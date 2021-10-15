@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a tool for quickly generatint html markup for those troublesome tables.
+This is a tool for quickly generating html markup for those troublesome tables.
 
 ## Changelog
 
