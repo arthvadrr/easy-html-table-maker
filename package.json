@@ -1,0 +1,25 @@
+{
+  "name": "easy-html-table-maker",
+  "version": "0.1.0",
+  "description": "A static HTML app to help you create and style HTML tables without losing your mind",
+  "author": "javaBryan",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.14.6",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@rollup/plugin-babel": "^5.3.0",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.3.5",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^6.7.0",
+    "rollup": "^2.53.2",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "scss": "^0.2.4"
+  }
+}
