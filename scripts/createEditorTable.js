@@ -7,7 +7,8 @@ const createEditorTable = state => {
         createElement(1, 'table', $div_editorTableContainer, `editor-table-${key}`, 'editor-table');
 
         if (table.header) {
-            createElement(1, 'tr', `editor-table-${key}`, `table-header-${key}`);
+            createElement(1, 'thead', `editor-table-${key}`, `table-head-${key}`);
+            createElement(1, 'tr', `table-head-${key}`, `table-header-${key}`);
             for (let a = 0; a < table.columns; a++) {
                 createElement(
                     1,
@@ -22,7 +23,8 @@ const createEditorTable = state => {
         }
 
         for (let i = 0; i < table.rows; i++) {
-            createElement(1, 'tr', `editor-table-${key}`, `table-row-${i}`);
+            createElement(1, 'tbody', `editor-table-${key}`, `table-body-${key}`);
+            createElement(1, 'tr', `table-body-${key}`, `table-row-${i}`);
 
             for (let x = 0; x < table.columns; x++) {
                 createElement(

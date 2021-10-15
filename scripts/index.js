@@ -1,5 +1,6 @@
 import StateMachine from '../state-machine/StateMachine';
 import createEditorTable from './createEditorTable';
+import createTableCode from './createTableCode';
 
 // Elements
 const $button_addRow = document.getElementById('add-row');
@@ -26,3 +27,6 @@ statePromise.catch(statePromiseOnReject);
 
 // Fire up the table
 createEditorTable(StateMachine.state);
+
+// Print the code output
+createTableCode(StateMachine.state);
