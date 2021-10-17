@@ -1,4 +1,7 @@
-const createElement = (amount, type, parent, id, className, isEditable, innerHTML) => {
+import StateMachine from '../state-machine/StateMachine';
+import createEditorTable from './createEditorTable';
+
+const createElement = (amount, type, parent, id, className, isEditable, innerHTML, eventObject) => {
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
     }
@@ -31,6 +34,11 @@ const createElement = (amount, type, parent, id, className, isEditable, innerHTM
         }
         if (innerHTML) {
             ele.innerHTML = innerHTML;
+        }
+        if (eventObject) {
+            ele.addEventListener(eventObject.type, e => {
+                eventObject.func(e);
+            });
         }
         parent.appendChild(ele);
     }
