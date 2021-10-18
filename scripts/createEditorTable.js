@@ -1,9 +1,7 @@
 import createElement from './createElement';
 import createTableCode from './createTableCode';
 
-const $div_editorTableContainer = document.getElementById('editor-table-container');
-
-const createEditorTable = StateMachine => {
+const createEditorTable = (StateMachine, $div_editorTableContainer) => {
     const { state } = StateMachine;
 
     state.tables.map((table, key) => {

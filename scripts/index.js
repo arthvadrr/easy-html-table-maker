@@ -1,11 +1,15 @@
 import StateMachine from '../state-machine/StateMachine';
+import copyTextToClipboard from './copyTextToClipboard';
 import createEditorTable from './createEditorTable';
 import createTableCode from './createTableCode';
+import replaceHTML from './replaceHTML';
 
 // Elements
 const $button_addRow = document.getElementById('add-row');
 const $button_addColumn = document.getElementById('add-column');
 const $button_copyTableCode = document.getElementById('copy-table-code');
+const $div_editorTableContainer = document.getElementById('editor-table-container');
+const $code_tableCode = document.getElementById('table-code');
 
 let state = '';
 
@@ -21,13 +25,20 @@ const statePromise = new Promise((resolve, reject) => {
 
 const statePromiseOnResolve = () => {
     StateMachine.state = state;
-    createEditorTable(StateMachine);
-    createTableCode(StateMachine.state);
+    init();
 };
 const statePromiseOnReject = () => {
     console.log('No local state');
-    createEditorTable(StateMachine);
-    createTableCode(StateMachine.state);
+    init();
 };
 statePromise.then(statePromiseOnResolve);
 statePromise.catch(statePromiseOnReject);
+
+const init = () => {
+    createEditorTable(StateMachine, $div_editorTableContainer);
+    createTableCode(StateMachine.state, $code_tableCode);
+
+    $button_copyTableCode.addEventListener('click', () => {
+        copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
+    });
+};

@@ -1,5 +1,4 @@
-const createTableCode = state => {
-    const $code_tableCode = document.getElementById('table-code');
+const createTableCode = (state, $code_tableCode) => {
     let output = '';
     const indent = amount => '\u00A0'.repeat(amount);
 
@@ -7,19 +6,13 @@ const createTableCode = state => {
         output += '&lt;table&gt<br>';
 
         if (state.tables[t].header) {
-            output += `
-            ${indent(2)}&lt;thead&gt<br>
-            ${indent(4)}&lt;tr&gt<br>
-            `;
+            output += `${indent(2)}&lt;thead&gt<br>${indent(4)}&lt;tr&gt<br>`;
             for (let h = 0; h < state.tables[t].columns; h++) {
                 output += `${indent(6)}&lt;th&gt${
                     state.tables[t].headerContent[h].innerHTML
                 }&lt;/th&gt<br>`;
             }
-            output += `
-            ${indent(4)}&lt;/tr&gt<br>
-            ${indent(2)}&lt;/thead&gt<br>
-            `;
+            output += `${indent(4)}&lt;/tr&gt<br>${indent(2)}&lt;/thead&gt<br>`;
         }
 
         output += `${indent(2)}&lt;tbody&gt<br>`;
