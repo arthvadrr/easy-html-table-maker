@@ -2,14 +2,21 @@ import createElement from './createElement';
 import createTableCode from './createTableCode';
 import createTableRow from './createTableRow';
 
-const createEditorTable = (StateMachine, $code_tableCode) => {
+const createEditorTable = StateMachine => {
     const { state } = StateMachine;
+    const $code_tableCode = document.getElementById('table-code');
     let $div_editorTableContainer = document.getElementById('editor-table-container');
     let $div_editorArea = document.getElementById('editor-area');
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
     $div_editorTableContainer = document.createElement('div');
     $div_editorTableContainer.setAttribute('id', 'editor-table-container');
     $div_editorArea.appendChild($div_editorTableContainer);
+
+    const refresh = () => {
+        localStorage.setItem('savedState', JSON.stringify(state));
+        createTableCode(StateMachine.state, $code_tableCode);
+        createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+    };
 
     state.tables.map((table, index) => {
         createElement('div', $div_editorTableContainer, `editor-table-container-${index}`);
@@ -29,12 +36,27 @@ const createEditorTable = (StateMachine, $code_tableCode) => {
             {
                 type: 'click',
                 func: () => {
-                    console.log(createTableRow(StateMachine.state, index));
                     state.tables[index].rows++;
                     state.tables[index].content.push(createTableRow(StateMachine.state, index));
-                    localStorage.setItem('savedState', JSON.stringify(state));
-                    createTableCode(StateMachine.state, $code_tableCode);
-                    createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+                    refresh();
+                },
+            }
+        );
+        createElement(
+            'button',
+            `editor-table-container-${index}`,
+            `remove-row-${index}`,
+            'remove-row-button',
+            false,
+            'Remove Row',
+            {
+                type: 'click',
+                func: () => {
+                    if (state.tables[index].rows > 0) {
+                        state.tables[index].rows--;
+                    }
+                    state.tables[index].content.pop();
+                    refresh();
                 },
             }
         );
@@ -49,7 +71,15 @@ const createEditorTable = (StateMachine, $code_tableCode) => {
                     false,
                     false,
                     true,
-                    table.headerContent[h].innerHTML
+                    table.headerContent[h].innerHTML,
+                    {
+                        type: 'input',
+                        func: e => {
+                            state.tables[index].headerContent[h].innerHTML = e.target.textContent;
+                            localStorage.setItem('savedState', JSON.stringify(state));
+                            createTableCode(StateMachine.state, $code_tableCode);
+                        },
+                    }
                 );
             }
         }

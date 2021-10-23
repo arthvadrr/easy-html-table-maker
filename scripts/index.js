@@ -34,7 +34,7 @@ statePromise.then(statePromiseOnResolve);
 statePromise.catch(statePromiseOnReject);
 
 const init = () => {
-    createEditorTable(StateMachine, $code_tableCode);
+    createEditorTable(StateMachine);
     createTableCode(StateMachine.state, $code_tableCode);
 
     $button_copyTableCode.addEventListener('click', () => {
