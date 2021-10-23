@@ -7,15 +7,14 @@
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="build/styles.min.css" />
         <title>Easy HTML Table Maker</title>
     </head>
     <body>
         <h1>Easy HTML Table Maker</h1>
         <noscript>Please enable JS to use the table maker.</noscript>
-        <div class="editor-area">
-            <button id="add-row">Add Row</button>
-            <button id="add-column">Add Column</button>
-
+        <div id="loading-modal"></div>
+        <div id="editor-area" class="editor-area">
             <div id="editor-table-container"></div>
         </div>
         <div class="output">

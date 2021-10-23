@@ -1,20 +1,51 @@
 import createElement from './createElement';
 import createTableCode from './createTableCode';
+import createTableRow from './createTableRow';
 
-const createEditorTable = (StateMachine, $div_editorTableContainer) => {
+const createEditorTable = (StateMachine, $code_tableCode) => {
     const { state } = StateMachine;
+    let $div_editorTableContainer = document.getElementById('editor-table-container');
+    let $div_editorArea = document.getElementById('editor-area');
+    $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
+    $div_editorTableContainer = document.createElement('div');
+    $div_editorTableContainer.setAttribute('id', 'editor-table-container');
+    $div_editorArea.appendChild($div_editorTableContainer);
 
-    state.tables.map((table, key) => {
-        createElement(1, 'table', $div_editorTableContainer, `editor-table-${key}`, 'editor-table');
+    state.tables.map((table, index) => {
+        createElement('div', $div_editorTableContainer, `editor-table-container-${index}`);
+        createElement(
+            'table',
+            `editor-table-container-${index}`,
+            `editor-table-${index}`,
+            'editor-table'
+        );
+        createElement(
+            'button',
+            `editor-table-container-${index}`,
+            `add-row-${index}`,
+            'add-row-button',
+            false,
+            'Add Row',
+            {
+                type: 'click',
+                func: () => {
+                    console.log(createTableRow(StateMachine.state, index));
+                    state.tables[index].rows++;
+                    state.tables[index].content.push(createTableRow(StateMachine.state, index));
+                    localStorage.setItem('savedState', JSON.stringify(state));
+                    createTableCode(StateMachine.state, $code_tableCode);
+                    createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+                },
+            }
+        );
 
         if (table.header) {
-            createElement(1, 'thead', `editor-table-${key}`, `table-head-${key}`);
-            createElement(1, 'tr', `table-head-${key}`, `table-header-${key}`);
+            createElement('thead', `editor-table-${index}`, `table-head-${index}`);
+            createElement('tr', `table-head-${index}`, `table-header-${index}`);
             for (let h = 0; h < table.columns; h++) {
                 createElement(
-                    1,
                     'th',
-                    `table-header-${key}`,
+                    `table-header-${index}`,
                     false,
                     false,
                     true,
@@ -24,12 +55,11 @@ const createEditorTable = (StateMachine, $div_editorTableContainer) => {
         }
 
         for (let r = 0; r < table.rows; r++) {
-            createElement(1, 'tbody', `editor-table-${key}`, `table-body-${key}`);
-            createElement(1, 'tr', `table-body-${key}`, `table-row-${r}`);
+            createElement('tbody', `editor-table-${index}`, `table-body-${index}`);
+            createElement('tr', `table-body-${index}`, `table-row-${r}`);
 
             for (let c = 0; c < table.columns; c++) {
                 createElement(
-                    1,
                     'td',
                     `table-row-${r}`,
                     `td-${r}${c}`,
@@ -39,9 +69,9 @@ const createEditorTable = (StateMachine, $div_editorTableContainer) => {
                     {
                         type: 'input',
                         func: e => {
-                            state.tables[key].content[r][c].innerHTML = e.target.textContent;
+                            state.tables[index].content[r][c].innerHTML = e.target.textContent;
                             localStorage.setItem('savedState', JSON.stringify(state));
-                            createTableCode(StateMachine.state);
+                            createTableCode(StateMachine.state, $code_tableCode);
                         },
                     }
                 );

@@ -8,7 +8,6 @@ import replaceHTML from './replaceHTML';
 const $button_addRow = document.getElementById('add-row');
 const $button_addColumn = document.getElementById('add-column');
 const $button_copyTableCode = document.getElementById('copy-table-code');
-const $div_editorTableContainer = document.getElementById('editor-table-container');
 const $code_tableCode = document.getElementById('table-code');
 
 let state = '';
@@ -35,7 +34,7 @@ statePromise.then(statePromiseOnResolve);
 statePromise.catch(statePromiseOnReject);
 
 const init = () => {
-    createEditorTable(StateMachine, $div_editorTableContainer);
+    createEditorTable(StateMachine, $code_tableCode);
     createTableCode(StateMachine.state, $code_tableCode);
 
     $button_copyTableCode.addEventListener('click', () => {

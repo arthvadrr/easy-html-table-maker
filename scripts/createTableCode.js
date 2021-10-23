@@ -1,4 +1,8 @@
 const createTableCode = (state, $code_tableCode) => {
+    if (!$code_tableCode) {
+        $code_tableCode = document.getElementById('table-code');
+    }
+
     let output = '';
     const indent = amount => '\u00A0'.repeat(amount);
 
@@ -29,6 +33,7 @@ const createTableCode = (state, $code_tableCode) => {
         output += `${indent(2)}&lt;/tbody&gt<br>`;
         output += `&lt;/table&gt<br>`;
     }
+
     $code_tableCode.innerHTML = output;
 };
 
