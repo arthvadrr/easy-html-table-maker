@@ -111,6 +111,51 @@ const createEditorTable = StateMachine => {
                 },
             }
         );
+        createElement(
+            'input',
+            `editor-table-container-${index}`,
+            `caption-toggle-${index}`,
+            'caption-toggle',
+            false,
+            false,
+            {
+                type: 'click',
+                func: e => {
+                    state.tables[index].caption = !state.tables[index].caption;
+                    if (e.target.checked) {
+                        console.log('checked');
+                    } else {
+                        console.log('not checked');
+                    }
+                    refresh();
+                },
+            },
+            {
+                type: 'checkbox',
+                name: 'captionToggle',
+                value: 'Toggle caption',
+                checked: state.tables[index].caption,
+            }
+        );
+
+        if (table.caption) {
+            createElement(
+                'caption',
+                `editor-table-${index}`,
+                `table-caption-${index}`,
+                false,
+                true,
+                table.captionText,
+                {
+                    type: 'input',
+                    func: e => {
+                        state.tables[index].captionText = e.target.textContent;
+                        localStorage.setItem('savedState', JSON.stringify(state));
+                        createTableCode(StateMachine.state, $code_tableCode);
+                    },
+                }
+            );
+        }
 
         if (table.header) {
             createElement('thead', `editor-table-${index}`, `table-head-${index}`);

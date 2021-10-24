@@ -6,7 +6,8 @@ export default {
             columns: 5,
             rows: 5,
             header: true,
-            caption: '',
+            caption: false,
+            captionText: ' captionText ',
             headerContent: [
                 { innerHTML: 'innerHTML' },
                 { innerHTML: 'innerHTML' },

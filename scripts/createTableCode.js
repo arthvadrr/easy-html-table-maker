@@ -9,6 +9,10 @@ const createTableCode = (state, $code_tableCode) => {
     for (let t = 0; t < state.tables.length; t++) {
         output += '&lt;table&gt<br>';
 
+        if (state.tables[t].caption) {
+            output += `${indent(2)}&lt;caption&gt${state.tables[t].captionText}&lt;/caption&gt<br>`;
+        }
+
         if (state.tables[t].header) {
             output += `${indent(2)}&lt;thead&gt<br>${indent(4)}&lt;tr&gt<br>`;
             for (let h = 0; h < state.tables[t].columns; h++) {

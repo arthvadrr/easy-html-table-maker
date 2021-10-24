@@ -1,4 +1,13 @@
-const createElement = (type, parent, id, className, isEditable, innerHTML, eventObject) => {
+const createElement = (
+    type,
+    parent,
+    id,
+    className,
+    isEditable,
+    innerHTML,
+    eventObject,
+    inputProps
+) => {
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
     }
@@ -9,6 +18,22 @@ const createElement = (type, parent, id, className, isEditable, innerHTML, event
     }
 
     let ele = document.createElement(type);
+
+    if (type === 'input') {
+        if (inputProps.type === 'checkbox') {
+            ele.setAttribute('type', inputProps.type);
+            ele.setAttribute('name', inputProps.name);
+            ele.setAttribute('value', inputProps.value);
+            ele.checked = inputProps.checked;
+        }
+        const inputContainer = document.createElement('div');
+        const label = document.createElement('label');
+        label.setAttribute('for', id);
+        label.innerHTML = inputProps.value;
+        inputContainer.appendChild(label);
+        parent.appendChild(inputContainer);
+        parent = inputContainer;
+    }
 
     if (id) {
         ele.setAttribute('id', `${id}`);
