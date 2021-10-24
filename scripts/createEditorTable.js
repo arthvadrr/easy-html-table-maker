@@ -1,6 +1,7 @@
 import createElement from './createElement';
 import createTableCode from './createTableCode';
 import createTableRow from './createTableRow';
+import createTableColumn from './createTableColumn';
 
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
@@ -56,6 +57,56 @@ const createEditorTable = StateMachine => {
                         state.tables[index].rows--;
                     }
                     state.tables[index].content.pop();
+                    refresh();
+                },
+            }
+        );
+        createElement(
+            'button',
+            `editor-table-container-${index}`,
+            `add-column-${index}`,
+            'add-column-button',
+            false,
+            'Add Column',
+            {
+                type: 'click',
+                func: () => {
+                    const col = { innerHTML: 'col' };
+
+                    if (table.header) {
+                        state.tables[index].headerContent.push(col);
+                    }
+
+                    state.tables[index].content.forEach(element => {
+                        element.push(col);
+                    });
+                    state.tables[index].columns++;
+                    refresh();
+                },
+            }
+        );
+        createElement(
+            'button',
+            `editor-table-container-${index}`,
+            `remove-column-${index}`,
+            'remove-column-button',
+            false,
+            'Remove Column',
+            {
+                type: 'click',
+                func: () => {
+                    const col = { innerHTML: 'col' };
+
+                    if (table.header) {
+                        state.tables[index].headerContent.pop();
+                    }
+
+                    state.tables[index].content.forEach(element => {
+                        element.pop();
+                    });
+                    if (state.tables[index].columns > 0) {
+                        state.tables[index].columns--;
+                    }
                     refresh();
                 },
             }
