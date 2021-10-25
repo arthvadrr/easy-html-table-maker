@@ -1,6 +1,5 @@
 export default {
     loading: true,
-    currentTable: 1,
     tables: [
         {
             columns: 5,

@@ -1,7 +1,6 @@
 import createElement from './createElement';
 import createTableCode from './createTableCode';
 import createTableRow from './createTableRow';
-import createTableColumn from './createTableColumn';
 
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
@@ -135,6 +134,28 @@ const createEditorTable = StateMachine => {
                 name: 'captionToggle',
                 value: 'Toggle caption',
                 checked: state.tables[index].caption,
+            }
+        );
+
+        createElement(
+            'input',
+            `editor-table-container-${index}`,
+            `header-toggle-${index}`,
+            'header-toggle',
+            false,
+            false,
+            {
+                type: 'click',
+                func: () => {
+                    state.tables[index].header = !state.tables[index].header;
+                    refresh();
+                },
+            },
+            {
+                type: 'checkbox',
+                name: 'headerToggle',
+                value: 'Table header',
+                checked: state.tables[index].header,
             }
         );
 
