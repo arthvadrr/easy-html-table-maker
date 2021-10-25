@@ -6,7 +6,10 @@ const createElement = (
     isEditable,
     innerHTML,
     eventObject,
-    inputProps
+    inputProps,
+    rowspan,
+    colspan,
+    disabled
 ) => {
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
@@ -47,6 +50,13 @@ const createElement = (
         ele.setAttribute('contenteditable', 'true');
     }
 
+    if (rowspan && rowspan > 1) {
+        ele.setAttribute('rowspan', rowspan);
+    }
+    if (colspan && colspan > 1) {
+        ele.setAttribute('colspan', colspan);
+    }
+
     if (innerHTML) {
         ele.innerHTML = innerHTML;
     }
@@ -55,6 +65,10 @@ const createElement = (
         ele.addEventListener(eventObject.type, e => {
             eventObject.func(e);
         });
+    }
+
+    if (disabled) {
+        ele.setAttribute('disabled', 'true');
     }
 
     parent.appendChild(ele);

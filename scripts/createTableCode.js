@@ -21,11 +21,11 @@ const createTableCode = (state, $code_tableCode) => {
     }
 
     output += `${indent(2)}&lt;tbody&gt<br>`;
-    for (let i = 0; i < state.rows; i++) {
+    for (let r = 0; r < state.content.length; r++) {
         output += `${indent(4)}&lt;tr&gt<br>`;
 
-        for (let p = 0; p < state.columns; p++) {
-            output += `${indent(6)}&lt;td&gt${state.content[i][p].innerHTML}&lt;/td&gt<br>`;
+        for (let c = 0; c < state.content[r].length; c++) {
+            output += `${indent(6)}&lt;td&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
         }
         output += `${indent(4)}&lt;/tr&gt<br>`;
     }

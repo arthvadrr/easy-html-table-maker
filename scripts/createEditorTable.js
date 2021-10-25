@@ -5,6 +5,7 @@ import createTableRow from './createTableRow';
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
     const $code_tableCode = document.getElementById('table-code');
+    let totalRowspans;
     let $div_editorTableContainer = document.getElementById('editor-table-container');
     let $div_editorArea = document.getElementById('editor-area');
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
@@ -187,11 +188,11 @@ const createEditorTable = StateMachine => {
         }
     }
 
-    for (let r = 0; r < state.rows; r++) {
+    for (let r = 0; r < state.content.length; r++) {
         createElement('tbody', `editor-table`, `table-body`);
         createElement('tr', `table-body`, `table-row-${r}`);
 
-        for (let c = 0; c < state.columns; c++) {
+        for (let c = 0; c < state.content[r].length; c++) {
             createElement(
                 'td',
                 `table-row-${r}`,
@@ -206,8 +207,41 @@ const createEditorTable = StateMachine => {
                         localStorage.setItem('savedState', JSON.stringify(state));
                         createTableCode(StateMachine.state, $code_tableCode);
                     },
-                }
+                },
+                false,
+                state.content[r][c].rowspan,
+                state.content[r][c].colspan
             );
+            if (state.content[r][c].rowspan > 1) {
+                state.content[r + (state.content[r][c].rowspan - 1)].splice(c, 1);
+            }
+            totalRowspans = 0;
+            for (let s = 0; s < state.content[r].length; s++) {
+                totalRowspans += state.content[r][s].rowspan;
+            }
+
+            if (r < state.content.length - 1) {
+                createElement(
+                    'button',
+                    `td-${r}${c}`,
+                    `increase-rowspan-button-${r}${c}`,
+                    'increase-rowspan-button',
+                    false,
+                    'RS+',
+                    {
+                        type: 'click',
+                        func: () => {
+                            state.content[r][c].rowspan++;
+                            state.rowspans++;
+                            refresh();
+                        },
+                    },
+                    false,
+                    false,
+                    false,
+                    totalRowspans == state.content.length - 1 ? true : false
+                );
+            }
         }
     }
 };
