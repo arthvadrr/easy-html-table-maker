@@ -203,11 +203,11 @@ const createEditorTable = StateMachine => {
                 `td-${r}${c}`,
                 false,
                 true,
-                state.content[r][c].innerHTML,
+                false,
                 {
                     type: 'input',
                     func: e => {
-                        state.content[r][c].innerHTML = e.target.textContent;
+                        state.content[r][c].innerHTML = e.target.value;
                         localStorage.setItem('savedState', JSON.stringify(state));
                         createTableCode(StateMachine.state, $code_tableCode);
                     },
@@ -216,6 +216,10 @@ const createEditorTable = StateMachine => {
                 state.content[r][c].rowspan,
                 state.content[r][c].colspan
             );
+            let tdInput = document.createElement('input');
+            let tdEle = document.getElementById(`td-${r}${c}`);
+            tdInput.value = state.content[r][c].innerHTML;
+            tdEle.appendChild(tdInput);
 
             if (r < state.content.length - 1) {
                 createElement(
@@ -230,7 +234,7 @@ const createEditorTable = StateMachine => {
                         func: () => {
                             state.content[r][c].rowspan++;
                             let totalColumnRowspans = 0; // TODO Solve deficit issue
-                            for (let row = 0; row < state.content.length; row++) {
+                            for (let row = 0; row < state.content.length - 1; row++) {
                                 totalColumnRowspans += state.content[row][c].rowspan;
                             }
 
@@ -238,6 +242,7 @@ const createEditorTable = StateMachine => {
                                 state.content.push(createTableRow(StateMachine.state));
                             }
                             console.log(totalColumnRowspans);
+                            console.log(state.content.length);
                             refresh();
                         },
                     },
