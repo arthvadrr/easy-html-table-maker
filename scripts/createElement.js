@@ -50,10 +50,10 @@ const createElement = (
         ele.setAttribute('contenteditable', 'true');
     }
 
-    if (rowspan && rowspan > 1) {
+    if (rowspan) {
         ele.setAttribute('rowspan', rowspan);
     }
-    if (colspan && colspan > 1) {
+    if (colspan) {
         ele.setAttribute('colspan', colspan);
     }
 

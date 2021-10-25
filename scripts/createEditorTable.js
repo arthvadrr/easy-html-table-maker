@@ -5,7 +5,6 @@ import createTableRow from './createTableRow';
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
     const $code_tableCode = document.getElementById('table-code');
-    let totalRowspans;
     let $div_editorTableContainer = document.getElementById('editor-table-container');
     let $div_editorArea = document.getElementById('editor-area');
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
@@ -31,8 +30,7 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                state.rows++;
-                state.content.push(createTableRow(StateMachine.state, index));
+                state.content.push(createTableRow(StateMachine.state));
                 refresh();
             },
         }
@@ -47,10 +45,9 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                if (state.rows > 0) {
-                    state.rows--;
+                if (state.content.length > 1) {
+                    state.content.pop();
                 }
-                state.content.pop();
                 refresh();
             },
         }
@@ -74,7 +71,6 @@ const createEditorTable = StateMachine => {
                 state.content.forEach(element => {
                     element.push(col);
                 });
-                state.columns++;
                 refresh();
             },
         }
@@ -89,18 +85,15 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                const col = { innerHTML: 'col' };
-
-                if (state.header) {
+                if (state.header && state.headerContent.length > 1) {
                     state.headerContent.pop();
                 }
 
                 state.content.forEach(element => {
-                    element.pop();
+                    if (element.length > 1) {
+                        element.pop();
+                    }
                 });
-                if (state.columns > 0) {
-                    state.columns--;
-                }
                 refresh();
             },
         }
@@ -168,7 +161,7 @@ const createEditorTable = StateMachine => {
     if (state.header) {
         createElement('thead', `editor-table`, `table-head`);
         createElement('tr', `table-head`, `table-header`);
-        for (let h = 0; h < state.columns; h++) {
+        for (let h = 0; h < state.headerContent.length; h++) {
             createElement(
                 'th',
                 `table-header`,
@@ -193,6 +186,17 @@ const createEditorTable = StateMachine => {
         createElement('tr', `table-body`, `table-row-${r}`);
 
         for (let c = 0; c < state.content[r].length; c++) {
+            if (state.content[r][c].ignore == true) {
+                continue;
+            }
+
+            //if rowspan exists, set ignore on the next row(s) corresponding column item
+            if (state.content[r][c].rowspan > 1) {
+                for (let p = 1; p < state.content[r][c].rowspan; p++) {
+                    state.content[r + p][c].ignore = true;
+                }
+            }
+
             createElement(
                 'td',
                 `table-row-${r}`,
@@ -212,13 +216,6 @@ const createEditorTable = StateMachine => {
                 state.content[r][c].rowspan,
                 state.content[r][c].colspan
             );
-            if (state.content[r][c].rowspan > 1) {
-                state.content[r + (state.content[r][c].rowspan - 1)].splice(c, 1);
-            }
-            totalRowspans = 0;
-            for (let s = 0; s < state.content[r].length; s++) {
-                totalRowspans += state.content[r][s].rowspan;
-            }
 
             if (r < state.content.length - 1) {
                 createElement(
@@ -232,14 +229,22 @@ const createEditorTable = StateMachine => {
                         type: 'click',
                         func: () => {
                             state.content[r][c].rowspan++;
-                            state.rowspans++;
+                            let totalColumnRowspans = 0; // TODO Solve deficit issue
+                            for (let row = 0; row < state.content.length; row++) {
+                                totalColumnRowspans += state.content[row][c].rowspan;
+                            }
+
+                            if (totalColumnRowspans >= state.content.length) {
+                                state.content.push(createTableRow(StateMachine.state));
+                            }
+                            console.log(totalColumnRowspans);
                             refresh();
                         },
                     },
                     false,
                     false,
                     false,
-                    totalRowspans == state.content.length - 1 ? true : false
+                    false
                 );
             }
         }
