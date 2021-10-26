@@ -5,8 +5,10 @@ import createTableRow from './createTableRow';
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
     const $code_tableCode = document.getElementById('table-code');
+
     let $div_editorTableContainer = document.getElementById('editor-table-container');
     let $div_editorArea = document.getElementById('editor-area');
+
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
     $div_editorTableContainer = document.createElement('div');
     $div_editorTableContainer.setAttribute('id', 'editor-table-container');
@@ -19,10 +21,11 @@ const createEditorTable = StateMachine => {
     };
 
     //Magic. if rowspan exists, set ignore on the next row(s) corresponding column item
-    const ignoreTd = (r, c, ignore, spanlength, offset) => {
+    const ignoreTd = (r, c, ignore, spanlength, offset, collision) => {
         if (state.content[r][c].rowspan > 1) {
             for (let p = offset; p < spanlength; p++) {
                 state.content[r + p][c].ignore = ignore;
+                state.content[r + p][c].collision = collision;
             }
         }
     };
@@ -54,6 +57,20 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
+                // for (let r = 0; r < state.content.length; r++) {
+                //     for (let c = 0; c < state.content[r].length; c++) {
+                //         if (state.content[r][c].rowspan > 1) {
+                //             state.content[r][c].rowspan--;
+                //         }
+                //     }
+                // }
+                for (let td = 0; td < state.content.at(-1).length; td++) {
+                    if (state.content.at(-1)[td].collision === 'rowspan') {
+                        console.log('rowspan detected, cannot delete row. Remove rowspan first.');
+                        return;
+                    }
+                }
+
                 if (state.content.length > 1) {
                     state.content.pop();
                 }
@@ -224,7 +241,7 @@ const createEditorTable = StateMachine => {
             tdEle.appendChild(tdInput);
 
             // Ignore TDs based on rowspan
-            ignoreTd(r, c, true, state.content[r][c].rowspan, 1);
+            ignoreTd(r, c, true, state.content[r][c].rowspan, 1, 'rowspan');
 
             if (r < state.content.length - 1) {
                 createElement(
