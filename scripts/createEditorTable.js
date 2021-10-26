@@ -18,6 +18,15 @@ const createEditorTable = StateMachine => {
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
     };
 
+    //Magic. if rowspan exists, set ignore on the next row(s) corresponding column item
+    const ignoreTd = (r, c, ignore, spanlength, offset) => {
+        if (state.content[r][c].rowspan > 1) {
+            for (let p = offset; p < spanlength; p++) {
+                state.content[r + p][c].ignore = ignore;
+            }
+        }
+    };
+
     createElement('div', $div_editorTableContainer, `editor-table-container`);
     createElement('table', `editor-table-container`, `editor-table`, 'editor-table');
     createElement(
@@ -190,13 +199,6 @@ const createEditorTable = StateMachine => {
                 continue;
             }
 
-            //if rowspan exists, set ignore on the next row(s) corresponding column item
-            if (state.content[r][c].rowspan > 1) {
-                for (let p = 1; p < state.content[r][c].rowspan; p++) {
-                    state.content[r + p][c].ignore = true;
-                }
-            }
-
             createElement(
                 'td',
                 `table-row-${r}`,
@@ -221,6 +223,9 @@ const createEditorTable = StateMachine => {
             tdInput.value = state.content[r][c].innerHTML;
             tdEle.appendChild(tdInput);
 
+            // Ignore TDs based on rowspan
+            ignoreTd(r, c, true, state.content[r][c].rowspan, 1);
+
             if (r < state.content.length - 1) {
                 createElement(
                     'button',
@@ -232,7 +237,6 @@ const createEditorTable = StateMachine => {
                     {
                         type: 'click',
                         func: () => {
-                            state.content[r][c].rowspan++;
                             let totalColumnRowspans = 0; // TODO Solve deficit issue
                             for (let row = 0; row < state.content.length - 1; row++) {
                                 totalColumnRowspans += state.content[row][c].rowspan;
@@ -241,8 +245,31 @@ const createEditorTable = StateMachine => {
                             if (totalColumnRowspans >= state.content.length) {
                                 state.content.push(createTableRow(StateMachine.state));
                             }
+                            state.content[r][c].rowspan++;
                             console.log(totalColumnRowspans);
                             console.log(state.content.length);
+                            refresh();
+                        },
+                    },
+                    false,
+                    false,
+                    false,
+                    false
+                );
+            }
+            if (state.content[r][c].rowspan > 1) {
+                createElement(
+                    'button',
+                    `td-${r}${c}`,
+                    `increase-rowspan-button-${r}${c}`,
+                    'increase-rowspan-button',
+                    false,
+                    'RS-',
+                    {
+                        type: 'click',
+                        func: () => {
+                            ignoreTd(r, c, false, state.content[r][c].rowspan, 0);
+                            state.content[r][c].rowspan--;
                             refresh();
                         },
                     },
