@@ -57,13 +57,6 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                // for (let r = 0; r < state.content.length; r++) {
-                //     for (let c = 0; c < state.content[r].length; c++) {
-                //         if (state.content[r][c].rowspan > 1) {
-                //             state.content[r][c].rowspan--;
-                //         }
-                //     }
-                // }
                 for (let td = 0; td < state.content.at(-1).length; td++) {
                     if (state.content.at(-1)[td].collision === 'rowspan') {
                         console.log('rowspan detected, cannot delete row. Remove rowspan first.');
@@ -265,6 +258,7 @@ const createEditorTable = StateMachine => {
                             state.content[r][c].rowspan++;
                             console.log(totalColumnRowspans);
                             console.log(state.content.length);
+                            ignoreTd(r, c, true, state.content[r][c].rowspan, 1, 'rowspan');
                             refresh();
                         },
                     },
@@ -278,14 +272,14 @@ const createEditorTable = StateMachine => {
                 createElement(
                     'button',
                     `td-${r}${c}`,
-                    `increase-rowspan-button-${r}${c}`,
-                    'increase-rowspan-button',
+                    `decrease-rowspan-button-${r}${c}`,
+                    'decrease-rowspan-button',
                     false,
                     'RS-',
                     {
                         type: 'click',
                         func: () => {
-                            ignoreTd(r, c, false, state.content[r][c].rowspan, 0);
+                            ignoreTd(r, c, false, state.content[r][c].rowspan, 0, false);
                             state.content[r][c].rowspan--;
                             refresh();
                         },

@@ -25,7 +25,15 @@ const createTableCode = (state, $code_tableCode) => {
         output += `${indent(4)}&lt;tr&gt<br>`;
 
         for (let c = 0; c < state.content[r].length; c++) {
-            output += `${indent(6)}&lt;td&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
+            if (!state.content[r][c].ignore) {
+                if (state.content[r][c].rowspan < 2) {
+                    output += `${indent(6)}&lt;td&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
+                } else {
+                    output += `${indent(6)}&lt;td rowspan="${state.content[r][c].rowspan}"&gt${
+                        state.content[r][c].innerHTML
+                    }&lt;/td&gt<br>`;
+                }
+            }
         }
         output += `${indent(4)}&lt;/tr&gt<br>`;
     }
