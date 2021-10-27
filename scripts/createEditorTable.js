@@ -82,7 +82,7 @@ const createEditorTable = StateMachine => {
             type: 'click',
             func: () => {
                 // DO NOT store the object as a variable
-                if (state.header) {
+                
                     state.headerContent.push({
                         innerHTML: 'col',
                         rowspan: 1,
@@ -90,7 +90,7 @@ const createEditorTable = StateMachine => {
                         ignore: false,
                         collision: false,
                     });
-                }
+                
 
                 StateMachine.state.content.forEach(element =>
                     element.push({
@@ -115,9 +115,9 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                if (state.header && state.headerContent.length > 1) {
+                
                     state.headerContent.pop();
-                }
+                
 
                 state.content.forEach(element => {
                     if (element.length > 1) {
