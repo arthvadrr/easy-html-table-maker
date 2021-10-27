@@ -16,11 +16,11 @@ const createEditorTable = StateMachine => {
 
     const refresh = () => {
         localStorage.setItem('savedState', JSON.stringify(state));
-        createTableCode(StateMachine.state, $code_tableCode);
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+        createTableCode(StateMachine.state, $code_tableCode);
     };
 
-    //Magic. if rowspan exists, set ignore on the next row(s) corresponding column item
+    //If rowspan exists (rowspan="*more than 1*"), set ignore on the next row(s) corresponding column item
     const ignoreTd = (r, c, ignore, spanlength, offset, collision) => {
         if (state.content[r][c].rowspan > 1) {
             for (let p = offset; p < spanlength; p++) {
@@ -81,15 +81,26 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                const col = { innerHTML: 'col' };
-
+                // DO NOT store the object as a variable
                 if (state.header) {
-                    state.headerContent.push(col);
+                    state.headerContent.push({
+                        innerHTML: 'col',
+                        rowspan: 1,
+                        colspan: 1,
+                        ignore: false,
+                        collision: false,
+                    });
                 }
 
-                state.content.forEach(element => {
-                    element.push(col);
-                });
+                StateMachine.state.content.forEach(element =>
+                    element.push({
+                        innerHTML: 'col',
+                        rowspan: 1,
+                        colspan: 1,
+                        ignore: false,
+                        collision: false,
+                    })
+                );
                 refresh();
             },
         }
@@ -126,13 +137,8 @@ const createEditorTable = StateMachine => {
         false,
         {
             type: 'click',
-            func: e => {
+            func: () => {
                 state.caption = !state.caption;
-                if (e.target.checked) {
-                    console.log('checked');
-                } else {
-                    console.log('not checked');
-                }
                 refresh();
             },
         },
@@ -199,9 +205,9 @@ const createEditorTable = StateMachine => {
             );
         }
     }
+    createElement('tbody', `editor-table`, `table-body`);
 
     for (let r = 0; r < state.content.length; r++) {
-        createElement('tbody', `editor-table`, `table-body`);
         createElement('tr', `table-body`, `table-row-${r}`);
 
         for (let c = 0; c < state.content[r].length; c++) {
@@ -247,17 +253,18 @@ const createEditorTable = StateMachine => {
                     {
                         type: 'click',
                         func: () => {
-                            let totalColumnRowspans = 0; // TODO Solve deficit issue
+                            // Magic...don't touch this!!!
+                            let totalColumnRowspans = 0;
                             for (let row = 0; row < state.content.length - 1; row++) {
-                                totalColumnRowspans += state.content[row][c].rowspan;
+                                if (state.content[row][c].collision !== 'rowspan') {
+                                    totalColumnRowspans += state.content[row][c].rowspan;
+                                }
                             }
 
                             if (totalColumnRowspans >= state.content.length) {
                                 state.content.push(createTableRow(StateMachine.state));
                             }
                             state.content[r][c].rowspan++;
-                            console.log(totalColumnRowspans);
-                            console.log(state.content.length);
                             ignoreTd(r, c, true, state.content[r][c].rowspan, 1, 'rowspan');
                             refresh();
                         },
@@ -283,11 +290,7 @@ const createEditorTable = StateMachine => {
                             state.content[r][c].rowspan--;
                             refresh();
                         },
-                    },
-                    false,
-                    false,
-                    false,
-                    false
+                    }
                 );
             }
         }

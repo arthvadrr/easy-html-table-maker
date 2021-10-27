@@ -14,7 +14,7 @@ const createTableCode = (state, $code_tableCode) => {
 
     if (state.header) {
         output += `${indent(2)}&lt;thead&gt<br>${indent(4)}&lt;tr&gt<br>`;
-        for (let h = 0; h < state.columns; h++) {
+        for (let h = 0; h < state.headerContent.length; h++) {
             output += `${indent(6)}&lt;th&gt${state.headerContent[h].innerHTML}&lt;/th&gt<br>`;
         }
         output += `${indent(4)}&lt;/tr&gt<br>${indent(2)}&lt;/thead&gt<br>`;
