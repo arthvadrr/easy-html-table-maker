@@ -5,8 +5,6 @@ import createTableCode from './createTableCode';
 import replaceHTML from './replaceHTML';
 
 // Elements
-const $button_addRow = document.getElementById('add-row');
-const $button_addColumn = document.getElementById('add-column');
 const $button_copyTableCode = document.getElementById('copy-table-code');
 const $code_tableCode = document.getElementById('table-code');
 

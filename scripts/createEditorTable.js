@@ -220,7 +220,7 @@ const createEditorTable = StateMachine => {
                 `table-row-${r}`,
                 `td-${r}${c}`,
                 false,
-                true,
+                false,
                 false,
                 {
                     type: 'input',
