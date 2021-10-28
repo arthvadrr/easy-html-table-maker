@@ -326,7 +326,7 @@ const createEditorTable = StateMachine => {
                 {
                     type: 'click',
                     func: () => {
-                        // Magic...don't touch this!!!
+                        // More magic...don't touch this either!!!
                         let totalRowColumnSpans = 0;
                         for (let column = 0; column < state.content[r].length - 1; column++) {
                             if (!state.content[r][column].colCollision) {
