@@ -25,13 +25,17 @@ const createEditorTable = StateMachine => {
     const setCollision = (r, c, type, collision, spanlength, offset) => {
         if (state.content[r][c].rowspan > 1 && type === 'rowCollision') {
             for (let p = offset; p < spanlength; p++) {
-                state.content[r + p][c].rowCollision = collision;
+                for (let colspan = 0; colspan < state.content[r][c].colspan; colspan++) {
+                    state.content[r + p][c + colspan].rowCollision = collision;
+                }
             }
         }
 
         if (state.content[r][c].colspan > 1 && type === 'colCollision') {
             for (let p = offset; p < spanlength; p++) {
-                state.content[r][c + p].colCollision = collision;
+                for (let rowspan = 0; rowspan < state.content[r][c].rowspan; rowspan++) {
+                    state.content[r + rowspan][c + p].colCollision = collision;
+                }
             }
         }
     };
