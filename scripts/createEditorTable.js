@@ -17,15 +17,21 @@ const createEditorTable = StateMachine => {
     const refresh = () => {
         localStorage.setItem('savedState', JSON.stringify(state));
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+        //TODO get rid of this recursive BS
         createTableCode(StateMachine.state, $code_tableCode);
     };
 
-    //If rowspan exists (rowspan="*more than 1*"), set ignore on the next row(s) corresponding column item
-    const ignoreTd = (r, c, ignore, spanlength, offset, collision) => {
-        if (state.content[r][c].rowspan > 1) {
+    //Set if a td has a colspan or rowspan collision
+    const setCollision = (r, c, type, collision, spanlength, offset) => {
+        if (state.content[r][c].rowspan > 1 && type === 'rowCollision') {
             for (let p = offset; p < spanlength; p++) {
-                state.content[r + p][c].ignore = ignore;
-                state.content[r + p][c].collision = collision;
+                state.content[r + p][c].rowCollision = collision;
+            }
+        }
+
+        if (state.content[r][c].colspan > 1 && type === 'colCollision') {
+            for (let p = offset; p < spanlength; p++) {
+                state.content[r][c + p].colCollision = collision;
             }
         }
     };
@@ -58,8 +64,8 @@ const createEditorTable = StateMachine => {
             type: 'click',
             func: () => {
                 for (let td = 0; td < state.content.at(-1).length; td++) {
-                    if (state.content.at(-1)[td].collision === 'rowspan') {
-                        console.log('rowspan detected, cannot delete row. Remove rowspan first.');
+                    if (state.content.at(-1)[td].rowCollision === true) {
+                        alert('Rowspan detected, cannot delete row. Remove rowspan first.');
                         return;
                     }
                 }
@@ -82,23 +88,22 @@ const createEditorTable = StateMachine => {
             type: 'click',
             func: () => {
                 // DO NOT store the object as a variable
-                
-                    state.headerContent.push({
-                        innerHTML: 'col',
-                        rowspan: 1,
-                        colspan: 1,
-                        ignore: false,
-                        collision: false,
-                    });
-                
+
+                state.headerContent.push({
+                    innerHTML: 'col',
+                    rowspan: 1,
+                    colspan: 1,
+                    rowCollision: false,
+                    colCollision: false,
+                });
 
                 StateMachine.state.content.forEach(element =>
                     element.push({
                         innerHTML: 'col',
                         rowspan: 1,
                         colspan: 1,
-                        ignore: false,
-                        collision: false,
+                        rowCollision: false,
+                        colCollision: false,
                     })
                 );
                 refresh();
@@ -115,9 +120,16 @@ const createEditorTable = StateMachine => {
         {
             type: 'click',
             func: () => {
-                
+                for (let row = 0; row < state.content.length; row++) {
+                    if (state.content[row].at(-1).colCollision === true) {
+                        alert('Colspan detected, cannot delete column. Remove colspan first.');
+                        return;
+                    }
+                }
+
+                if (state.headerContent.length > 1) {
                     state.headerContent.pop();
-                
+                }
 
                 state.content.forEach(element => {
                     if (element.length > 1) {
@@ -211,7 +223,7 @@ const createEditorTable = StateMachine => {
         createElement('tr', `table-body`, `table-row-${r}`);
 
         for (let c = 0; c < state.content[r].length; c++) {
-            if (state.content[r][c].ignore == true) {
+            if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
                 continue;
             }
 
@@ -239,60 +251,131 @@ const createEditorTable = StateMachine => {
             tdInput.value = state.content[r][c].innerHTML;
             tdEle.appendChild(tdInput);
 
-            // Ignore TDs based on rowspan
-            ignoreTd(r, c, true, state.content[r][c].rowspan, 1, 'rowspan');
+            // Ignore TDs based on rowspan and colspan
+            setCollision(r, c, 'rowCollision', true, state.content[r][c].rowspan, 1);
+            setCollision(r, c, 'colCollision', true, state.content[r][c].colspan, 1);
 
-            if (r < state.content.length - 1) {
-                createElement(
-                    'button',
-                    `td-${r}${c}`,
-                    `increase-rowspan-button-${r}${c}`,
-                    'increase-rowspan-button',
-                    false,
-                    'RS+',
-                    {
-                        type: 'click',
-                        func: () => {
-                            // Magic...don't touch this!!!
-                            let totalColumnRowspans = 0;
-                            for (let row = 0; row < state.content.length - 1; row++) {
-                                if (state.content[row][c].collision !== 'rowspan') {
-                                    totalColumnRowspans += state.content[row][c].rowspan;
-                                }
+            createElement(
+                'button',
+                `td-${r}${c}`,
+                `increase-rowspan-button-${r}${c}`,
+                'increase-rowspan-button',
+                false,
+                'RS+',
+                {
+                    type: 'click',
+                    func: () => {
+                        // Magic...don't touch this!!!
+                        let totalColumnRowspans = 0;
+                        for (let row = 0; row < state.content.length - 1; row++) {
+                            if (!state.content[row][c].rowCollision) {
+                                totalColumnRowspans += state.content[row][c].rowspan;
                             }
+                        }
 
-                            if (totalColumnRowspans >= state.content.length) {
-                                state.content.push(createTableRow(StateMachine.state));
-                            }
-                            state.content[r][c].rowspan++;
-                            ignoreTd(r, c, true, state.content[r][c].rowspan, 1, 'rowspan');
-                            refresh();
-                        },
+                        if (totalColumnRowspans >= state.content.length) {
+                            state.content.push(createTableRow(StateMachine.state));
+                        }
+                        state.content[r][c].rowspan++;
+                        setCollision(r, c, 'rowCollision', true, state.content[r][c].rowspan, 1);
+                        refresh();
                     },
-                    false,
-                    false,
-                    false,
-                    false
-                );
-            }
-            if (state.content[r][c].rowspan > 1) {
-                createElement(
-                    'button',
-                    `td-${r}${c}`,
-                    `decrease-rowspan-button-${r}${c}`,
-                    'decrease-rowspan-button',
-                    false,
-                    'RS-',
-                    {
-                        type: 'click',
-                        func: () => {
-                            ignoreTd(r, c, false, state.content[r][c].rowspan, 0, false);
-                            state.content[r][c].rowspan--;
-                            refresh();
-                        },
-                    }
-                );
-            }
+                },
+                false,
+                false,
+                false,
+                r < state.content.length - 1 ? false : true
+            );
+
+            createElement(
+                'button',
+                `td-${r}${c}`,
+                `decrease-rowspan-button-${r}${c}`,
+                'decrease-rowspan-button',
+                false,
+                'RS-',
+                {
+                    type: 'click',
+                    func: () => {
+                        setCollision(r, c, 'rowCollision', false, state.content[r][c].rowspan, 0);
+                        state.content[r][c].rowspan--;
+                        refresh();
+                    },
+                },
+                false,
+                false,
+                false,
+                state.content[r][c].rowspan > 1 ? false : true
+            );
+
+            createElement(
+                'button',
+                `td-${r}${c}`,
+                `increase-colspan-button-${r}${c}`,
+                'increase-colspan-button',
+                false,
+                'CS+',
+                {
+                    type: 'click',
+                    func: () => {
+                        // Magic...don't touch this!!!
+                        let totalRowColumnSpans = 0;
+                        for (let column = 0; column < state.content[r].length - 1; column++) {
+                            if (!state.content[r][column].colCollision) {
+                                totalRowColumnSpans += state.content[r][column].colspan;
+                            }
+                        }
+
+                        if (totalRowColumnSpans >= state.content[r].length) {
+                            state.headerContent.push({
+                                innerHTML: 'col',
+                                rowspan: 1,
+                                colspan: 1,
+                                rowCollision: false,
+                                colCollision: false,
+                            });
+
+                            StateMachine.state.content.forEach(element =>
+                                element.push({
+                                    innerHTML: 'col',
+                                    rowspan: 1,
+                                    colspan: 1,
+                                    rowCollision: false,
+                                    colCollision: false,
+                                })
+                            );
+                        }
+                        state.content[r][c].colspan++;
+                        setCollision(r, c, 'colCollision', true, state.content[r][c].colspan, 1);
+                        refresh();
+                    },
+                },
+                false,
+                false,
+                false,
+                c < state.content[r].length - 1 ? false : true
+            );
+
+            createElement(
+                'button',
+                `td-${r}${c}`,
+                `decrease-colspan-button-${r}${c}`,
+                'decrease-colspan-button',
+                false,
+                'RC-',
+                {
+                    type: 'click',
+                    func: () => {
+                        setCollision(r, c, 'colCollision', false, state.content[r][c].colspan, 0);
+                        state.content[r][c].colspan--;
+                        refresh();
+                    },
+                },
+                false,
+                false,
+                false,
+                state.content[r][c].colspan > 1 ? false : true
+            );
         }
     }
 };
