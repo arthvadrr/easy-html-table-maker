@@ -1,3 +1,14 @@
+/*
+Opening Bracket
+&lt;   ==  <
+
+Closing Bracket
+&gt    ==  >
+
+Space
+\u00a0 == ' '
+*/
+
 const createTableCode = (state, $code_tableCode) => {
     if (!$code_tableCode) {
         $code_tableCode = document.getElementById('table-code');
@@ -25,14 +36,16 @@ const createTableCode = (state, $code_tableCode) => {
         output += `${indent(4)}&lt;tr&gt<br>`;
 
         for (let c = 0; c < state.content[r].length; c++) {
-            if (!state.content[r][c].ignore) {
-                if (state.content[r][c].rowspan < 2) {
-                    output += `${indent(6)}&lt;td&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
-                } else {
-                    output += `${indent(6)}&lt;td rowspan="${state.content[r][c].rowspan}"&gt${
-                        state.content[r][c].innerHTML
-                    }&lt;/td&gt<br>`;
+            if (!state.content[r][c].colCollision && !state.content[r][c].rowCollision) {
+                output += `${indent(6)}&lt;td`;
+
+                if (state.content[r][c].rowspan > 1) {
+                    output += ` rowspan="${state.content[r][c].rowspan}"`;
                 }
+                if (state.content[r][c].colspan > 1) {
+                    output += ` colspan="${state.content[r][c].colspan}"`;
+                }
+                output += `&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
             }
         }
         output += `${indent(4)}&lt;/tr&gt<br>`;
