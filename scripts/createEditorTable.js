@@ -282,18 +282,17 @@ const createEditorTable = StateMachine => {
                             }
                         }
 
-                        if (totalColumnRowspans >= state.content.length) {
+                        if (
+                            totalColumnRowspans >= state.content.length ||
+                            r === state.content.length - 1
+                        ) {
                             state.content.push(createTableRow(StateMachine.state));
                         }
                         state.content[r][c].rowspan++;
                         setCollision(r, c, true, 1);
                         refresh();
                     },
-                },
-                false,
-                false,
-                false,
-                r < state.content.length - 1 ? false : true
+                }
             );
 
             createElement(
@@ -335,7 +334,10 @@ const createEditorTable = StateMachine => {
                             }
                         }
 
-                        if (totalRowColumnSpans >= state.content[r].length) {
+                        if (
+                            totalRowColumnSpans >= state.content[r].length ||
+                            c === state.content[r].length - 1
+                        ) {
                             state.headerContent.push({
                                 innerHTML: 'col',
                                 rowspan: 1,
@@ -358,11 +360,7 @@ const createEditorTable = StateMachine => {
                         setCollision(r, c, true, 1);
                         refresh();
                     },
-                },
-                false,
-                false,
-                false,
-                c < state.content[r].length - 1 ? false : true
+                }
             );
 
             createElement(
