@@ -3,6 +3,8 @@
 import createElement from './createElement';
 import createTableCode from './createTableCode';
 import createTableRow from './createTableRow';
+import createTablePreview from './createTablePreview';
+import replaceHTML from './replaceHTML';
 
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
@@ -20,6 +22,7 @@ const createEditorTable = StateMachine => {
         localStorage.setItem('savedState', JSON.stringify(state));
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
         //TODO get rid of this recursive BS if possible
+        createTablePreview(StateMachine);
         createTableCode(StateMachine.state, $code_tableCode);
     };
 

@@ -2,11 +2,10 @@ import StateMachine from '../state-machine/StateMachine';
 import copyTextToClipboard from './copyTextToClipboard';
 import createEditorTable from './createEditorTable';
 import createTableCode from './createTableCode';
+import createTablePreview from './createTablePreview';
 import replaceHTML from './replaceHTML';
 
 // Elements
-const $button_copyTableCode = document.getElementById('copy-table-code');
-const $code_tableCode = document.getElementById('table-code');
 
 let state = '';
 
@@ -32,8 +31,12 @@ statePromise.then(statePromiseOnResolve);
 statePromise.catch(statePromiseOnReject);
 
 const init = () => {
-    createEditorTable(StateMachine);
+    const $button_copyTableCode = document.getElementById('copy-table-code');
+    const $code_tableCode = document.getElementById('table-code');
+
+    createEditorTable(StateMachine, $code_tableCode);
     createTableCode(StateMachine.state, $code_tableCode);
+    createTablePreview(StateMachine);
 
     $button_copyTableCode.addEventListener('click', () => {
         copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));

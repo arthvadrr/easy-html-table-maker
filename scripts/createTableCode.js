@@ -54,6 +54,8 @@ const createTableCode = (state, $code_tableCode) => {
     output += `&lt;/table&gt<br>`;
 
     $code_tableCode.innerHTML = output;
+
+    return output;
 };
 
 export default createTableCode;
