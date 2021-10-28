@@ -1,3 +1,5 @@
+// Let the voids begin!
+
 import createElement from './createElement';
 import createTableCode from './createTableCode';
 import createTableRow from './createTableRow';
@@ -17,24 +19,27 @@ const createEditorTable = StateMachine => {
     const refresh = () => {
         localStorage.setItem('savedState', JSON.stringify(state));
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
-        //TODO get rid of this recursive BS
+        //TODO get rid of this recursive BS if possible
         createTableCode(StateMachine.state, $code_tableCode);
     };
 
     //Set if a td has a colspan or rowspan collision
-    const setCollision = (r, c, type, collision, spanlength, offset) => {
-        if (state.content[r][c].rowspan > 1 && type === 'rowCollision') {
-            for (let p = offset; p < spanlength; p++) {
-                for (let colspan = 0; colspan < state.content[r][c].colspan; colspan++) {
-                    state.content[r + p][c + colspan].rowCollision = collision;
+    const setCollision = (r, c, collision, offset) => {
+        const rowspan = state.content[r][c].rowspan;
+        const colspan = state.content[r][c].colspan;
+
+        if (rowspan > 1) {
+            for (let p = offset; p < rowspan; p++) {
+                for (let col = 0; col < colspan; col++) {
+                    state.content[r + p][c + col].rowCollision = collision;
                 }
             }
         }
 
-        if (state.content[r][c].colspan > 1 && type === 'colCollision') {
-            for (let p = offset; p < spanlength; p++) {
-                for (let rowspan = 0; rowspan < state.content[r][c].rowspan; rowspan++) {
-                    state.content[r + rowspan][c + p].colCollision = collision;
+        if (colspan > 1) {
+            for (let p = offset; p < colspan; p++) {
+                for (let row = 0; row < rowspan; row++) {
+                    state.content[r + row][c + p].colCollision = collision;
                 }
             }
         }
@@ -228,6 +233,7 @@ const createEditorTable = StateMachine => {
 
         for (let c = 0; c < state.content[r].length; c++) {
             if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
+                console.log('ignore');
                 continue;
             }
 
@@ -256,8 +262,7 @@ const createEditorTable = StateMachine => {
             tdEle.appendChild(tdInput);
 
             // Ignore TDs based on rowspan and colspan
-            setCollision(r, c, 'rowCollision', true, state.content[r][c].rowspan, 1);
-            setCollision(r, c, 'colCollision', true, state.content[r][c].colspan, 1);
+            setCollision(r, c, true, 1);
 
             createElement(
                 'button',
@@ -281,7 +286,7 @@ const createEditorTable = StateMachine => {
                             state.content.push(createTableRow(StateMachine.state));
                         }
                         state.content[r][c].rowspan++;
-                        setCollision(r, c, 'rowCollision', true, state.content[r][c].rowspan, 1);
+                        setCollision(r, c, true, 1);
                         refresh();
                     },
                 },
@@ -301,7 +306,7 @@ const createEditorTable = StateMachine => {
                 {
                     type: 'click',
                     func: () => {
-                        setCollision(r, c, 'rowCollision', false, state.content[r][c].rowspan, 0);
+                        setCollision(r, c, false, 0);
                         state.content[r][c].rowspan--;
                         refresh();
                     },
@@ -350,7 +355,7 @@ const createEditorTable = StateMachine => {
                             );
                         }
                         state.content[r][c].colspan++;
-                        setCollision(r, c, 'colCollision', true, state.content[r][c].colspan, 1);
+                        setCollision(r, c, true, 1);
                         refresh();
                     },
                 },
@@ -366,11 +371,11 @@ const createEditorTable = StateMachine => {
                 `decrease-colspan-button-${r}${c}`,
                 'decrease-colspan-button',
                 false,
-                'RC-',
+                'CS-',
                 {
                     type: 'click',
                     func: () => {
-                        setCollision(r, c, 'colCollision', false, state.content[r][c].colspan, 0);
+                        setCollision(r, c, false, 0);
                         state.content[r][c].colspan--;
                         refresh();
                     },
