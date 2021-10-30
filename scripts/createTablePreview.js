@@ -1,4 +1,4 @@
-import createElement from './createElement';
+import createElement from './editor/createElement';
 
 const createTablePreview = StateMachine => {
     const { state } = StateMachine;

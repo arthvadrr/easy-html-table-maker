@@ -1,10 +1,9 @@
 // Let the voids begin!
 
 import createElement from './createElement';
-import createTableCode from './createTableCode';
+import createTableCode from '../createTableCode';
 import createTableRow from './createTableRow';
-import createTablePreview from './createTablePreview';
-import replaceHTML from './replaceHTML';
+import createTablePreview from '../createTablePreview';
 
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
@@ -21,7 +20,6 @@ const createEditorTable = StateMachine => {
     const refresh = () => {
         localStorage.setItem('savedState', JSON.stringify(state));
         createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
-        //TODO get rid of this recursive BS if possible
         createTablePreview(StateMachine);
         createTableCode(StateMachine.state, $code_tableCode);
     };
@@ -203,6 +201,7 @@ const createEditorTable = StateMachine => {
                 state.captionText = e.target.textContent;
                 localStorage.setItem('savedState', JSON.stringify(state));
                 createTableCode(StateMachine.state, $code_tableCode);
+                createTablePreview(StateMachine);
             },
         });
     }
@@ -224,6 +223,7 @@ const createEditorTable = StateMachine => {
                         state.headerContent[h].innerHTML = e.target.textContent;
                         localStorage.setItem('savedState', JSON.stringify(state));
                         createTableCode(StateMachine.state, $code_tableCode);
+                        createTablePreview(StateMachine);
                     },
                 }
             );
@@ -253,6 +253,7 @@ const createEditorTable = StateMachine => {
                         state.content[r][c].innerHTML = e.target.value;
                         localStorage.setItem('savedState', JSON.stringify(state));
                         createTableCode(StateMachine.state, $code_tableCode);
+                        createTablePreview(StateMachine);
                     },
                 },
                 false,

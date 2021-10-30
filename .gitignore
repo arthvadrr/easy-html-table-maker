@@ -1,4 +1,4 @@
-#Ignore node_modules
+#Ignore them BIGASS node_modules
 **/node_modules
 
 #Ignore git stuff

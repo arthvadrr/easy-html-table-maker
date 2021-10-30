@@ -7,20 +7,26 @@
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
         />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="stylesheet" href="build/styles.min.css" />
+        <link href="build/styles.min.css" rel="stylesheet" />
         <title>Easy HTML Table Maker</title>
     </head>
 
     <body>
         <h1>Easy HTML Table Maker</h1>
         <noscript>Please enable JS to use the table maker.</noscript>
-        <div id="loading-modal"></div>
+        <div id="loading-modal" class="loading-modal">
+            <div class="loading-circle" aria-hidden="true"></div>
+            <span>Loading</span>
+        </div>
         <div id="editor-area" class="editor-area">
+            <h2>Table Editor</h2>
             <div id="editor-table-container"></div>
         </div>
         <div class="output">
+            <h2>Table Markup</h2>
             <code id="table-code"></code>
-            <button id="copy-table-code">Copy Table Code</button>
+            <button id="copy-table-code">Copy table markup</button>
+            <h2>Table Preview</h2>
             <div id="preview"></div>
         </div>
         <button id="add-csv">Import Data from CSV</button>

@@ -1,11 +1,9 @@
 import StateMachine from '../state-machine/StateMachine';
 import copyTextToClipboard from './copyTextToClipboard';
-import createEditorTable from './createEditorTable';
+import createEditorTable from './editor/createEditorTable';
 import createTableCode from './createTableCode';
 import createTablePreview from './createTablePreview';
 import replaceHTML from './replaceHTML';
-
-// Elements
 
 let state = '';
 
@@ -33,6 +31,7 @@ statePromise.catch(statePromiseOnReject);
 const init = () => {
     const $button_copyTableCode = document.getElementById('copy-table-code');
     const $code_tableCode = document.getElementById('table-code');
+    const $div_loadingModal = document.getElementById('loading-modal');
 
     createEditorTable(StateMachine, $code_tableCode);
     createTableCode(StateMachine.state, $code_tableCode);
@@ -41,4 +40,5 @@ const init = () => {
     $button_copyTableCode.addEventListener('click', () => {
         copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
     });
+    //setTimeout(() => $div_loadingModal.classList.add('display-none'), 5000);
 };

@@ -17,7 +17,7 @@ const addPlugins = () => {
 // rollup.config.js
 export default [
     {
-        input: './sass/index.scss',
+        input: './sass/main.scss',
         output: {
             name: 'MainStyles',
             file: './build/styles.min.css',
@@ -31,9 +31,6 @@ export default [
             file: './build/index.min.js',
             name: 'MainScript',
             format: 'iife',
-            globals: {
-                '@babel/runtime/regenerator': 'regeneratorRuntime',
-            },
         },
         plugins: [babel({ babelHelpers: 'bundled' }), terser()],
     },
