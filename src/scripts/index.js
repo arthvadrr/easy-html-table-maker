@@ -40,5 +40,5 @@ const init = () => {
     $button_copyTableCode.addEventListener('click', () => {
         copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
     });
-    //setTimeout(() => $div_loadingModal.classList.add('display-none'), 5000);
+    $div_loadingModal.classList.add('display-none');
 };

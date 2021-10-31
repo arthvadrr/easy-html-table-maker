@@ -9,6 +9,8 @@ Space
 \u00a0 == ' '
 */
 
+import replaceHTML from './replaceHTML';
+
 const createTableCode = (state, $code_tableCode) => {
     if (!$code_tableCode) {
         $code_tableCode = document.getElementById('table-code');
@@ -45,7 +47,7 @@ const createTableCode = (state, $code_tableCode) => {
                 if (state.content[r][c].colspan > 1) {
                     output += ` colspan="${state.content[r][c].colspan}"`;
                 }
-                output += `&gt${state.content[r][c].innerHTML}&lt;/td&gt<br>`;
+                output += `&gt${replaceHTML(state.content[r][c].innerHTML, true)}&lt;/td&gt<br>`;
             }
         }
         output += `${indent(4)}&lt;/tr&gt<br>`;

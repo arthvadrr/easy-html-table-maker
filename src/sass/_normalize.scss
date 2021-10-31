@@ -6,6 +6,7 @@ html {
 
 body {
     margin: 0;
+    font-family: 'AzeretMono', monospace;
 }
 main {
     display: block;
@@ -23,7 +24,7 @@ hr {
 }
 
 pre {
-    font-family: monospace, monospace;
+    font-family: 'AzeretMono', monospace;
     font-size: 1em;
 }
 
@@ -45,7 +46,7 @@ strong {
 code,
 kbd,
 samp {
-    font-family: monospace, monospace;
+    font-family: 'AzeretMono', monospace;
     font-size: 1em;
 }
 

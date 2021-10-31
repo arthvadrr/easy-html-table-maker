@@ -236,7 +236,6 @@ const createEditorTable = StateMachine => {
 
         for (let c = 0; c < state.content[r].length; c++) {
             if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
-                console.log('ignore');
                 continue;
             }
 
@@ -247,23 +246,28 @@ const createEditorTable = StateMachine => {
                 false,
                 false,
                 false,
-                {
-                    type: 'input',
-                    func: e => {
-                        state.content[r][c].innerHTML = e.target.value;
-                        localStorage.setItem('savedState', JSON.stringify(state));
-                        createTableCode(StateMachine.state, $code_tableCode);
-                        createTablePreview(StateMachine);
-                    },
-                },
                 false,
                 state.content[r][c].rowspan,
                 state.content[r][c].colspan
             );
-            let tdInput = document.createElement('input');
-            let tdEle = document.getElementById(`td-${r}${c}`);
-            tdInput.value = state.content[r][c].innerHTML;
-            tdEle.appendChild(tdInput);
+            createElement(
+                'span',
+                `td-${r}${c}`,
+                `td-editable-${r}${c}`,
+                'td-editable',
+                true,
+                state.content[r][c].innerHTML,
+                {
+                    type: 'input',
+                    func: e => {
+                        state.content[r][c].innerHTML = e.target.innerHTML;
+                        console.log((state.content[r][c].innerHTML = e.target.innerHTML));
+                        localStorage.setItem('savedState', JSON.stringify(state));
+                        createTableCode(StateMachine.state, $code_tableCode);
+                        createTablePreview(StateMachine);
+                    },
+                }
+            );
 
             // Ignore TDs based on rowspan and colspan
             setCollision(r, c, true, 1);
