@@ -1,7 +1,6 @@
 const replaceHTML = (text, encode) => {
     if (typeof text !== 'string') {
-        console.log(`Not string, is ${typeof text}`);
-        return;
+        return 'replaceHTML error: Parameter "text" not a string.';
     }
 
     if (encode) {
@@ -9,6 +8,10 @@ const replaceHTML = (text, encode) => {
         text = text.replace(/</g, '&lt;'); // replace opening tags
         text = text.replace(/>/g, '&gt;'); // replace closing tags
         text = text.replace(/ /g, '&nbsp;'); // replace spaces
+        //console.log(text.substr(text.length - 10));
+        if (text.substr(text.length - 10) === '&lt;br&gt;') {
+            text = text.slice(0, -10);
+        }
     } else {
         text = text.replace(/<br\s*[\/]?>/gi, '\n'); // replace line breaks
         text = text.replace(/&lt;/g, '<'); // replace opening tags

@@ -236,6 +236,7 @@ const createEditorTable = StateMachine => {
 
         for (let c = 0; c < state.content[r].length; c++) {
             if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
+                console.log('ignore');
                 continue;
             }
 
@@ -250,18 +251,18 @@ const createEditorTable = StateMachine => {
                 state.content[r][c].rowspan,
                 state.content[r][c].colspan
             );
+
             createElement(
-                'span',
+                'p',
                 `td-${r}${c}`,
-                `td-editable-${r}${c}`,
-                'td-editable',
+                `p-${r}${c}`,
+                'td-p',
                 true,
                 state.content[r][c].innerHTML,
                 {
                     type: 'input',
                     func: e => {
                         state.content[r][c].innerHTML = e.target.innerHTML;
-                        console.log((state.content[r][c].innerHTML = e.target.innerHTML));
                         localStorage.setItem('savedState', JSON.stringify(state));
                         createTableCode(StateMachine.state, $code_tableCode);
                         createTablePreview(StateMachine);
