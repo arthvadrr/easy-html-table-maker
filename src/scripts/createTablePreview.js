@@ -11,7 +11,7 @@ const createTablePreview = StateMachine => {
     createElement('table', 'preview', 'preview-table');
 
     if (state.caption) {
-        createElement('caption', 'preview-table', `table-caption`, false, true, state.captionText);
+        createElement('caption', 'preview-table', `table-caption`, false, false, state.captionText);
     }
 
     if (state.header) {

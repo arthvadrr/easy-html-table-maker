@@ -1,11 +1,24 @@
 @font-face {
-    font-family: 'AzeretMono';
-    src: url('../src/fonts/AzeretMono-VariableFont_wght.ttf') format('truetype');
+    font-family: 'B612Mono';
+    src: url('../src/fonts/B612Mono-Regular.ttf') format('truetype');
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'AzeretMono';
-    src: url('../src/fonts/AzeretMono-Italic-VariableFont_wght.ttf') format('truetype');
+    font-family: 'B612Mono';
+    src: url('../src/fonts/B612Mono-Italic.ttf') format('truetype');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'B612Mono';
+    src: url('../src/fonts/B612Mono-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'B612Mono';
+    src: url('../src/fonts/B612Mono-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
     font-style: italic;
 }
