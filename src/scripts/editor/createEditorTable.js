@@ -8,7 +8,6 @@ import createTablePreview from '../createTablePreview';
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
     const $code_tableCode = document.getElementById('table-code');
-
     let $div_editorTableContainer = document.getElementById('editor-table-container');
     let $div_editorArea = document.getElementById('editor-area');
 
@@ -18,14 +17,18 @@ const createEditorTable = StateMachine => {
     $div_editorTableContainer.setAttribute('id', 'editor-table-container');
     $div_editorArea.appendChild($div_editorTableContainer);
 
-    const refresh = () => {
+    const reload = reloadEditor => {
         localStorage.setItem('savedState', JSON.stringify(state));
-        createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
-        createTablePreview(StateMachine);
+
+        if (reloadEditor) {
+            createEditorTable(StateMachine, $div_editorTableContainer, $code_tableCode);
+        }
+
         createTableCode(StateMachine.state, $code_tableCode);
+        createTablePreview(StateMachine);
     };
 
-    //Set if a td has a colspan or rowspan collision
+    //Set if a td has a colspan or rowspan collision, or no collision.
     const setCollision = (r, c, collision, offset) => {
         const rowspan = state.content[r][c].rowspan;
         const colspan = state.content[r][c].colspan;
@@ -47,15 +50,18 @@ const createEditorTable = StateMachine => {
         }
     };
 
+    // Create the container
     createElement('div', $div_editorTableContainer, `editor-table-container`);
     createElement('table', `editor-table-container`, `editor-table`, 'editor-table');
     createElement('button', `editor-table-container`, `add-row`, 'add-row-button', false, 'Add Row', {
         type: 'click',
         func: () => {
             state.content.push(createTableRow(StateMachine.state));
-            refresh();
+            reload(true);
         },
     });
+
+    // Create the table
     createElement('button', `editor-table-container`, `remove-row`, 'remove-row-button', false, 'Remove Row', {
         type: 'click',
         func: () => {
@@ -69,13 +75,20 @@ const createEditorTable = StateMachine => {
             if (state.content.length > 1) {
                 state.content.pop();
             }
-            refresh();
+            reload(true);
         },
     });
+
+    // Create add column button
     createElement('button', `editor-table-container`, `add-column`, 'add-column-button', false, 'Add Column', {
         type: 'click',
         func: () => {
-            // DO NOT store the object as a variable
+            // !!! objects oos, do not store as variables
+
+            state.colGroup.push({
+                width: 0,
+                widthUnits: 'px',
+            });
 
             state.headerContent.push({
                 innerHTML: 'col',
@@ -94,9 +107,11 @@ const createEditorTable = StateMachine => {
                     colCollision: false,
                 })
             );
-            refresh();
+            reload(true);
         },
     });
+
+    // Create remove column button
     createElement('button', `editor-table-container`, `remove-column`, 'remove-column-button', false, 'Remove Column', {
         type: 'click',
         func: () => {
@@ -105,6 +120,10 @@ const createEditorTable = StateMachine => {
                     alert('Colspan detected, cannot delete column. Remove colspan first.');
                     return;
                 }
+            }
+
+            if (state.colGroup.length > 1) {
+                state.colGroup.pop();
             }
 
             if (state.headerContent.length > 1) {
@@ -116,9 +135,11 @@ const createEditorTable = StateMachine => {
                     element.pop();
                 }
             });
-            refresh();
+            reload(true);
         },
     });
+
+    // Create caption toggle
     createElement(
         'input',
         `editor-table-container`,
@@ -130,7 +151,7 @@ const createEditorTable = StateMachine => {
             type: 'click',
             func: () => {
                 state.caption = !state.caption;
-                refresh();
+                reload(true);
             },
         },
         {
@@ -141,6 +162,7 @@ const createEditorTable = StateMachine => {
         }
     );
 
+    // Create header toggle
     createElement(
         'input',
         `editor-table-container`,
@@ -152,7 +174,7 @@ const createEditorTable = StateMachine => {
             type: 'click',
             func: () => {
                 state.header = !state.header;
-                refresh();
+                reload(true);
             },
         },
         {
@@ -163,14 +185,13 @@ const createEditorTable = StateMachine => {
         }
     );
 
+    // Render caption
     if (state.caption) {
         createElement('caption', `editor-table`, `table-caption`, false, true, state.captionText, {
             type: 'input',
             func: e => {
                 state.captionText = e.target.textContent;
-                localStorage.setItem('savedState', JSON.stringify(state));
-                createTableCode(StateMachine.state, $code_tableCode);
-                createTablePreview(StateMachine);
+                reload();
             },
         });
     }
@@ -183,9 +204,7 @@ const createEditorTable = StateMachine => {
                 type: 'input',
                 func: e => {
                     state.headerContent[h].innerHTML = e.target.textContent;
-                    localStorage.setItem('savedState', JSON.stringify(state));
-                    createTableCode(StateMachine.state, $code_tableCode);
-                    createTablePreview(StateMachine);
+                    reload();
                 },
             });
         }
@@ -210,9 +229,7 @@ const createEditorTable = StateMachine => {
                 type: 'input',
                 func: e => {
                     state.content[r][c].innerHTML = e.target.innerHTML;
-                    localStorage.setItem('savedState', JSON.stringify(state));
-                    createTableCode(StateMachine.state, $code_tableCode);
-                    createTablePreview(StateMachine);
+                    reload();
                 },
             });
 
@@ -234,7 +251,7 @@ const createEditorTable = StateMachine => {
 
                     state.content[r][c].rowspan++;
                     setCollision(r, c, true, 1);
-                    refresh();
+                    reload(true);
                 },
             });
 
@@ -250,7 +267,7 @@ const createEditorTable = StateMachine => {
                     func: () => {
                         setCollision(r, c, false, 0);
                         state.content[r][c].rowspan--;
-                        refresh();
+                        reload(true);
                     },
                 },
                 false,
@@ -292,7 +309,7 @@ const createEditorTable = StateMachine => {
                     }
                     state.content[r][c].colspan++;
                     setCollision(r, c, true, 1);
-                    refresh();
+                    reload(true);
                 },
             });
 
@@ -308,7 +325,7 @@ const createEditorTable = StateMachine => {
                     func: () => {
                         setCollision(r, c, false, 0);
                         state.content[r][c].colspan--;
-                        refresh();
+                        reload(true);
                     },
                 },
                 false,

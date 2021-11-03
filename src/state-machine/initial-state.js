@@ -3,6 +3,28 @@ export default {
     header: true,
     caption: false,
     captionText: 'captionText',
+    colGroup: [
+        {
+            width: 0,
+            widthUnits: 'px',
+        },
+        {
+            width: 0,
+            widthUnits: 'px',
+        },
+        {
+            width: 0,
+            widthUnits: 'px',
+        },
+        {
+            width: 0,
+            widthUnits: 'px',
+        },
+        {
+            width: 0,
+            widthUnits: 'px',
+        },
+    ],
     headerContent: [
         {
             innerHTML: 'innerHTML',
