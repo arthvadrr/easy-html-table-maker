@@ -1,16 +1,16 @@
+//prettier-ignore
 const createElement = (
-    type,
-    parent,
-    id,
-    className,
-    isEditable,
-    innerHTML,
-    eventObject,
-    inputProps,
-    rowspan,
-    colspan,
-    disabled
-) => {
+    type, 
+    parent, 
+    id, 
+    className, 
+    isEditable, 
+    innerHTML, 
+    eventObject, 
+    inputProps, 
+    rowspan, 
+    colspan, 
+    disabled) => {
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
     }

@@ -1,28 +1,34 @@
 export default {
     loading: true,
     header: true,
+    colgroup: true,
     caption: false,
     captionText: 'captionText',
-    colGroup: [
+    colgroupProps: [
         {
             width: 0,
             widthUnits: 'px',
+            span: 1,
         },
         {
             width: 0,
             widthUnits: 'px',
+            span: 1,
         },
         {
             width: 0,
             widthUnits: 'px',
+            span: 1,
         },
         {
             width: 0,
             widthUnits: 'px',
+            span: 1,
         },
         {
             width: 0,
             widthUnits: 'px',
+            span: 1,
         },
     ],
     headerContent: [
