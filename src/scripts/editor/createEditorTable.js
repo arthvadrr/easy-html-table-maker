@@ -1,5 +1,3 @@
-// Let the voids begin!
-
 import createElement from './createElement';
 import createTableCode from '../createTableCode';
 import createTableRow from './createTableRow';
@@ -51,309 +49,454 @@ const createEditorTable = StateMachine => {
     };
 
     // Create the container
-    createElement('div', $div_editorTableContainer, `editor-table-container`);
-    createElement('table', `editor-table-container`, `editor-table`, 'editor-table');
-    createElement('button', `editor-table-container`, `add-row`, 'add-row-button', false, 'Add Row', {
-        type: 'click',
-        func: () => {
-            state.content.push(createTableRow(StateMachine.state));
-            reload(true);
+    createElement({
+        type: 'div',
+        id: 'editor-table-container',
+        parent: $div_editorTableContainer,
+    });
+
+    createElement({
+        type: 'table',
+        id: 'editor-table',
+        parent: 'editor-table-container',
+        attrs: [
+            {
+                attr: 'class',
+                value: 'editor-table',
+            },
+        ],
+    });
+
+    createElement({
+        type: 'button',
+        id: 'add-row',
+        parent: 'editor-table-container',
+        innerHTML: 'add row',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.content.push(createTableRow(StateMachine.state));
+                reload(true);
+            },
         },
     });
 
-    // Create the table
-    createElement('button', `editor-table-container`, `remove-row`, 'remove-row-button', false, 'Remove Row', {
-        type: 'click',
-        func: () => {
-            for (let td = 0; td < state.content.at(-1).length; td++) {
-                if (state.content.at(-1)[td].rowCollision === true) {
-                    alert('Rowspan detected, cannot delete row. Remove rowspan first.');
-                    return;
+    createElement({
+        type: 'button',
+        id: 'remove-row',
+        parent: 'editor-table-container',
+        innerHTML: 'remove row',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                for (let td = 0; td < state.content.at(-1).length; td++) {
+                    if (state.content.at(-1)[td].rowCollision === true) {
+                        alert('Rowspan detected, cannot delete row. Remove rowspan first.');
+                        return;
+                    }
                 }
-            }
 
-            if (state.content.length > 1) {
-                state.content.pop();
-            }
-            reload(true);
+                if (state.content.length > 1) {
+                    state.content.pop();
+                }
+                reload(true);
+            },
         },
     });
 
-    // Create add column button
-    createElement('button', `editor-table-container`, `add-column`, 'add-column-button', false, 'Add Column', {
-        type: 'click',
-        func: () => {
-            // !!! objects oos, do not store as variables
+    createElement({
+        type: 'button',
+        id: 'add-column',
+        parent: 'editor-table-container',
+        innerHTML: 'add column',
+        attrs: [
+            {
+                attr: 'class',
+                value: 'add-column',
+            },
+        ],
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                // !!! objects oos, do not store as variables
 
-            state.colgroupProps.push({
-                width: 0,
-                widthUnits: 'px',
-            });
+                state.colgroupProps.push({
+                    width: 0,
+                    widthUnits: 'px',
+                });
 
-            state.headerContent.push({
-                innerHTML: 'col',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            });
-
-            StateMachine.state.content.forEach(element =>
-                element.push({
+                state.headerContent.push({
                     innerHTML: 'col',
                     rowspan: 1,
                     colspan: 1,
                     rowCollision: false,
                     colCollision: false,
-                })
-            );
-            reload(true);
+                });
+
+                StateMachine.state.content.forEach(element =>
+                    element.push({
+                        innerHTML: 'col',
+                        rowspan: 1,
+                        colspan: 1,
+                        rowCollision: false,
+                        colCollision: false,
+                    })
+                );
+                reload(true);
+            },
         },
     });
 
-    // Create remove column button
-    createElement('button', `editor-table-container`, `remove-column`, 'remove-column-button', false, 'Remove Column', {
-        type: 'click',
-        func: () => {
-            for (let row = 0; row < state.content.length; row++) {
-                if (state.content[row].at(-1).colCollision === true) {
-                    alert('Colspan detected, cannot delete column. Remove colspan first.');
-                    return;
+    createElement({
+        type: 'button',
+        id: 'remove-column',
+        parent: 'editor-table-container',
+        innerHTML: 'remove column',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                for (let row = 0; row < state.content.length; row++) {
+                    if (state.content[row].at(-1).colCollision === true) {
+                        alert('Colspan detected, cannot delete column. Remove colspan first.');
+                        return;
+                    }
                 }
-            }
 
-            if (state.colgroupProps.length > 1) {
-                state.colgroupProps.pop();
-            }
-
-            if (state.headerContent.length > 1) {
-                state.headerContent.pop();
-            }
-
-            state.content.forEach(element => {
-                if (element.length > 1) {
-                    element.pop();
+                if (state.colgroupProps.length > 1) {
+                    state.colgroupProps.pop();
                 }
-            });
-            reload(true);
+
+                if (state.headerContent.length > 1) {
+                    state.headerContent.pop();
+                }
+
+                state.content.forEach(element => {
+                    if (element.length > 1) {
+                        element.pop();
+                    }
+                });
+                reload(true);
+            },
         },
     });
 
-    // Create caption toggle
-    createElement(
-        'input',
-        `editor-table-container`,
-        `caption-toggle`,
-        'caption-toggle',
-        false,
-        false,
-        {
-            type: 'click',
+    createElement({
+        type: 'input',
+        id: 'caption-toggle',
+        parent: 'editor-table-container',
+        innerHTML: 'Table caption',
+        attrs: [
+            {
+                attr: 'type',
+                value: 'checkbox',
+            },
+            {
+                attr: 'name',
+                value: 'captionToggle',
+            },
+            {
+                attr: 'value',
+                value: 'Toggle caption',
+            },
+        ],
+        inputProps: {
+            type: 'checkbox',
+            name: 'captionToggle',
+            value: 'Toggle Caption',
+            checked: state.caption,
+        },
+        eventObject: {
+            listener: 'click',
             func: () => {
                 state.caption = !state.caption;
                 reload(true);
             },
         },
-        {
-            type: 'checkbox',
-            name: 'captionToggle',
-            value: 'Toggle caption',
-            checked: state.caption,
-        }
-    );
+    });
 
-    // Create header toggle
-    createElement(
-        'input',
-        `editor-table-container`,
-        `header-toggle`,
-        'header-toggle',
-        false,
-        false,
-        {
-            type: 'click',
+    createElement({
+        type: 'input',
+        id: 'header-toggle',
+        parent: 'editor-table-container',
+        innerHTML: 'Table header',
+        inputProps: {
+            type: 'checkbox',
+            name: 'headerToggle',
+            value: 'Table header',
+            checked: state.header,
+        },
+        eventObject: {
+            listener: 'click',
             func: () => {
                 state.header = !state.header;
                 reload(true);
             },
         },
-        {
-            type: 'checkbox',
-            name: 'headerToggle',
-            value: 'Table header',
-            checked: state.header,
-        }
-    );
+    });
 
-    // Render caption
     if (state.caption) {
-        // createElement({
-        //     type: 'caption',
-        //     parent: 'editor-table',
-        //     id: 'editor-table',
-        //     isEditable: true,
-        //     innerHTML: state.captionText,
-        //     eventObject: {
-        //         listener: 'input',
-        //         func: e => {
-        //             state.captionText = e.target.textContent;
-        //             reload();
-        //         },
-        //     },
-        // });
-        createElement('caption', `editor-table`, `table-caption`, false, true, state.captionText, {
-            type: 'input',
-            func: e => {
-                state.captionText = e.target.textContent;
-                reload();
+        createElement({
+            type: 'caption',
+            id: 'table-caption',
+            parent: 'editor-table',
+            innerHTML: state.captionText,
+            attr: [
+                {
+                    attr: 'contenteditable',
+                    value: 'true',
+                },
+            ],
+            eventObject: {
+                listener: 'input',
+                func: e => {
+                    state.captionText = e.target.textContent;
+                    reload();
+                },
             },
         });
-    }
+    }   
 
     if (state.colgroup) {
-        createElement('colgroup', 'editor-table', 'editor-table-colgroup');
+        createElement({
+            type: 'colgroup',
+            id: 'editor-table-colgroup',
+            parent: 'editor-table'
+        });
         for (let colgroupProps = 0; colgroupProps < state.colgroupProps.length; colgroupProps++) {
-            createElement('col', 'editor-table-colgroup');
+            createElement({
+                type: 'col',
+                parent: 'editor-table-colgroup'
+            });
         }
     }
 
     if (state.header) {
-        createElement('thead', `editor-table`, `table-head`);
-        createElement('tr', `table-head`, `table-header`);
+
+        createElement({
+            type: 'thead',
+            id: 'table-header',
+            parent: 'editor-table'
+        });
+
+        createElement({
+            type: 'tr',
+            id: 'table-header-row',
+            parent: 'table-header'
+        });
+
         for (let h = 0; h < state.headerContent.length; h++) {
-            createElement('th', `table-header`, false, false, true, state.headerContent[h].innerHTML, {
-                type: 'input',
-                func: e => {
-                    state.headerContent[h].innerHTML = e.target.textContent;
-                    reload();
-                },
+
+            createElement({
+                type: 'th',
+                id: `table-header-row-cell-${h}`,
+                parent: 'table-header-row',
+                innerHTML: state.headerContent[h].innerHTML,
+                attrs: [
+                    {
+                        attr: 'contenteditable',
+                        value: 'true'
+                    }
+                ],
+                eventObject: {
+                    listener: 'input',
+                    func: e => {
+                        state.headerContent[h].innerHTML = e.target.textContent;
+                        reload();
+                    },
+                }
             });
+            
         }
     }
-    createElement('tbody', `editor-table`, `table-body`);
+    createElement({
+        type: 'tbody',
+        id: 'table-body',
+        parent: 'editor-table',
+    });
 
     for (let r = 0; r < state.content.length; r++) {
-        createElement('tr', `table-body`, `table-row-${r}`);
+        createElement({
+            type: 'tr',
+            id: `table-row-${r}`,
+            parent: 'table-body',
+        });
 
         for (let c = 0; c < state.content[r].length; c++) {
             if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
-                console.log('ignore');
                 continue;
             }
 
             // Ignore TDs based on rowspan and colspan
             setCollision(r, c, true, 1);
 
-            createElement('td', `table-row-${r}`, `td-${r}${c}`, false, false, false, false, false, state.content[r][c].rowspan, state.content[r][c].colspan);
-
-            createElement('p', `td-${r}${c}`, `p-${r}${c}`, 'td-p', true, state.content[r][c].innerHTML, {
-                type: 'input',
-                func: e => {
-                    state.content[r][c].innerHTML = e.target.innerHTML;
-                    reload();
-                },
+            createElement({
+                type: 'td',
+                id: `td-${r}${c}`,
+                parent: `table-row-${r}`,
+                attrs: [
+                    {
+                        attr: 'rowspan',
+                        value: state.content[r][c].rowspan
+                    },
+                    {
+                        attr: 'colspan',
+                        value: state.content[r][c].colspan
+                    }
+                ]
             });
 
-            createElement('button', `td-${r}${c}`, `increase-rowspan-button-${r}${c}`, 'increase-rowspan-button', false, 'RS+', {
-                type: 'click',
-                func: () => {
-                    // Determining if there is enough room for the rowspans
-                    let totalColumnRowspans = 0;
-                    for (let row = 0; row < state.content.length - 1; row++) {
-                        if (!state.content[row][c].rowCollision) {
-                            totalColumnRowspans += state.content[row][c].rowspan;
+            createElement({
+                type: 'p',
+                id: `p-${r}${c}`,
+                parent: `td-${r}${c}`,
+                innerHTML: state.content[r][c].innerHTML,
+                attrs: [
+                    {
+                        attr: 'classname',
+                        value: 'td-p'
+                    },
+                    {
+                        attr: 'contenteditable',
+                        value: 'true'
+                    }
+                ],
+                eventObject: {
+                    listener: 'input',
+                    func: e => {
+                        state.content[r][c].innerHTML = e.target.innerHTML;
+                        reload();
+                    }, 
+                }
+            });
+
+            createElement({
+                type: 'button',
+                id: `increase-rowspan-button-${r}${c}`,
+                parent: `td-${r}${c}`,
+                innerHTML: 'RS+',
+                attrs: [
+                    {
+                        attr: 'classname',
+                        value: 'increase-rowspan-button'
+                    },
+                ],
+                eventObject: {
+                    listener: 'click',
+                    func: () => {
+                        // Determining if there is enough room for the rowspans
+                        let totalColumnRowspans = 0;
+                        for (let row = 0; row < state.content.length - 1; row++) {
+                            if (!state.content[row][c].rowCollision) {
+                                totalColumnRowspans += state.content[row][c].rowspan;
+                            }
                         }
-                    }
-
-                    // If there isn't enough room, create another row
-                    if (totalColumnRowspans >= state.content.length || r === state.content.length - 1) {
-                        state.content.push(createTableRow(StateMachine.state));
-                    }
-
-                    state.content[r][c].rowspan++;
-                    setCollision(r, c, true, 1);
-                    reload(true);
-                },
+    
+                        // If there isn't enough room, create another row
+                        if (totalColumnRowspans >= state.content.length || r === state.content.length - 1) {
+                            state.content.push(createTableRow(StateMachine.state));
+                        }
+    
+                        state.content[r][c].rowspan++;
+                        setCollision(r, c, true, 1);
+                        reload(true);
+                    },
+                }
             });
 
-            createElement(
-                'button',
-                `td-${r}${c}`,
-                `decrease-rowspan-button-${r}${c}`,
-                'decrease-rowspan-button',
-                false,
-                'RS-',
-                {
-                    type: 'click',
+            createElement({
+                type: 'button',
+                id: `decrease-rowspan-button-${r}${c}`,
+                parent: `td-${r}${c}`,
+                innerHTML: 'RS-',
+                attrs: [
+                    {
+                        attr: 'classname',
+                        value: 'decrease-rowspan-button',
+                    },
+                    {
+                        attr: 'disabled',
+                        value: state.content[r][c].rowspan > 1 ? 'false' : 'true'
+
+                    }
+                ],
+                eventObject: {
+                    listener: 'click',
                     func: () => {
                         setCollision(r, c, false, 0);
                         state.content[r][c].rowspan--;
                         reload(true);
                     },
-                },
-                false,
-                false,
-                false,
-                state.content[r][c].rowspan > 1 ? false : true
-            );
+                }
+            });
 
-            createElement('button', `td-${r}${c}`, `increase-colspan-button-${r}${c}`, 'increase-colspan-button', false, 'CS+', {
-                type: 'click',
-                func: () => {
-                    // Determining if there is enough room for the colspans
-                    let totalRowColumnSpans = 0;
-                    for (let column = 0; column < state.content[r].length - 1; column++) {
-                        if (!state.content[r][column].colCollision) {
-                            totalRowColumnSpans += state.content[r][column].colspan;
+            createElement({
+                type: 'button',
+                id: `increase-colspan-button-${r}${c}`,
+                parent: `td-${r}${c}`,
+                innerHTML: 'CS+',
+                eventObject: {
+                    listener: 'click',
+                    func: () => {
+                        // Determining if there is enough room for the colspans
+                        let totalRowColumnSpans = 0;
+                        for (let column = 0; column < state.content[r].length - 1; column++) {
+                            if (!state.content[r][column].colCollision) {
+                                totalRowColumnSpans += state.content[r][column].colspan;
+                            }
                         }
-                    }
-
-                    // If there isn't enough room, create another column (to thead and tbody)
-                    if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
-                        state.headerContent.push({
-                            innerHTML: 'col',
-                            rowspan: 1,
-                            colspan: 1,
-                            rowCollision: false,
-                            colCollision: false,
-                        });
-
-                        StateMachine.state.content.forEach(element =>
-                            element.push({
+    
+                        // If there isn't enough room, create another column (to thead and tbody)
+                        if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
+                            state.headerContent.push({
                                 innerHTML: 'col',
                                 rowspan: 1,
                                 colspan: 1,
                                 rowCollision: false,
                                 colCollision: false,
-                            })
-                        );
-                    }
-                    state.content[r][c].colspan++;
-                    setCollision(r, c, true, 1);
-                    reload(true);
-                },
+                            });
+    
+                            StateMachine.state.content.forEach(element =>
+                                element.push({
+                                    innerHTML: 'col',
+                                    rowspan: 1,
+                                    colspan: 1,
+                                    rowCollision: false,
+                                    colCollision: false,
+                                })
+                            );
+                        }
+                        state.content[r][c].colspan++;
+                        setCollision(r, c, true, 1);
+                        reload(true);
+                    },
+                }
             });
 
-            createElement(
-                'button',
-                `td-${r}${c}`,
-                `decrease-colspan-button-${r}${c}`,
-                'decrease-colspan-button',
-                false,
-                'CS-',
-                {
-                    type: 'click',
+            createElement({
+                type: 'button',
+                id: `decrease-colspan-button-${r}${c}`,
+                parent: `td-${r}${c}`,
+                innerHTML: 'CS-',
+                attrs: [
+                    {
+                        attr: 'classname',
+                        value: 'decrease-colspan-button'
+                    },
+                    {
+                        attr: 'disabled',
+                        value: state.content[r][c].colspan > 1 ? 'false' : 'true'
+
+                    }
+                ],
+                eventObject: {
+                    listener: 'click',
                     func: () => {
                         setCollision(r, c, false, 0);
                         state.content[r][c].colspan--;
                         reload(true);
                     },
-                },
-                false,
-                false,
-                false,
-                state.content[r][c].colspan > 1 ? false : true
-            );
+                }
+            });
         }
     }
 };

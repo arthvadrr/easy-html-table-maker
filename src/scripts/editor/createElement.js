@@ -1,34 +1,34 @@
-//prettier-ignore
 const createElement = (
-    type, 
-    parent, 
-    id, 
-    className, 
-    isEditable, 
-    innerHTML, 
-    eventObject, 
-    inputProps, 
-    rowspan, 
-    colspan, 
-    disabled) => {
+    props = {
+        type,
+        id,
+        parent,
+        innerHTML,
+        inputProps,
+        eventObject,
+        attrs,
+    }
+) => {
+    let {type, id, parent, innerHTML, inputProps, eventObject, attrs} = props;
+
+    //TODO bug somewhere causing returns with valid prop types
+    if (!type || !parent) {
+        return;
+    }
+    
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
-    }
-
-    if (!type || !parent) {
-        console.log('createElement requires type and parent params!');
-        return;
     }
 
     let ele = document.createElement(type);
 
     if (type === 'input') {
-        if (inputProps.type === 'checkbox') {
-            ele.setAttribute('type', inputProps.type);
-            ele.setAttribute('name', inputProps.name);
-            ele.setAttribute('value', inputProps.value);
+        if (inputProps.checked) {
             ele.checked = inputProps.checked;
         }
+
+        ele.type = inputProps.type;
+
         const inputContainer = document.createElement('div');
         const label = document.createElement('label');
         label.setAttribute('for', id);
@@ -42,19 +42,15 @@ const createElement = (
         ele.setAttribute('id', `${id}`);
     }
 
-    if (className) {
-        ele.setAttribute('class', `${className}`);
-    }
+    if (attrs) {
+        for (let a = 0; a < attrs.length; a++) {
+            ele.setAttribute(attrs[a].attr, attrs[a].value);
 
-    if (isEditable) {
-        ele.setAttribute('contenteditable', 'true');
-    }
-
-    if (rowspan) {
-        ele.setAttribute('rowspan', rowspan);
-    }
-    if (colspan) {
-        ele.setAttribute('colspan', colspan);
+            // Hacky fix for disabled=false not being valid on HTML elements. What a pain in the ass!
+            if (attrs[a].attr === 'disabled' && attrs[a].value === 'false') {
+                ele.removeAttribute('disabled');
+            }
+        }
     }
 
     if (innerHTML) {
@@ -62,13 +58,9 @@ const createElement = (
     }
 
     if (eventObject) {
-        ele.addEventListener(eventObject.type, e => {
+        ele.addEventListener(eventObject.listener, e => {
             eventObject.func(e);
         });
-    }
-
-    if (disabled) {
-        ele.setAttribute('disabled', 'true');
     }
 
     parent.appendChild(ele);
