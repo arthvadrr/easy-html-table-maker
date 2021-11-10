@@ -3,7 +3,7 @@ const createTableRow = state => {
 
     for (let i = 0; i < state.content[0].length; i++) {
         newRow.push({
-            innerHTML: ' hi ',
+            innerHTML: 'innerHTML',
             rowspan: 1,
             colspan: 1,
             rowCollision: false,

@@ -6,8 +6,8 @@ import createTablePreview from '../createTablePreview';
 const createEditorTable = StateMachine => {
     const { state } = StateMachine;
     const $code_tableCode = document.getElementById('table-code');
-    let $div_editorTableContainer = document.getElementById('editor-table-container');
-    let $div_editorArea = document.getElementById('editor-area');
+    const $div_editorTableContainer = document.getElementById('editor-table-container');
+    const $div_editorArea = document.getElementById('editor-area');
 
     // Remove the existing div so we don't get duplicates
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
@@ -45,7 +45,6 @@ const createEditorTable = StateMachine => {
         }
     };
 
-    //Create the container
     createElement({
         type: 'div',
         id: 'editor-table-container',
@@ -123,7 +122,7 @@ const createEditorTable = StateMachine => {
                 });
 
                 state.headerContent.push({
-                    innerHTML: 'col',
+                    innerHTML: 'innerHTML',
                     rowspan: 1,
                     colspan: 1,
                     rowCollision: false,
@@ -132,7 +131,7 @@ const createEditorTable = StateMachine => {
 
                 StateMachine.state.content.forEach(element =>
                     element.push({
-                        innerHTML: 'col',
+                        innerHTML: 'innerHTML',
                         rowspan: 1,
                         colspan: 1,
                         rowCollision: false,
@@ -283,6 +282,7 @@ const createEditorTable = StateMachine => {
             id: 'editor-table-colgroup',
             parent: 'editor-table'
         });
+        
         for (let colgroupIndex = 0; colgroupIndex < state.colgroupProps.length; colgroupIndex++) {
             createElement({
                 type: 'col',
@@ -295,7 +295,7 @@ const createEditorTable = StateMachine => {
                     },
                     {
                         attr: 'span',
-                        value: state.colgroupProps[colgroupIndex].span.toString()
+                        value: state.colgroupProps[colgroupIndex].span + ''
                     }
                 ]
             });
@@ -495,7 +495,7 @@ const createEditorTable = StateMachine => {
                         // If there isn't enough room, create another column (to thead and tbody)
                         if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
                             state.headerContent.push({
-                                innerHTML: 'col',
+                                innerHTML: 'innerHTML',
                                 rowspan: 1,
                                 colspan: 1,
                                 rowCollision: false,
@@ -504,7 +504,7 @@ const createEditorTable = StateMachine => {
     
                             StateMachine.state.content.forEach(element =>
                                 element.push({
-                                    innerHTML: 'col',
+                                    innerHTML: 'innerHTML',
                                     rowspan: 1,
                                     colspan: 1,
                                     rowCollision: false,
