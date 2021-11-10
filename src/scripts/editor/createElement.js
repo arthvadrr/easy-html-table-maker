@@ -11,6 +11,8 @@ const createElement = (
 ) => {
     let {type, id, parent, innerHTML, inputProps, eventObject, attrs} = props;
 
+    let inputContainer;
+
     //TODO bug somewhere causing returns with valid prop types
     if (!type || !parent) {
         return;
@@ -29,13 +31,26 @@ const createElement = (
 
         ele.type = inputProps.type;
 
-        const inputContainer = document.createElement('div');
+        if (inputProps.container) {
+            inputContainer = document.createElement(inputProps.container);
+        } else {
+            inputContainer = document.createElement('div');
+        }
+
         const label = document.createElement('label');
         label.setAttribute('for', id);
         label.innerHTML = inputProps.value;
         inputContainer.appendChild(label);
         parent.appendChild(inputContainer);
         parent = inputContainer;
+
+        if (inputProps.min) {
+            ele.setAttribute('min', inputProps.min);
+        }
+
+        if (inputProps.max) {
+            ele.setAttribute('max', inputProps.max);
+        }
     }
 
     if (id) {

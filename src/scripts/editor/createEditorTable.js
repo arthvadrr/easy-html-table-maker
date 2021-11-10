@@ -11,9 +11,6 @@ const createEditorTable = StateMachine => {
 
     // Remove the existing div so we don't get duplicates
     $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
-    $div_editorTableContainer = document.createElement('div');
-    $div_editorTableContainer.setAttribute('id', 'editor-table-container');
-    $div_editorArea.appendChild($div_editorTableContainer);
 
     const reload = reloadEditor => {
         localStorage.setItem('savedState', JSON.stringify(state));
@@ -48,11 +45,11 @@ const createEditorTable = StateMachine => {
         }
     };
 
-    // Create the container
+    //Create the container
     createElement({
         type: 'div',
         id: 'editor-table-container',
-        parent: $div_editorTableContainer,
+        parent: $div_editorArea,
     });
 
     createElement({
@@ -118,7 +115,7 @@ const createEditorTable = StateMachine => {
         eventObject: {
             listener: 'click',
             func: () => {
-                // !!! objects oos, do not store as variables
+                // !!! Hacks: stored objects oos, do not store the objects in this function as variables
 
                 state.colgroupProps.push({
                     width: 0,
@@ -184,7 +181,6 @@ const createEditorTable = StateMachine => {
         type: 'input',
         id: 'caption-toggle',
         parent: 'editor-table-container',
-        innerHTML: 'Table caption',
         attrs: [
             {
                 attr: 'type',
@@ -216,9 +212,28 @@ const createEditorTable = StateMachine => {
 
     createElement({
         type: 'input',
+        id: 'colgroup-toggle',
+        parent: 'editor-table-container',
+        inputProps: {
+            type: 'checkbox',
+            name: 'colgroupToggle',
+            value: 'Colgroup',
+            checked: state.colgroup
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.colgroup = !state.colgroup;
+                console.log(state.colgroup);
+                reload(true);
+            }
+        }
+    });
+
+    createElement({
+        type: 'input',
         id: 'header-toggle',
         parent: 'editor-table-container',
-        innerHTML: 'Table header',
         inputProps: {
             type: 'checkbox',
             name: 'headerToggle',
@@ -240,7 +255,7 @@ const createEditorTable = StateMachine => {
             id: 'table-caption',
             parent: 'editor-table',
             innerHTML: state.captionText,
-            attr: [
+            attrs: [
                 {
                     attr: 'contenteditable',
                     value: 'true',
@@ -258,14 +273,46 @@ const createEditorTable = StateMachine => {
 
     if (state.colgroup) {
         createElement({
+            type: 'tr',
+            id: 'editor-colgroup-settings',
+            parent: 'editor-table'
+        });
+
+        createElement({
             type: 'colgroup',
             id: 'editor-table-colgroup',
             parent: 'editor-table'
         });
-        for (let colgroupProps = 0; colgroupProps < state.colgroupProps.length; colgroupProps++) {
+        for (let colgroupIndex = 0; colgroupIndex < state.colgroupProps.length; colgroupIndex++) {
             createElement({
                 type: 'col',
-                parent: 'editor-table-colgroup'
+                id: `colgroupItem-${colgroupIndex}`,
+                parent: 'editor-table-colgroup',
+                attrs: [
+                    {
+                        attr: 'width',
+                        value: state.colgroupProps[colgroupIndex].width + state.colgroupProps[colgroupIndex].widthUnits
+                    },
+                    {
+                        attr: 'span',
+                        value: state.colgroupProps[colgroupIndex].span.toString()
+                    }
+                ]
+            });
+
+            createElement({
+                type: 'input',
+                id: `col-width-input-${colgroupIndex}`,
+                parent: `editor-colgroup-settings`,
+                inputProps: {
+                    type: 'number',
+                    container: 'col',
+                    name: `columnWidth-${colgroupIndex}`,
+                    value: '0',
+                    checked: state.caption,
+                    min: 0,
+                    max: 1000,
+                },
             });
         }
     }

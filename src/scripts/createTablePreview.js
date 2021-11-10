@@ -8,48 +8,77 @@ const createTablePreview = StateMachine => {
         previewTable.parentNode.removeChild(previewTable);
     }
 
-    createElement('table', 'preview', 'preview-table');
+    createElement({
+        type: 'table',
+        id: 'preview-table',
+        parent: 'preview'
+    });
 
     if (state.caption) {
-        createElement('caption', 'preview-table', `table-caption`, false, false, state.captionText);
+        createElement({
+            type: 'caption',
+            id: 'preview-table-caption',
+            parent: 'preview-table',
+            innerHTML: state.captionText
+        });
     }
 
     if (state.header) {
-        createElement('thead', 'preview-table', 'preview-table-head');
-        createElement('tr', `preview-table-head`, 'preview-table-header');
+        createElement({
+            type: 'thead',
+            id: 'preview-thead',
+            parent: 'preview-table'
+        });
+
+        createElement({
+            type: 'tr',
+            id: 'preview-thead-row',
+            parent: 'preview-thead'
+        });
+
         for (let h = 0; h < state.headerContent.length; h++) {
-            createElement(
-                'th',
-                'preview-table-header',
-                false,
-                false,
-                false,
-                state.headerContent[h].innerHTML
-            );
+            createElement({
+                type: 'th',
+                parent: 'preview-thead-row',
+                innerHTML: state.headerContent[h].innerHTML
+            });
         }
     }
-    createElement('tbody', 'preview-table', 'preview-table-body');
+
+    createElement({
+        type: 'tbody',
+        id: 'preview-tbody',
+        parent: 'preview-table'
+    });
 
     for (let r = 0; r < state.content.length; r++) {
-        createElement('tr', 'preview-table-body', `preview-table-row-${r}`);
+        createElement({
+            type: 'tr',
+            id: `preview-table-row-${r}`,
+            parent: `preview-tbody`
+        });
 
         for (let c = 0; c < state.content[r].length; c++) {
             if (state.content[r][c].rowCollision || state.content[r][c].colCollision) {
                 continue;
             }
 
-            createElement(
-                'td',
-                `preview-table-row-${r}`,
-                `preview-td-${r}${c}`,
-                false,
-                false,
-                state.content[r][c].innerHTML,
-                false,
-                false,
-                state.content[r][c].rowspan,
-                state.content[r][c].colspan
-            );
+            createElement({
+                type: 'td',
+                id: `preview-td-${r}${c}`,
+                parent: `preview-table-row-${r}`,
+                innerHTML: state.content[r][c].innerHTML,
+                attrs: [
+                    {
+                        attr: 'rowspan',
+                        value: state.content[r][c].rowspan
+                    },
+                    {
+                        attr: 'colspan',
+                        value: state.content[r][c].colspan
+                    }
+                ]
+            });
         }
     }
 };
