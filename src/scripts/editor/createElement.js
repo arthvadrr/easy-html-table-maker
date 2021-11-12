@@ -37,12 +37,19 @@ const createElement = (
             inputContainer = document.createElement('div');
         }
 
-        const label = document.createElement('label');
-        label.setAttribute('for', id);
-        label.innerHTML = inputProps.value;
-        inputContainer.appendChild(label);
-        parent.appendChild(inputContainer);
-        parent = inputContainer;
+        if (inputProps.label && inputProps.name) {
+            const label = document.createElement('label');
+            label.setAttribute('for', inputProps.name);
+            label.innerHTML = inputProps.label;
+            inputContainer.appendChild(label);
+            parent.appendChild(inputContainer);
+            parent = inputContainer;
+            ele.setAttribute('name', inputProps.name);
+        }
+
+        if (inputProps.value) {
+            ele.setAttribute('value', inputProps.value);
+        }
 
         if (inputProps.min) {
             ele.setAttribute('min', inputProps.min);
@@ -50,6 +57,10 @@ const createElement = (
 
         if (inputProps.max) {
             ele.setAttribute('max', inputProps.max);
+        }
+
+        if (inputProps.step) {
+            ele.setAttribute('step', inputProps.step);
         }
     }
 

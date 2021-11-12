@@ -6,26 +6,31 @@ export default {
     captionText: 'captionText',
     colgroupProps: [
         {
+            useWidth: false,
             width: 0,
             widthUnits: 'px',
             span: 1,
         },
         {
+            useWidth: false,
             width: 0,
             widthUnits: 'px',
             span: 1,
         },
         {
+            useWidth: false,
             width: 0,
             widthUnits: 'px',
             span: 1,
         },
         {
+            useWidth: false,
             width: 0,
             widthUnits: 'px',
             span: 1,
         },
         {
+            useWidth: false,
             width: 0,
             widthUnits: 'px',
             span: 1,

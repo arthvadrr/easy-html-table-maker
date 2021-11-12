@@ -196,6 +196,7 @@ const createEditorTable = StateMachine => {
         ],
         inputProps: {
             type: 'checkbox',
+            label: 'Caption',
             name: 'captionToggle',
             value: 'Toggle Caption',
             checked: state.caption,
@@ -215,15 +216,14 @@ const createEditorTable = StateMachine => {
         parent: 'editor-table-container',
         inputProps: {
             type: 'checkbox',
+            label: 'Colgroup',
             name: 'colgroupToggle',
-            value: 'Colgroup',
             checked: state.colgroup
         },
         eventObject: {
             listener: 'click',
             func: () => {
                 state.colgroup = !state.colgroup;
-                console.log(state.colgroup);
                 reload(true);
             }
         }
@@ -235,8 +235,8 @@ const createEditorTable = StateMachine => {
         parent: 'editor-table-container',
         inputProps: {
             type: 'checkbox',
+            label: 'Header',
             name: 'headerToggle',
-            value: 'Table header',
             checked: state.header,
         },
         eventObject: {
@@ -272,48 +272,90 @@ const createEditorTable = StateMachine => {
 
     if (state.colgroup) {
         createElement({
-            type: 'tr',
-            id: 'editor-colgroup-settings',
-            parent: 'editor-table'
-        });
-
-        createElement({
             type: 'colgroup',
             id: 'editor-table-colgroup',
-            parent: 'editor-table'
+            parent: 'editor-table',
+            attrs: [
+                {
+                    attr: 'style',
+                    value: 'display: table-header-group'
+                }
+            ]
         });
         
         for (let colgroupIndex = 0; colgroupIndex < state.colgroupProps.length; colgroupIndex++) {
             createElement({
                 type: 'col',
-                id: `colgroupItem-${colgroupIndex}`,
+                id: `colgroup-item-${colgroupIndex}`,
                 parent: 'editor-table-colgroup',
                 attrs: [
                     {
                         attr: 'width',
-                        value: state.colgroupProps[colgroupIndex].width + state.colgroupProps[colgroupIndex].widthUnits
+                        value: state.colgroupProps[colgroupIndex].useWidth ? state.colgroupProps[colgroupIndex].width + state.colgroupProps[colgroupIndex].widthUnits : false,
                     },
                     {
                         attr: 'span',
-                        value: state.colgroupProps[colgroupIndex].span + ''
+                        value: state.colgroupProps[colgroupIndex].span ? state.colgroupProps[colgroupIndex].span + '' : 1,
+                    },
+                    {
+                        attr: 'style',
+                        value: 'display: table-cell'
                     }
                 ]
             });
 
             createElement({
                 type: 'input',
-                id: `col-width-input-${colgroupIndex}`,
-                parent: `editor-colgroup-settings`,
+                id: `use-col-width-${colgroupIndex}`,
+                parent: `colgroup-item-${colgroupIndex}`,
                 inputProps: {
-                    type: 'number',
-                    container: 'col',
-                    name: `columnWidth-${colgroupIndex}`,
-                    value: '0',
-                    checked: state.caption,
-                    min: 0,
-                    max: 1000,
+                    type: 'checkbox',
+                    label: 'Use col width',
+                    name: 'useColWidth',
+                    checked: state.colgroupProps[colgroupIndex].useWidth,
+                },
+                eventObject: {
+                    listener: 'click',
+                    func: () => {
+                        state.colgroupProps[colgroupIndex].useWidth = !state.colgroupProps[colgroupIndex].useWidth,
+                        reload(true);
+                    },
                 },
             });
+            
+            if (state.colgroupProps[colgroupIndex].useWidth) {
+
+                createElement({
+                    type: 'input',
+                    id: `col-width-input-${colgroupIndex}`,
+                    parent: `colgroup-item-${colgroupIndex}`,
+                    inputProps: {
+                        type: 'number',
+                        container: 'div',
+                        name: `columnWidth-${colgroupIndex}`,
+                        label: 'Col width',
+                        value: state.colgroupProps[colgroupIndex].width,
+                        min: 0, // <colgroup> 'span' according to spec is clamped to 1000 and defaults to 1
+                        max: 1000,
+                    }
+                });
+
+                createElement({
+                    type: 'button',
+                    id: `col-width-${colgroupIndex}-set`,
+                    parent: `colgroup-item-${colgroupIndex}`,
+                    innerHTML: 'Set',
+                    eventObject: {
+                        listener: 'click',
+                        func: () => {
+                            const width = document.getElementById(`col-width-input-${colgroupIndex}`).value;
+                            state.colgroupProps[colgroupIndex].width = width;
+                            reload(true);
+                        }
+                    }
+                });
+
+            }
         }
     }
 
