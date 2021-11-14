@@ -21,10 +21,6 @@ export const reload = (state, reloadEditor) => {
 };
 
 const createEditorTable = state => {
-    // Remove the existing div so we don't get duplicates
-    const $div_editorTableContainer = document.getElementById('editor-table-container');
-    $div_editorTableContainer.parentNode.removeChild($div_editorTableContainer);
-
     // Render the table components
     const tableComponents = [
         table,
