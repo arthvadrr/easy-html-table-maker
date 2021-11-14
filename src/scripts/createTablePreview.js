@@ -1,7 +1,6 @@
-import createElement from './editor/createElement';
+import createElement from './editor/utl/createElement';
 
-const createTablePreview = StateMachine => {
-    const { state } = StateMachine;
+const createTablePreview = state => {
     let previewTable = document.getElementById('preview-table');
 
     if (previewTable) {

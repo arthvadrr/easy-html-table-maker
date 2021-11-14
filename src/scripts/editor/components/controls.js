@@ -1,0 +1,204 @@
+import createElement from "../utl/createElement";
+import { reload } from "../createEditorTable";
+import createTableRow from "../utl/createTableRow";
+
+const controls = (state) => {
+
+    createElement({
+        type: 'div',
+        id: `editor-table-controls`,
+        parent: 'editor-table-container'
+    });
+
+    createElement({
+        type: 'button',
+        id: 'add-row',
+        parent: 'editor-table-controls',
+        innerHTML: 'add row',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.content.push(createTableRow(state));
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'button',
+        id: 'remove-row',
+        parent: 'editor-table-controls',
+        innerHTML: 'remove row',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                for (let td = 0; td < state.content.at(-1).length; td++) {
+                    if (state.content.at(-1)[td].rowCollision === true) {
+                        alert('Rowspan detected, cannot delete row. Remove rowspan first.');
+                        return;
+                    }
+                }
+
+                if (state.content.length > 1) {
+                    state.content.pop();
+                }
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'button',
+        id: 'add-column',
+        parent: 'editor-table-controls',
+        innerHTML: 'add column',
+        attrs: [
+            {
+                attr: 'class',
+                value: 'add-column',
+            },
+        ],
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                // !!! Hacks: stored objects oos, do not store the objects in this function as variables
+
+                state.colgroupProps.push({
+                    useWidth: false,
+                    width: 0,
+                    widthUnits: 'px',
+                    span: 1
+                });
+
+                state.headerContent.push({
+                    innerHTML: 'innerHTML',
+                    rowspan: 1,
+                    colspan: 1,
+                    rowCollision: false,
+                    colCollision: false,
+                });
+
+                state.content.forEach(element =>
+                    element.push({
+                        innerHTML: 'innerHTML',
+                        rowspan: 1,
+                        colspan: 1,
+                        rowCollision: false,
+                        colCollision: false,
+                    })
+                );
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'button',
+        id: 'remove-column',
+        parent: 'editor-table-controls',
+        innerHTML: 'remove column',
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                for (let row = 0; row < state.content.length; row++) {
+                    if (state.content[row].at(-1).colCollision === true) {
+                        alert('Colspan detected, cannot delete column. Remove colspan first.');
+                        return;
+                    }
+                }
+
+                if (state.colgroupProps.length > 1) {
+                    state.colgroupProps.pop();
+                }
+
+                if (state.headerContent.length > 1) {
+                    state.headerContent.pop();
+                }
+
+                state.content.forEach(element => {
+                    if (element.length > 1) {
+                        element.pop();
+                    }
+                });
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
+        id: 'caption-toggle',
+        parent: 'editor-table-controls',
+        attrs: [
+            {
+                attr: 'type',
+                value: 'checkbox',
+            },
+            {
+                attr: 'name',
+                value: 'captionToggle',
+            },
+            {
+                attr: 'value',
+                value: 'Toggle caption',
+            },
+        ],
+        inputProps: {
+            type: 'checkbox',
+            label: 'Caption',
+            name: 'caption-toggle',
+            for: 'caption-toggle',
+            value: 'Toggle Caption',
+            checked: state.caption,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.caption = !state.caption;
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
+        id: 'colgroup-toggle',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Colgroup',
+            name: 'colgroup-toggle',
+            for: 'colgroup-toggle',
+            checked: state.colgroup
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.colgroup = !state.colgroup;
+                reload(state, true);
+            }
+        }
+    });
+
+    createElement({
+        type: 'input',
+        id: 'header-toggle',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Header',
+            name: 'header-toggle',
+            for: 'header-toggle',
+            checked: state.header,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.header = !state.header;
+                reload(state, true);
+            },
+        },
+    });
+}
+
+export default controls;

@@ -1,3 +1,7 @@
+import copyTextToClipboard from './copyTextToClipboard';
+import createElement from './editor/utl/createElement';
+import replaceHTML from './replaceHTML';
+
 /*
 Opening Bracket
 &lt;   ==  <
@@ -9,15 +13,10 @@ Space
 \u00a0 == ' '
 */
 
-import replaceHTML from './replaceHTML';
-
-const createTableCode = (state, $code_tableCode) => {
-    if (!$code_tableCode) {
-        $code_tableCode = document.getElementById('table-code');
-    }
-
+const createTableCode = state => {
     let output = '';
     const indent = amount => '\u00A0'.repeat(amount);
+    const $code_tableCode = document.getElementById('table-code');
 
     output += '&lt;table&gt<br>';
 
@@ -56,6 +55,21 @@ const createTableCode = (state, $code_tableCode) => {
     output += `&lt;/table&gt<br>`;
 
     $code_tableCode.innerHTML = output;
+
+    if (!document.getElementById('copy-table-code')) {
+        createElement({
+            type: 'button',
+            id: 'copy-table-code',
+            parent: 'markup-controls',
+            innerHTML: 'Copy HTML',
+            eventObject: {
+                listener: 'click',
+                func: () => {
+                    copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
+                }
+            }
+        });
+    }
 
     return output;
 };

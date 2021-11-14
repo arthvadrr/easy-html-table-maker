@@ -37,14 +37,17 @@ const createElement = (
             inputContainer = document.createElement('div');
         }
 
-        if (inputProps.label && inputProps.name) {
+        if (inputProps.name) {
+            ele.setAttribute('name', inputProps.name);
+        }
+
+        if (inputProps.label && inputProps.for) {
             const label = document.createElement('label');
-            label.setAttribute('for', inputProps.name);
+            label.setAttribute('for', inputProps.for);
             label.innerHTML = inputProps.label;
             inputContainer.appendChild(label);
             parent.appendChild(inputContainer);
             parent = inputContainer;
-            ele.setAttribute('name', inputProps.name);
         }
 
         if (inputProps.value) {
