@@ -1,13 +1,12 @@
-import createElement from "../utl/createElement";
-import { reload } from "../createEditorTable";
-import createTableRow from "../utl/createTableRow";
+import createElement from '../utl/createElement';
+import { reload } from '../createEditorTable';
+import createTableRow from '../utl/createTableRow';
 
-const controls = (state) => {
-
+const controls = state => {
     createElement({
         type: 'div',
         id: `editor-table-controls`,
-        parent: 'editor-table-container'
+        parent: 'editor-table-container',
     });
 
     createElement({
@@ -63,11 +62,15 @@ const controls = (state) => {
             func: () => {
                 // !!! Hacks: stored objects oos, do not store the objects in this function as variables
 
-                state.colgroupProps.push({
+                state.columnSettings.push({
                     useWidth: false,
                     width: 0,
                     widthUnits: 'px',
-                    span: 1
+                    align: 'left',
+                });
+
+                state.colgroupProps.push({
+                    span: 1,
                 });
 
                 state.headerContent.push({
@@ -105,6 +108,10 @@ const controls = (state) => {
                         alert('Colspan detected, cannot delete column. Remove colspan first.');
                         return;
                     }
+                }
+
+                if (state.columnSettings.length > 1) {
+                    state.columnSettings.pop();
                 }
 
                 if (state.colgroupProps.length > 1) {
@@ -169,15 +176,15 @@ const controls = (state) => {
             label: 'Colgroup',
             name: 'colgroup-toggle',
             for: 'colgroup-toggle',
-            checked: state.colgroup
+            checked: state.colgroup,
         },
         eventObject: {
             listener: 'click',
             func: () => {
                 state.colgroup = !state.colgroup;
                 reload(state, true);
-            }
-        }
+            },
+        },
     });
 
     createElement({
@@ -199,6 +206,46 @@ const controls = (state) => {
             },
         },
     });
-}
+
+    createElement({
+        type: 'input',
+        id: 'table-use-classname',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Use table classname',
+            for: 'table-use-classname',
+            checked: state.useClassName,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.useClassName = !state.useClassName;
+                reload(state, true);
+            },
+        },
+    });
+
+    if (state.useClassName) {
+        createElement({
+            type: 'input',
+            id: 'table-class-selector',
+            parent: 'editor-table-controls',
+            inputProps: {
+                type: 'text',
+                label: 'Table classname',
+                for: 'table-class-selector',
+                value: state.className,
+            },
+            eventObject: {
+                listener: 'input',
+                func: e => {
+                    state.className = e.target.value;
+                    reload(state);
+                },
+            },
+        });
+    }
+};
 
 export default controls;

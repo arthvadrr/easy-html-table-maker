@@ -4,51 +4,55 @@ export default {
     colgroup: true,
     caption: false,
     captionText: 'captionText',
-    colgroupProps: [
+    useClassName: false,
+    className: '',
+    styles: [
+        {
+            selector: 'tbody>tr>:nth-child(1)',
+            styles: 'text-align: left',
+        },
+    ],
+    columnSettings: [
         {
             useWidth: false,
             width: 0,
             widthUnits: 'px',
-            span: 1,
             align: 'left',
         },
         {
             useWidth: false,
             width: 0,
             widthUnits: 'px',
-            span: 1,
             align: 'left',
         },
         {
             useWidth: false,
             width: 0,
             widthUnits: 'px',
-            span: 1,
             align: 'left',
         },
         {
             useWidth: false,
             width: 0,
             widthUnits: 'px',
-            span: 1,
-            align: 'left',
-        },
-        {
-            useWidth: false,
-            width: 0,
-            widthUnits: 'px',
-            span: 1,
             align: 'left',
         },
     ],
-    headerContent: [
+    colgroupProps: [
         {
-            innerHTML: 'innerHTML',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
+            span: 1,
         },
+        {
+            span: 1,
+        },
+        {
+            span: 1,
+        },
+        {
+            span: 1,
+        },
+    ],
+    headerContent: [
         {
             innerHTML: 'innerHTML',
             rowspan: 1,
@@ -109,13 +113,6 @@ export default {
                 rowCollision: false,
                 colCollision: false,
             },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
         ],
         [
             {
@@ -146,59 +143,8 @@ export default {
                 rowCollision: false,
                 colCollision: false,
             },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
         ],
         [
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
-        ],
-        [
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
             {
                 innerHTML: 'innerHTML',
                 rowspan: 1,

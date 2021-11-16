@@ -17,11 +17,31 @@ const createTableCode = state => {
     let output = '';
     const indent = amount => '\u00A0'.repeat(amount);
     const $code_tableCode = document.getElementById('table-code');
+    let className = '';
+    let colgroupProps = '';
 
-    output += '&lt;table&gt<br>';
+    if (state.useClassName && state.className.length > 0) {
+        className = ` class="${state.className}"`;
+    }
+
+    output += `&lt;table${className}&gt<br>`;
 
     if (state.caption) {
         output += `${indent(2)}&lt;caption&gt${state.captionText}&lt;/caption&gt<br>`;
+    }
+
+    if (state.colgroup) {
+        output += `${indent(2)}&lt;colgroup${colgroupProps}&gt<br>`;
+        for (let colgroup = 0; colgroup < state.colgroupProps.length; colgroup++) {
+            let colOutput = `${indent(4)}&lt;col`;
+
+            if (state.colgroupProps[colgroup].span > 1) {
+            }
+
+            colOutput += '&gt<br>';
+            output += colOutput;
+        }
+        output += `${indent(2)}&lt;/colgroup&gt<br>`;
     }
 
     if (state.header) {
@@ -66,8 +86,8 @@ const createTableCode = state => {
                 listener: 'click',
                 func: () => {
                     copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
-                }
-            }
+                },
+            },
         });
     }
 

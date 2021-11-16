@@ -1,9 +1,10 @@
 import createTableCode from '../createTableCode';
 import createTablePreview from '../createTablePreview';
 
-// Components (in order)
+// Components (in render order)
 import table from './components/table';
 import controls from './components/controls';
+import columnSettings from './components/columnSettings';
 import caption from './components/caption';
 import colgroup from './components/colgroup';
 import header from './components/header';
@@ -22,14 +23,7 @@ export const reload = (state, reloadEditor) => {
 
 const createEditorTable = state => {
     // Render the table components
-    const tableComponents = [
-        table,
-        controls,
-        caption,
-        colgroup,
-        header,
-        body
-    ];
+    const tableComponents = [table, columnSettings, controls, caption, colgroup, header, body];
     tableComponents.map(item => item(state));
 };
 
