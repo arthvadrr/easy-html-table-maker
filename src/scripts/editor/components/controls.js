@@ -1,6 +1,7 @@
 import createElement from '../utl/createElement';
 import { reload } from '../createEditorTable';
 import createTableRow from '../utl/createTableRow';
+import createTableCol from '../utl/createTableCol';
 
 const controls = state => {
     createElement({
@@ -60,36 +61,7 @@ const controls = state => {
         eventObject: {
             listener: 'click',
             func: () => {
-                // !!! Hacks: stored objects oos, do not store the objects in this function as variables
-
-                state.columnSettings.push({
-                    useWidth: false,
-                    width: 0,
-                    widthUnits: 'px',
-                    align: 'left',
-                });
-
-                state.colgroupProps.push({
-                    span: 1,
-                });
-
-                state.headerContent.push({
-                    innerHTML: 'innerHTML',
-                    rowspan: 1,
-                    colspan: 1,
-                    rowCollision: false,
-                    colCollision: false,
-                });
-
-                state.content.forEach(element =>
-                    element.push({
-                        innerHTML: 'innerHTML',
-                        rowspan: 1,
-                        colspan: 1,
-                        rowCollision: false,
-                        colCollision: false,
-                    })
-                );
+                createTableCol(state);
                 reload(state, true);
             },
         },
