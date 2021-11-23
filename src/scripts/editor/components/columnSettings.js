@@ -32,10 +32,6 @@ const columnSettings = state => {
                     attr: 'style',
                     value: 'display: table-cell',
                 },
-                {
-                    attr: 'align',
-                    value: state.columnSettings[setting].align,
-                },
             ],
         });
 
@@ -46,7 +42,7 @@ const columnSettings = state => {
             innerHTML: 'Text align',
         });
 
-        const alignOptions = ['left', 'center', 'right', 'Justify'];
+        const alignOptions = ['no align', 'left', 'center', 'right', 'justify'];
 
         alignOptions.map((option, i) => {
             createElement({

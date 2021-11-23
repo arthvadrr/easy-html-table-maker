@@ -1,6 +1,6 @@
-import { reload } from "../createEditorTable";
-import setCollision from "../utl/setCollision";
-import createElement from "../utl/createElement";
+import { reload } from '../createEditorTable';
+import setCollision from '../utl/setCollision';
+import createElement from '../utl/createElement';
 
 const body = state => {
     createElement({
@@ -31,13 +31,13 @@ const body = state => {
                 attrs: [
                     {
                         attr: 'rowspan',
-                        value: state.content[r][c].rowspan
+                        value: state.content[r][c].rowspan,
                     },
                     {
                         attr: 'colspan',
-                        value: state.content[r][c].colspan
-                    }
-                ]
+                        value: state.content[r][c].colspan,
+                    },
+                ],
             });
 
             createElement({
@@ -48,20 +48,20 @@ const body = state => {
                 attrs: [
                     {
                         attr: 'classname',
-                        value: 'td-p'
+                        value: 'td-p',
                     },
                     {
                         attr: 'contenteditable',
-                        value: 'true'
-                    }
+                        value: 'true',
+                    },
                 ],
                 eventObject: {
                     listener: 'input',
                     func: e => {
                         state.content[r][c].innerHTML = e.target.innerHTML;
                         reload(state);
-                    }, 
-                }
+                    },
+                },
             });
 
             createElement({
@@ -72,7 +72,7 @@ const body = state => {
                 attrs: [
                     {
                         attr: 'classname',
-                        value: 'increase-rowspan-button'
+                        value: 'increase-rowspan-button',
                     },
                 ],
                 eventObject: {
@@ -85,17 +85,17 @@ const body = state => {
                                 totalColumnRowspans += state.content[row][c].rowspan;
                             }
                         }
-    
+
                         // If there isn't enough room, create another row
                         if (totalColumnRowspans >= state.content.length || r === state.content.length - 1) {
                             state.content.push(createTableRow(state));
                         }
-    
+
                         state.content[r][c].rowspan++;
                         setCollision(state, r, c, true, 1);
                         reload(state, true);
                     },
-                }
+                },
             });
 
             createElement({
@@ -110,9 +110,8 @@ const body = state => {
                     },
                     {
                         attr: 'disabled',
-                        value: state.content[r][c].rowspan > 1 ? 'false' : 'true'
-
-                    }
+                        value: state.content[r][c].rowspan > 1 ? 'false' : 'true',
+                    },
                 ],
                 eventObject: {
                     listener: 'click',
@@ -121,7 +120,7 @@ const body = state => {
                         state.content[r][c].rowspan--;
                         reload(state, true);
                     },
-                }
+                },
             });
 
             createElement({
@@ -139,16 +138,16 @@ const body = state => {
                                 totalRowColumnSpans += state.content[r][column].colspan;
                             }
                         }
-    
+
                         // If there isn't enough room, create another column (to thead and tbody)
                         if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
                             state.colgroupProps.push({
                                 useWidth: false,
                                 width: 0,
                                 widthUnits: 'px',
-                                span: 1
+                                span: 1,
                             });
-                            
+
                             state.headerContent.push({
                                 innerHTML: 'innerHTML',
                                 rowspan: 1,
@@ -156,7 +155,7 @@ const body = state => {
                                 rowCollision: false,
                                 colCollision: false,
                             });
-    
+
                             state.content.forEach(element =>
                                 element.push({
                                     innerHTML: 'innerHTML',
@@ -171,7 +170,7 @@ const body = state => {
                         setCollision(state, r, c, true, 1);
                         reload(state, true);
                     },
-                }
+                },
             });
 
             createElement({
@@ -182,13 +181,12 @@ const body = state => {
                 attrs: [
                     {
                         attr: 'classname',
-                        value: 'decrease-colspan-button'
+                        value: 'decrease-colspan-button',
                     },
                     {
                         attr: 'disabled',
-                        value: state.content[r][c].colspan > 1 ? 'false' : 'true'
-
-                    }
+                        value: state.content[r][c].colspan > 1 ? 'false' : 'true',
+                    },
                 ],
                 eventObject: {
                     listener: 'click',
@@ -197,10 +195,10 @@ const body = state => {
                         state.content[r][c].colspan--;
                         reload(state, true);
                     },
-                }
+                },
             });
         }
     }
-}
+};
 
 export default body;
