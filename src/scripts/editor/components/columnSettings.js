@@ -42,7 +42,7 @@ const columnSettings = state => {
             innerHTML: 'Text align',
         });
 
-        const alignOptions = ['no align', 'left', 'center', 'right', 'justify'];
+        const alignOptions = ['none', 'left', 'center', 'right', 'justify'];
 
         alignOptions.map((option, i) => {
             createElement({
