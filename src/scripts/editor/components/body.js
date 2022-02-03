@@ -1,6 +1,7 @@
 import { reload } from '../createEditorTable';
 import setCollision from '../utl/setCollision';
 import createElement from '../utl/createElement';
+import createTableRow from '../utl/createTableRow';
 
 const body = state => {
     createElement({
@@ -156,6 +157,13 @@ const body = state => {
                                 colCollision: false,
                             });
 
+                            state.columnSettings.push({
+                                useWidth: false,
+                                width: 0,
+                                widthUnits: 'px',
+                                align: 'none',
+                            });
+
                             state.content.forEach(element =>
                                 element.push({
                                     innerHTML: 'innerHTML',
@@ -197,6 +205,101 @@ const body = state => {
                     },
                 },
             });
+
+            createElement({
+                type: 'input',
+                id: `isHeader-${r}${c}`,
+                parent: `td-${r}${c}`,
+                attrs: [
+                    {
+                        attr: 'classname',
+                        value: 'isheader',
+                    },
+                ],
+                inputProps: {
+                    type: 'checkbox',
+                    container: 'div',
+                    label: 'Is header',
+                    for: `isHeader-${r}${c}`,
+                    name: `isHeader-${r}${c}`,
+                    checked: state.content[r][c].isHeader,
+                },
+                eventObject: {
+                    listener: 'change',
+                    func: e => {
+                        state.content[r][c].isHeader = !state.content[r][c].isHeader;
+                        reload(state, true);
+                    },
+                },
+            });
+
+            if (state.content[r][c].isHeader) {
+                createElement({
+                    type: 'div',
+                    id: `isHeaderContainer-${r}${c}`,
+                    parent: `td-${r}${c}`,
+                });
+
+                createElement({
+                    type: 'span',
+                    innerHTML: 'Scope',
+                    parent: `isHeaderContainer-${r}${c}`,
+                });
+
+                createElement({
+                    type: 'input',
+                    id: `headerScopeCol-${r}${c}`,
+                    parent: `isHeaderContainer-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'classname',
+                            value: 'headerScope',
+                        },
+                    ],
+                    inputProps: {
+                        type: 'radio',
+                        container: 'div',
+                        label: 'Col',
+                        for: `headerScopeCol-${r}${c}`,
+                        name: `scope-${r}${c}`,
+                        checked: state.content[r][c].headerScope === 'col',
+                    },
+                    eventObject: {
+                        listener: 'change',
+                        func: () => {
+                            state.content[r][c].headerScope = 'col';
+                            reload(state, true);
+                        },
+                    },
+                });
+
+                createElement({
+                    type: 'input',
+                    id: `headerScopeRow-${r}${c}`,
+                    parent: `isHeaderContainer-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'classname',
+                            value: 'headerScope',
+                        },
+                    ],
+                    inputProps: {
+                        type: 'radio',
+                        container: 'div',
+                        label: 'Row',
+                        for: `headerScopeRow-${r}${c}`,
+                        name: `scope-${r}${c}`,
+                        checked: state.content[r][c].headerScope === 'row',
+                    },
+                    eventObject: {
+                        listener: 'change',
+                        func: () => {
+                            state.content[r][c].headerScope = 'row';
+                            reload(state, true);
+                        },
+                    },
+                });
+            }
         }
     }
 };

@@ -57,8 +57,13 @@ const createTableCode = state => {
         output += `${indent(4)}&lt;tr&gt<br>`;
 
         for (let c = 0; c < state.content[r].length; c++) {
+            let isHeader = state.content[r][c].isHeader;
+            let headerScope = state.content[r][c].headerScope;
+            let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
+            let cellTypeClose = isHeader ? 'th' : 'td';
+
             if (!state.content[r][c].colCollision && !state.content[r][c].rowCollision) {
-                output += `${indent(6)}&lt;td`;
+                output += `${indent(6)}&lt;${cellTypeOpen}`;
 
                 if (state.content[r][c].rowspan > 1) {
                     output += ` rowspan="${state.content[r][c].rowspan}"`;
@@ -66,7 +71,7 @@ const createTableCode = state => {
                 if (state.content[r][c].colspan > 1) {
                     output += ` colspan="${state.content[r][c].colspan}"`;
                 }
-                output += `&gt${replaceHTML(state.content[r][c].innerHTML, true)}&lt;/td&gt<br>`;
+                output += `&gt${replaceHTML(state.content[r][c].innerHTML, true)}&lt;/${cellTypeClose}&gt<br>`;
             }
         }
         output += `${indent(4)}&lt;/tr&gt<br>`;

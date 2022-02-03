@@ -10,7 +10,7 @@ const createTablePreview = state => {
     createElement({
         type: 'table',
         id: 'preview-table',
-        parent: 'preview'
+        parent: 'preview',
     });
 
     if (state.caption) {
@@ -18,7 +18,7 @@ const createTablePreview = state => {
             type: 'caption',
             id: 'preview-table-caption',
             parent: 'preview-table',
-            innerHTML: state.captionText
+            innerHTML: state.captionText,
         });
     }
 
@@ -26,20 +26,20 @@ const createTablePreview = state => {
         createElement({
             type: 'thead',
             id: 'preview-thead',
-            parent: 'preview-table'
+            parent: 'preview-table',
         });
 
         createElement({
             type: 'tr',
             id: 'preview-thead-row',
-            parent: 'preview-thead'
+            parent: 'preview-thead',
         });
 
         for (let h = 0; h < state.headerContent.length; h++) {
             createElement({
                 type: 'th',
                 parent: 'preview-thead-row',
-                innerHTML: state.headerContent[h].innerHTML
+                innerHTML: state.headerContent[h].innerHTML,
             });
         }
     }
@@ -47,14 +47,14 @@ const createTablePreview = state => {
     createElement({
         type: 'tbody',
         id: 'preview-tbody',
-        parent: 'preview-table'
+        parent: 'preview-table',
     });
 
     for (let r = 0; r < state.content.length; r++) {
         createElement({
             type: 'tr',
             id: `preview-table-row-${r}`,
-            parent: `preview-tbody`
+            parent: `preview-tbody`,
         });
 
         for (let c = 0; c < state.content[r].length; c++) {
@@ -62,21 +62,27 @@ const createTablePreview = state => {
                 continue;
             }
 
+            let cellType = state.content[r][c].isHeader ? 'th' : 'td';
+
             createElement({
-                type: 'td',
+                type: cellType,
                 id: `preview-td-${r}${c}`,
                 parent: `preview-table-row-${r}`,
                 innerHTML: state.content[r][c].innerHTML,
                 attrs: [
                     {
                         attr: 'rowspan',
-                        value: state.content[r][c].rowspan
+                        value: state.content[r][c].rowspan,
                     },
                     {
                         attr: 'colspan',
-                        value: state.content[r][c].colspan
-                    }
-                ]
+                        value: state.content[r][c].colspan,
+                    },
+                    {
+                        attr: 'scope',
+                        value: state.content[r][c].headerScope,
+                    },
+                ],
             });
         }
     }
