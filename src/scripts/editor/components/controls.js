@@ -2,6 +2,7 @@ import createElement from '../utl/createElement';
 import { reload } from '../createEditorTable';
 import createTableRow from '../utl/createTableRow';
 import createTableCol from '../utl/createTableCol';
+import createTableHeaderRow from '../utl/createTableHeaderRow';
 
 const controls = state => {
     createElement({
@@ -47,6 +48,51 @@ const controls = state => {
         },
     });
 
+    if (state.header) {
+        createElement({
+            type: 'button',
+            id: 'add-header-row',
+            parent: 'editor-table-controls',
+            innerHTML: 'add header row',
+            eventObject: {
+                listener: 'click',
+                func: () => {
+                    if (state.header) {
+                        state.headerContent.push(createTableHeaderRow(state));
+                    }
+                    reload(state, true);
+                },
+            },
+        });
+
+        createElement({
+            type: 'button',
+            id: 'remove-header-row',
+            parent: 'editor-table-controls',
+            innerHTML: 'remove header row',
+            eventObject: {
+                listener: 'click',
+                func: () => {
+                    if (!state.header) {
+                        return;
+                    }
+
+                    for (let td = 0; td < state.headerContent.at(-1).length; td++) {
+                        if (state.headerContent.at(-1)[td].rowCollision === true) {
+                            alert('Rowspan detected, cannot delete row. Remove rowspan first.');
+                            return;
+                        }
+                    }
+
+                    if (state.headerContent.length > 1) {
+                        state.headerContent.pop();
+                    }
+                    reload(state, true);
+                },
+            },
+        });
+    }
+
     createElement({
         type: 'button',
         id: 'add-column',
@@ -75,11 +121,23 @@ const controls = state => {
         eventObject: {
             listener: 'click',
             func: () => {
+                let detectedColspan = false;
+
                 for (let row = 0; row < state.content.length; row++) {
                     if (state.content[row].at(-1).colCollision === true) {
-                        alert('Colspan detected, cannot delete column. Remove colspan first.');
-                        return;
+                        detectedColspan = true;
                     }
+                }
+
+                for (let headerRow = 0; headerRow < state.headerContent.length; headerRow++) {
+                    if (state.headerContent[headerRow].at(-1).colCollision === true) {
+                        detectedColspan = true;
+                    }
+                }
+
+                if (detectedColspan) {
+                    alert('Colspan detected, cannot delete column. Remove colspan first.');
+                    return;
                 }
 
                 if (state.columnSettings.length > 1) {
@@ -90,9 +148,11 @@ const controls = state => {
                     state.colgroupProps.pop();
                 }
 
-                if (state.headerContent.length > 1) {
-                    state.headerContent.pop();
-                }
+                state.headerContent.forEach(element => {
+                    if (element.length > 1) {
+                        element.pop();
+                    }
+                });
 
                 state.content.forEach(element => {
                     if (element.length > 1) {

@@ -149,14 +149,6 @@ const body = state => {
                                 span: 1,
                             });
 
-                            state.headerContent.push({
-                                innerHTML: 'innerHTML',
-                                rowspan: 1,
-                                colspan: 1,
-                                rowCollision: false,
-                                colCollision: false,
-                            });
-
                             state.columnSettings.push({
                                 useWidth: false,
                                 width: 0,
@@ -165,6 +157,18 @@ const body = state => {
                             });
 
                             state.content.forEach(element =>
+                                element.push({
+                                    innerHTML: 'innerHTML',
+                                    rowspan: 1,
+                                    colspan: 1,
+                                    rowCollision: false,
+                                    colCollision: false,
+                                    isHeader: false,
+                                    headerScope: 'col',
+                                })
+                            );
+
+                            state.headerContent.forEach(element =>
                                 element.push({
                                     innerHTML: 'innerHTML',
                                     rowspan: 1,

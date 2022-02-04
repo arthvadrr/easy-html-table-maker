@@ -53,34 +53,36 @@ export default {
         },
     ],
     headerContent: [
-        {
-            innerHTML: 'innerHTML',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
-        },
-        {
-            innerHTML: 'innerHTML',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
-        },
-        {
-            innerHTML: 'innerHTML',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
-        },
-        {
-            innerHTML: 'innerHTML',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
-        },
+        [
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+            },
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+            },
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+            },
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+            },
+        ],
     ],
 
     content: [
