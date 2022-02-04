@@ -29,18 +29,37 @@ const createTablePreview = state => {
             parent: 'preview-table',
         });
 
-        createElement({
-            type: 'tr',
-            id: 'preview-thead-row',
-            parent: 'preview-thead',
-        });
-
-        for (let h = 0; h < state.headerContent.length; h++) {
+        for (let r = 0; r < state.headerContent.length; r++) {
             createElement({
-                type: 'th',
-                parent: 'preview-thead-row',
-                innerHTML: state.headerContent[h].innerHTML,
+                type: 'tr',
+                id: `preview-table-header-row-${r}`,
+                parent: `preview-thead`,
             });
+
+            for (let c = 0; c < state.headerContent[r].length; c++) {
+                if (state.headerContent[r][c].rowCollision || state.headerContent[r][c].colCollision) {
+                    continue;
+                }
+
+                let cellType = 'th';
+
+                createElement({
+                    type: cellType,
+                    id: `preview-th-${r}${c}`,
+                    parent: `preview-table-header-row-${r}`,
+                    innerHTML: state.headerContent[r][c].innerHTML,
+                    attrs: [
+                        {
+                            attr: 'rowspan',
+                            value: state.headerContent[r][c].rowspan,
+                        },
+                        {
+                            attr: 'colspan',
+                            value: state.headerContent[r][c].colspan,
+                        },
+                    ],
+                });
+            }
         }
     }
 

@@ -31,17 +31,8 @@ export default {
             widthUnits: 'px',
             align: 'none',
         },
-        {
-            useWidth: false,
-            width: 0,
-            widthUnits: 'px',
-            align: 'none',
-        },
     ],
     colgroupProps: [
-        {
-            span: 1,
-        },
         {
             span: 1,
         },
@@ -54,13 +45,6 @@ export default {
     ],
     headerContent: [
         [
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-            },
             {
                 innerHTML: 'innerHTML',
                 rowspan: 1,
@@ -114,64 +98,8 @@ export default {
                 isHeader: false,
                 headerScope: 'col',
             },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
         ],
         [
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
-        ],
-        [
-            {
-                innerHTML: 'innerHTML',
-                rowspan: 1,
-                colspan: 1,
-                rowCollision: false,
-                colCollision: false,
-                isHeader: false,
-                headerScope: 'col',
-            },
             {
                 innerHTML: 'innerHTML',
                 rowspan: 1,
