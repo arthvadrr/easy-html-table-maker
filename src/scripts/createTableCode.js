@@ -45,11 +45,28 @@ const createTableCode = state => {
     }
 
     if (state.header) {
-        output += `${indent(2)}&lt;thead&gt<br>${indent(4)}&lt;tr&gt<br>`;
-        for (let h = 0; h < state.headerContent.length; h++) {
-            output += `${indent(6)}&lt;th&gt${state.headerContent[h].innerHTML}&lt;/th&gt<br>`;
+        output += `${indent(2)}&lt;thead&gt<br>`;
+        for (let r = 0; r < state.headerContent.length; r++) {
+            output += `${indent(4)}&lt;tr&gt<br>`;
+
+            for (let c = 0; c < state.headerContent[r].length; c++) {
+                let cellType = 'th';
+
+                if (!state.headerContent[r][c].colCollision && !state.headerContent[r][c].rowCollision) {
+                    output += `${indent(6)}&lt;${cellType}`;
+
+                    if (state.headerContent[r][c].rowspan > 1) {
+                        output += ` rowspan="${state.headerContent[r][c].rowspan}"`;
+                    }
+                    if (state.headerContent[r][c].colspan > 1) {
+                        output += ` colspan="${state.headerContent[r][c].colspan}"`;
+                    }
+                    output += `&gt${replaceHTML(state.headerContent[r][c].innerHTML, true)}&lt;/${cellType}&gt<br>`;
+                }
+            }
+            output += `${indent(4)}&lt;/tr&gt<br>`;
         }
-        output += `${indent(4)}&lt;/tr&gt<br>${indent(2)}&lt;/thead&gt<br>`;
+        output += `${indent(2)}&lt;/thead&gt<br>`;
     }
 
     output += `${indent(2)}&lt;tbody&gt<br>`;
