@@ -31,6 +31,18 @@ const createTableCol = state => {
             colCollision: false,
         })
     );
+
+    state.footerContent.forEach(element =>
+        element.push({
+            innerHTML: 'innerHTML',
+            rowspan: 1,
+            colspan: 1,
+            rowCollision: false,
+            colCollision: false,
+            isHeader: false,
+            headerScope: 'col',
+        })
+    );
 };
 
 export default createTableCol;
