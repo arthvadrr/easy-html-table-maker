@@ -3,6 +3,7 @@ import { reload } from '../createEditorTable';
 import createTableRow from '../utl/createTableRow';
 import createTableCol from '../utl/createTableCol';
 import createTableHeaderRow from '../utl/createTableHeaderRow';
+import createTableFooterRow from '../utl/createTableFooterRow';
 
 const controls = state => {
     createElement({
@@ -93,6 +94,51 @@ const controls = state => {
         });
     }
 
+    if (state.footer) {
+        createElement({
+            type: 'button',
+            id: 'add-footer-row',
+            parent: 'editor-table-controls',
+            innerHTML: 'add footer row',
+            eventObject: {
+                listener: 'click',
+                func: () => {
+                    if (state.footer) {
+                        state.footerContent.push(createTableFooterRow(state));
+                    }
+                    reload(state, true);
+                },
+            },
+        });
+
+        createElement({
+            type: 'button',
+            id: 'remove-footer-row',
+            parent: 'editor-table-controls',
+            innerHTML: 'remove footer row',
+            eventObject: {
+                listener: 'click',
+                func: () => {
+                    if (!state.footer) {
+                        return;
+                    }
+
+                    for (let td = 0; td < state.footerContent.at(-1).length; td++) {
+                        if (state.footerContent.at(-1)[td].rowCollision === true) {
+                            alert('Rowspan detected, cannot delete row. Remove rowspan first.');
+                            return;
+                        }
+                    }
+
+                    if (state.footerContent.length > 1) {
+                        state.footerContent.pop();
+                    }
+                    reload(state, true);
+                },
+            },
+        });
+    }
+
     createElement({
         type: 'button',
         id: 'add-column',
@@ -135,6 +181,12 @@ const controls = state => {
                     }
                 }
 
+                for (let footerRow = 0; footerRow < state.footerContent.length; footerRow++) {
+                    if (state.footerContent[footerRow].at(-1).colCollision === true) {
+                        detectedColspan = true;
+                    }
+                }
+
                 if (detectedColspan) {
                     alert('Colspan detected, cannot delete column. Remove colspan first.');
                     return;
@@ -155,6 +207,12 @@ const controls = state => {
                 });
 
                 state.content.forEach(element => {
+                    if (element.length > 1) {
+                        element.pop();
+                    }
+                });
+
+                state.footerContent.forEach(element => {
                     if (element.length > 1) {
                         element.pop();
                     }
@@ -234,6 +292,26 @@ const controls = state => {
             listener: 'click',
             func: () => {
                 state.header = !state.header;
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
+        id: 'footer-toggle',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Footer',
+            name: 'footer-toggle',
+            for: 'footer-toggle',
+            checked: state.footer,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.footer = !state.footer;
                 reload(state, true);
             },
         },

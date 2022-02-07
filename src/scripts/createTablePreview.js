@@ -105,6 +105,50 @@ const createTablePreview = state => {
             });
         }
     }
+
+    if (state.footer) {
+        createElement({
+            type: 'tfoot',
+            id: 'preview-tfoot',
+            parent: 'preview-table',
+        });
+
+        for (let r = 0; r < state.footerContent.length; r++) {
+            createElement({
+                type: 'tr',
+                id: `preview-table-footer-row-${r}`,
+                parent: `preview-tfoot`,
+            });
+            for (let c = 0; c < state.footerContent[r].length; c++) {
+                if (state.footerContent[r][c].rowCollision || state.footerContent[r][c].colCollision) {
+                    continue;
+                }
+
+                let cellType = state.footerContent[r][c].isHeader ? 'th' : 'td';
+
+                createElement({
+                    type: cellType,
+                    id: `preview-footer-td-${r}${c}`,
+                    parent: `preview-table-footer-row-${r}`,
+                    innerHTML: state.footerContent[r][c].innerHTML,
+                    attrs: [
+                        {
+                            attr: 'rowspan',
+                            value: state.footerContent[r][c].rowspan,
+                        },
+                        {
+                            attr: 'colspan',
+                            value: state.footerContent[r][c].colspan,
+                        },
+                        {
+                            attr: 'scope',
+                            value: state.footerContent[r][c].headerScope,
+                        },
+                    ],
+                });
+            }
+        }
+    }
 };
 
 export default createTablePreview;

@@ -94,6 +94,36 @@ const createTableCode = state => {
         output += `${indent(4)}&lt;/tr&gt<br>`;
     }
     output += `${indent(2)}&lt;/tbody&gt<br>`;
+
+    if (state.footer) {
+        output += `${indent(2)}&lt;tfoot&gt<br>`;
+        for (let r = 0; r < state.footerContent.length; r++) {
+            output += `${indent(4)}&lt;tr&gt<br>`;
+
+            for (let c = 0; c < state.footerContent[r].length; c++) {
+                let isHeader = state.footerContent[r][c].isHeader;
+                let headerScope = state.footerContent[r][c].headerScope;
+                let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
+                let cellTypeClose = isHeader ? 'th' : 'td';
+
+                if (!state.footerContent[r][c].colCollision && !state.footerContent[r][c].rowCollision) {
+                    output += `${indent(6)}&lt;${cellTypeOpen}`;
+
+                    if (state.footerContent[r][c].rowspan > 1) {
+                        output += ` rowspan="${state.content[r][c].rowspan}"`;
+                    }
+                    if (state.footerContent[r][c].colspan > 1) {
+                        output += ` colspan="${state.footerContent[r][c].colspan}"`;
+                    }
+                    output += `&gt${replaceHTML(state.footerContent[r][c].innerHTML, true)}&lt;/${cellTypeClose}&gt<br>`;
+                }
+            }
+
+            output += `${indent(4)}&lt;/tr&gt<br>`;
+        }
+        output += `${indent(2)}&lt;/tfoot&gt<br>`;
+    }
+
     output += `&lt;/table&gt<br>`;
 
     $code_tableCode.innerHTML = output;

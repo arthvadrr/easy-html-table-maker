@@ -9,6 +9,7 @@ import caption from './components/caption';
 import colgroup from './components/colgroup';
 import header from './components/header';
 import body from './components/body';
+import footer from './components/footer';
 
 export const reload = (state, reloadEditor) => {
     localStorage.setItem('savedState', JSON.stringify(state));
@@ -23,7 +24,7 @@ export const reload = (state, reloadEditor) => {
 
 const createEditorTable = state => {
     // Render the table components
-    const tableComponents = [table, columnSettings, controls, caption, colgroup, header, body];
+    const tableComponents = [table, columnSettings, controls, colgroup, caption, header, body, footer];
     tableComponents.map(item => item(state));
 };
 

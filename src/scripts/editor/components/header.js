@@ -6,6 +6,13 @@ import setCollision from '../utl/setCollision';
 const header = state => {
     if (state.header) {
         createElement({
+            type: 'h3',
+            id: 'header-heading',
+            parent: 'editor-table',
+            innerHTML: 'Table Header',
+        });
+
+        createElement({
             type: 'thead',
             id: 'table-header',
             parent: 'editor-table',
@@ -163,6 +170,18 @@ const header = state => {
                                         colspan: 1,
                                         rowCollision: false,
                                         colCollision: false,
+                                    })
+                                );
+
+                                state.footerContent.forEach(element =>
+                                    element.push({
+                                        innerHTML: 'innerHTML',
+                                        rowspan: 1,
+                                        colspan: 1,
+                                        rowCollision: false,
+                                        colCollision: false,
+                                        isHeader: false,
+                                        headerScope: 'col',
                                     })
                                 );
 

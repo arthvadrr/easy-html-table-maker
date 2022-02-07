@@ -5,6 +5,13 @@ import createTableRow from '../utl/createTableRow';
 
 const body = state => {
     createElement({
+        type: 'h3',
+        id: 'body-heading',
+        parent: 'editor-table',
+        innerHTML: 'Table Body',
+    });
+
+    createElement({
         type: 'tbody',
         id: 'table-body',
         parent: 'editor-table',
@@ -175,6 +182,18 @@ const body = state => {
                                     colspan: 1,
                                     rowCollision: false,
                                     colCollision: false,
+                                })
+                            );
+
+                            state.footerContent.forEach(element =>
+                                element.push({
+                                    innerHTML: 'innerHTML',
+                                    rowspan: 1,
+                                    colspan: 1,
+                                    rowCollision: false,
+                                    colCollision: false,
+                                    isHeader: false,
+                                    headerScope: 'col',
                                 })
                             );
                         }

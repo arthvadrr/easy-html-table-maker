@@ -1,6 +1,7 @@
 export default {
     loading: true,
     header: true,
+    footer: true,
     colgroup: true,
     caption: false,
     captionText: 'captionText',
@@ -99,6 +100,37 @@ export default {
                 headerScope: 'col',
             },
         ],
+        [
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+                isHeader: false,
+                headerScope: 'col',
+            },
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+                isHeader: false,
+                headerScope: 'col',
+            },
+            {
+                innerHTML: 'innerHTML',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+                isHeader: false,
+                headerScope: 'col',
+            },
+        ],
+    ],
+    footerContent: [
         [
             {
                 innerHTML: 'innerHTML',

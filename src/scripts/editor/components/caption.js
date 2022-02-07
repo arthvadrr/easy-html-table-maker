@@ -1,10 +1,17 @@
-import { reload } from "../createEditorTable";
-import createElement from "../utl/createElement";
+import { reload } from '../createEditorTable';
+import createElement from '../utl/createElement';
 
 const caption = state => {
     if (state.caption) {
         createElement({
-            type: 'caption',
+            type: 'h3',
+            id: 'caption-heading',
+            parent: 'editor-table',
+            innerHTML: 'Table Caption',
+        });
+
+        createElement({
+            type: 'p',
             id: 'table-caption',
             parent: 'editor-table',
             innerHTML: state.captionText,
@@ -22,7 +29,7 @@ const caption = state => {
                 },
             },
         });
-    }   
-}
+    }
+};
 
 export default caption;
