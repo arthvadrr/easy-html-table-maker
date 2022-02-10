@@ -1,5 +1,6 @@
 import createElement from '../utl/createElement';
 import { reload } from '../createEditorTable';
+import initialState from '../../initialState';
 import createTableRow from '../utl/createTableRow';
 import createTableCol from '../utl/createTableCol';
 import createTableHeaderRow from '../utl/createTableHeaderRow';
@@ -224,6 +225,26 @@ const controls = state => {
 
     createElement({
         type: 'input',
+        id: 'colgroup-toggle',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Colgroup',
+            name: 'colgroup-toggle',
+            for: 'colgroup-toggle',
+            checked: state.colgroup,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.colgroup = !state.colgroup;
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
         id: 'caption-toggle',
         parent: 'editor-table-controls',
         attrs: [
@@ -252,26 +273,6 @@ const controls = state => {
             listener: 'click',
             func: () => {
                 state.caption = !state.caption;
-                reload(state, true);
-            },
-        },
-    });
-
-    createElement({
-        type: 'input',
-        id: 'colgroup-toggle',
-        parent: 'editor-table-controls',
-        inputProps: {
-            type: 'checkbox',
-            label: 'Colgroup',
-            name: 'colgroup-toggle',
-            for: 'colgroup-toggle',
-            checked: state.colgroup,
-        },
-        eventObject: {
-            listener: 'click',
-            func: () => {
-                state.colgroup = !state.colgroup;
                 reload(state, true);
             },
         },
@@ -356,6 +357,23 @@ const controls = state => {
             },
         });
     }
+
+    createElement({
+        type: 'button',
+        id: 'reset-table',
+        parent: 'editor-table-controls',
+        innerHTML: 'reset table',
+        eventObject: {
+            listener: 'click',
+            func: e => {
+                let clearTableAlert = confirm('Are you sure you want to clear the current table data?');
+                if (clearTableAlert) {
+                    localStorage.removeItem('savedState');
+                    location.reload();
+                }
+            },
+        },
+    });
 };
 
 export default controls;

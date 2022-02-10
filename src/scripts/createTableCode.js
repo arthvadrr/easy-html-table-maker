@@ -36,6 +36,11 @@ const createTableCode = state => {
             let colOutput = `${indent(4)}&lt;col`;
 
             if (state.colgroupProps[colgroup].span > 1) {
+                colOutput += ` span="${state.colgroupProps[colgroup].span}"`;
+            }
+
+            if (state.colgroupProps[colgroup].className != '' && state.colgroupProps[colgroup].className != undefined) {
+                colOutput += ` class="${state.colgroupProps[colgroup].className}"`;
             }
 
             colOutput += '&gt<br>';

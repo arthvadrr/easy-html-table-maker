@@ -35,13 +35,22 @@ export default {
     ],
     colgroupProps: [
         {
+            useSpan: false,
             span: 1,
+            useClassName: false,
+            className: '',
         },
         {
+            useSpan: false,
             span: 1,
+            useClassName: false,
+            className: '',
         },
         {
+            useSpan: false,
             span: 1,
+            useClassName: false,
+            className: '',
         },
     ],
     headerContent: [
