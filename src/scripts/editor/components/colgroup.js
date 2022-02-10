@@ -74,7 +74,7 @@ const colgroup = state => {
                     parent: `colgroup-item-${colgroupIndex}`,
                     inputProps: {
                         type: 'number',
-                        label: 'Amount',
+                        label: `Amount (current max is ${state.content.length + state.headerContent.length + state.footerContent.length})`,
                         name: 'span-toggle',
                         for: `colgroup-use-span-${colgroupIndex}`,
                         checked: state.colgroupProps[colgroupIndex].useSpan,
@@ -82,11 +82,12 @@ const colgroup = state => {
                     eventObject: {
                         listener: 'input',
                         func: e => {
-                            if (e.target.value <= state.content[0].length) {
+                            if (e.target.value <= state.content.length + state.headerContent.length + state.footerContent.length) {
                                 state.colgroupProps[colgroupIndex].span = e.target.value;
                                 reload(state);
                             } else {
-                                alert('Please enter a valid number (span cannot exceed column length)');
+                                alert('Please enter a valid number (span cannot exceed total table rows length)');
+                                e.target.value = '';
                             }
                             reload(state);
                         },
