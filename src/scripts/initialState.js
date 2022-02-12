@@ -10,7 +10,7 @@ export default {
     styles: [
         {
             selector: 'tbody>tr>:nth-child(1)',
-            styles: 'text-align: left',
+            style: 'text-align: left',
         },
     ],
     columnSettings: [
