@@ -1,13 +1,13 @@
-#them BIGASS node_modules
+#node_modules
 **/node_modules
 
-#git stuff
+#git
 *.git
 
 #logs
 *.log
 *.idea
 
-#system generated crap
+#system generated
 .DS_Store
 .DS_Store?

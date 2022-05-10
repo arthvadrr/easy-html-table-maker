@@ -25,8 +25,7 @@ const statePromiseOnReject = () => {
     init();
 };
 
-statePromise.then(statePromiseOnResolve);
-statePromise.catch(statePromiseOnReject);
+statePromise.then(statePromiseOnResolve).catch(statePromiseOnReject);
 
 const init = () => {
     createEditorTable(state);
