@@ -10,14 +10,22 @@ const createColControls = (props) => {
 		attrs       : [
 			{
 				attr  : 'classname',
-				value : '',
+				value : 'colcon_text-align',
 			},
 		],
 		eventObject : {
 			listener : 'click',
-			func     : () => {
-				console.log(props.state);
-				//reload( props.state, true );
+			func     : (e) => {
+				console.log(e.target);
+				const styleID = (Date.now() + props.c).toString();
+				console.log(styleID);
+				let style = {
+					id: styleID,
+					selector: `tbody>tr>:nth-child(${props.c})`,
+					style: 'text-align: left',
+				}
+				props.state.styles.push(style);
+				reload(props.state, true);
 			},
 		},
 	} );

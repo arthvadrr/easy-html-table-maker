@@ -17,7 +17,7 @@ const createElement = (
     if (!type || !parent) {
         return;
     }
-    
+
     if (typeof parent === 'string') {
         parent = document.getElementById(parent);
     }
@@ -75,7 +75,7 @@ const createElement = (
         for (let a = 0; a < attrs.length; a++) {
             ele.setAttribute(attrs[a].attr, attrs[a].value);
 
-            // Hacky fix for disabled=false not being valid on HTML elements. What a pain in the ass!
+            // Hacky fix for disabled=false not being valid on HTML elements.
             if (attrs[a].attr === 'disabled' && attrs[a].value === 'false') {
                 ele.removeAttribute('disabled');
             }

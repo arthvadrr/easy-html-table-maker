@@ -46,7 +46,8 @@ const body = state => {
 					id     : `colcon-${c}`,
 					parent : `td-colcon-${c}`,
 					state: state,
-				} );
+					c: c,
+				});
 			}
 
 			// Ignore TDs based on rowspan and colspan

@@ -21,13 +21,18 @@ const createTableCode = state => {
     let colgroupProps = '';
 
     if (state.styles.length > 0) {
+        output += '&lt;style&gt;';
+        output += '<br>';
         for (let style = 0; style < state.styles.length; style++) {
             output += `${state.styles[style].selector} {`;
             output += '<br>';
             output += `${indent(2)}${state.styles[style].style};`;
             output += '<br>';
             output += '}';
+            output += '<br>';
+            output += state.styles.length === style ? '' : '<br>';
         }
+        output += '&lt;/style&gt;';
         output += '<br><br>';
     }
 
