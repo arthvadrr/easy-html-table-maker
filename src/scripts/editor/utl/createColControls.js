@@ -2,6 +2,17 @@ import createElement  from './createElement';
 import { reload }     from '../createEditorTable';
 
 const createColControls = (props) => {
+	let stylePosition;
+	const styleExists = (() => {
+		for (let s = 0; s < props.state.styles.length; s++) {
+			if (props.state.styles[s].id === props.id) {
+				stylePosition = s;
+				return true;
+			}
+		}
+		return false;
+	})();
+
 	createElement( {
 		type        : 'button',
 		id          : props.id,
@@ -12,20 +23,27 @@ const createColControls = (props) => {
 				attr  : 'classname',
 				value : 'colcon_text-align',
 			},
+			{
+				attr : 'data-style-exists',
+				value : styleExists === true ? "true" : "false"
+			}
 		],
 		eventObject : {
 			listener : 'click',
 			func     : (e) => {
-				console.log(e.target);
-				const styleID = (Date.now() + props.c).toString();
-				console.log(styleID);
-				let style = {
-					id: styleID,
-					selector: `tbody>tr>:nth-child(${props.c})`,
-					style: 'text-align: left',
+				if (!styleExists) {
+					let style = {
+						id       : props.id,
+						selector : `tbody>tr>:nth-child(${props.c})`,
+						style    : 'text-align: left',
+					}
+
+					props.state.styles.push( style );
+					console.log( props.state.styles );
+				} else {
+					props.state.styles.splice(stylePosition, 1);
 				}
-				props.state.styles.push(style);
-				reload(props.state, true);
+				reload( props.state, true );
 			},
 		},
 	} );

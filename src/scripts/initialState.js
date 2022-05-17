@@ -7,12 +7,7 @@ export default {
     captionText: 'captionText',
     useClassName: false,
     className: '',
-    styles: [
-        {
-            selector: 'tbody>tr>:nth-child(1)',
-            style: 'text-align: left',
-        },
-    ],
+    styles: [],
     columnSettings: [
         {
             useWidth: false,
