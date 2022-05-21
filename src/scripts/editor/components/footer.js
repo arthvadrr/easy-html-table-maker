@@ -9,7 +9,7 @@ const footer = state => {
             type: 'h3',
             id: 'footer-heading',
             parent: 'editor-table',
-            innerHTML: 'Table Footer',
+            innerHTML: 'table footer',
         });
 
         createElement({
@@ -76,7 +76,7 @@ const footer = state => {
                     type: 'button',
                     id: `increase-footer-rowspan-button-${r}${c}`,
                     parent: `footer-td-${r}${c}`,
-                    innerHTML: 'RS+',
+                    innerHTML: 'rs+',
                     attrs: [
                         {
                             attr: 'classname',
@@ -110,7 +110,7 @@ const footer = state => {
                     type: 'button',
                     id: `decrease-footer-rowspan-button-${r}${c}`,
                     parent: `footer-td-${r}${c}`,
-                    innerHTML: 'RS-',
+                    innerHTML: 'rs-',
                     attrs: [
                         {
                             attr: 'classname',
@@ -135,7 +135,7 @@ const footer = state => {
                     type: 'button',
                     id: `increase-footer-colspan-button-${r}${c}`,
                     parent: `footer-td-${r}${c}`,
-                    innerHTML: 'CS+',
+                    innerHTML: 'cs+',
                     eventObject: {
                         listener: 'click',
                         func: () => {
@@ -206,7 +206,7 @@ const footer = state => {
                     type: 'button',
                     id: `decrease-colspan-button-${r}${c}`,
                     parent: `footer-td-${r}${c}`,
-                    innerHTML: 'CS-',
+                    innerHTML: 'cs-',
                     attrs: [
                         {
                             attr: 'classname',
@@ -263,7 +263,7 @@ const footer = state => {
 
                     createElement({
                         type: 'span',
-                        innerHTML: 'Scope',
+                        innerHTML: 'scope',
                         parent: `footer-isHeaderContainer-${r}${c}`,
                     });
 

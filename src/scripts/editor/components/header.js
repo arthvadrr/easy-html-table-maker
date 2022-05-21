@@ -9,7 +9,7 @@ const header = state => {
             type: 'h3',
             id: 'header-heading',
             parent: 'editor-table',
-            innerHTML: 'Table Header',
+            innerHTML: 'table header',
         });
 
         createElement({
@@ -76,7 +76,7 @@ const header = state => {
                     type: 'button',
                     id: `increase-header-rowspan-button-${r}${c}`,
                     parent: `th-${r}${c}`,
-                    innerHTML: 'RS+',
+                    innerHTML: 'rs+',
                     attrs: [
                         {
                             attr: 'classname',
@@ -110,7 +110,7 @@ const header = state => {
                     type: 'button',
                     id: `decrease-header-rowspan-button-${r}${c}`,
                     parent: `th-${r}${c}`,
-                    innerHTML: 'RS-',
+                    innerHTML: 'rs-',
                     attrs: [
                         {
                             attr: 'classname',
@@ -135,7 +135,7 @@ const header = state => {
                     type: 'button',
                     id: `increase-header-colspan-button-${r}${c}`,
                     parent: `th-${r}${c}`,
-                    innerHTML: 'CS+',
+                    innerHTML: 'cs+',
                     eventObject: {
                         listener: 'click',
                         func: () => {
@@ -208,7 +208,7 @@ const header = state => {
                     type: 'button',
                     id: `decrease-colspan-button-${r}${c}`,
                     parent: `th-${r}${c}`,
-                    innerHTML: 'CS-',
+                    innerHTML: 'cs-',
                     attrs: [
                         {
                             attr: 'classname',

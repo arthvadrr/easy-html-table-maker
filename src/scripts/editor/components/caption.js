@@ -7,7 +7,7 @@ const caption = state => {
             type: 'h3',
             id: 'caption-heading',
             parent: 'editor-table',
-            innerHTML: 'Table Caption',
+            innerHTML: 'table caption',
         });
 
         createElement({

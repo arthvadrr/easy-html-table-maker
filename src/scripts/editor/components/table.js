@@ -1,4 +1,4 @@
-import createElement from "../utl/createElement";
+import createElement from '../utl/createElement';
 
 const table = () => {
     // Remove the existing div so we don't get duplicates
@@ -24,6 +24,6 @@ const table = () => {
             },
         ],
     });
-}
+};
 
 export default table;
