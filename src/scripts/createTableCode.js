@@ -51,16 +51,15 @@ const createTableCode = state => {
         for (let colgroup = 0; colgroup < state.colgroupProps.length; colgroup++) {
             let colOutput = `${indent(4)}&lt;col`;
 
-            if (state.colgroupProps[colgroup].span > 1) {
+            if (state.colgroupProps[colgroup].span > 1 && state.colgroupProps[colgroup].useSpan) {
                 colOutput += ` span="${state.colgroupProps[colgroup].span}"`;
             }
 
-            if (state.colgroupProps[colgroup].className != '' && state.colgroupProps[colgroup].className != undefined) {
+            if (state.colgroupProps[colgroup].className !== '' && state.colgroupProps[colgroup].className !== undefined) {
                 colOutput += ` class="${state.colgroupProps[colgroup].className}"`;
             }
 
-            // TODO Move to colgroupProps
-            if (state.columnSettings[colgroup].width != 0 && state.columnSettings[colgroup].useWidth) {
+            if (state.columnSettings[colgroup].width !== 0 && state.columnSettings[colgroup].useWidth) {
                 colOutput += ` style="width:${state.columnSettings[colgroup].width}${state.columnSettings[colgroup].widthUnits}"`;
             }
 

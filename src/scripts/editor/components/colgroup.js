@@ -4,6 +4,18 @@ import createElement from '../utl/createElement';
 const colgroup = state => {
 	if ( state.colgroup ) {
 		createElement( {
+			type      : 'h3',
+			innerHTML : 'colgroup settings',
+			parent    : 'editor-table',
+			attrs     : [
+				{
+					attr  : 'style',
+					value : 'display: table-header-group; text-align:left;',
+				},
+			],
+		} );
+
+		createElement( {
 			type   : 'colgroup',
 			id     : 'editor-table-colgroup',
 			parent : 'editor-table',
@@ -37,12 +49,6 @@ const colgroup = state => {
 					value : state.content[ 0 ].length.toString(),
 				},
 			],
-		} );
-
-		createElement( {
-			type      : 'h3',
-			innerHTML : 'colgroup settings',
-			parent    : 'editor-colgroup-header-th',
 		} );
 
 		for ( let colgroupIndex = 0; colgroupIndex < state.colgroupProps.length; colgroupIndex++ ) {
@@ -154,22 +160,25 @@ const colgroup = state => {
 					type        : 'input',
 					id          : `colgroup-use-classname-name-${colgroupIndex}`,
 					parent      : `colgroup-item-${colgroupIndex}`,
-					attrs       : {
-						attr  : 'placeholder',
-						value : 'Enter a class name',
-					},
+					attrs       :
+						[
+							{
+								attr  : 'placeholder',
+								value : 'Enter a class name',
+							},
+						],
 					inputProps  : {
-						type    : 'text',
-						label   : 'Name',
-						name    : `colgroup-use-classname-name-${colgroupIndex}`,
-						for     : `colgroup-use-classname-name-${colgroupIndex}`,
-						checked : state.colgroupProps[ colgroupIndex ].useClassName,
+						type  : 'text',
+						label : 'name',
+						name  : `colgroup-use-classname-name-${colgroupIndex}`,
+						for   : `colgroup-use-classname-name-${colgroupIndex}`,
+						value: state.colgroupProps[ colgroupIndex ].className ? state.colgroupProps[ colgroupIndex ].className : '',
 					},
 					eventObject : {
 						listener : 'input',
 						func     : e => {
-							if ( e.target.value != undefined && e.target.value != '' ) {
-								state.colgroupProps[ colgroupIndex ].span = e.target.value;
+							if ( e.target.value !== undefined ) {
+								state.colgroupProps[ colgroupIndex ].className = e.target.value;
 								reload( state );
 							}
 							reload( state );
@@ -236,7 +245,7 @@ const colgroup = state => {
 						listener : 'click',
 						func     : () => {
 							document.getElementById( `col-width-input-${colgroupIndex}` ).value = 0;
-							state.columnSettings[ colgroupIndex ].width = "0";
+							state.columnSettings[ colgroupIndex ].width = '0';
 							reload( state, true );
 						},
 					},
