@@ -278,6 +278,27 @@ const controls = state => {
         },
     });
 
+    if (state.caption) {
+        createElement({
+            type: 'input',
+            id: 'table-caption-input',
+            parent: 'editor-table-controls',
+            inputProps: {
+                type: 'text',
+                label: 'Table caption',
+                for: 'table-caption-input',
+                value: state.captionText,
+            },
+            eventObject: {
+                listener: 'input',
+                func: e => {
+                    state.captionText = e.target.value;
+                    reload(state);
+                },
+            },
+        });
+    }
+
     createElement({
         type: 'input',
         id: 'header-toggle',

@@ -1,3 +1,5 @@
+// Deprecated file (caption input moved to controls.js)
+
 import { reload } from '../createEditorTable';
 import createElement from '../utl/createElement';
 

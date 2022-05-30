@@ -59,6 +59,11 @@ const createTableCode = state => {
                 colOutput += ` class="${state.colgroupProps[colgroup].className}"`;
             }
 
+            // TODO Move to colgroupProps
+            if (state.columnSettings[colgroup].width != 0 && state.columnSettings[colgroup].useWidth) {
+                colOutput += ` style="width:${state.columnSettings[colgroup].width}${state.columnSettings[colgroup].widthUnits}"`;
+            }
+
             colOutput += '&gt<br>';
             output += colOutput;
         }

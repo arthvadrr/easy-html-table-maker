@@ -23,7 +23,7 @@ export const reload = (state, reloadEditor) => {
 
 const createEditorTable = state => {
     // Render the table components
-    const tableComponents = [table, controls, colgroup, caption, header, body, footer];
+    const tableComponents = [table, controls, colgroup, header, body, footer];
     tableComponents.map(item => item(state));
 };
 

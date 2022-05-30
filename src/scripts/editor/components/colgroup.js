@@ -226,6 +226,21 @@ const colgroup = state => {
 						},
 					},
 				} );
+
+				createElement( {
+					type        : 'button',
+					id          : `col-width-${colgroupIndex}-clear`,
+					parent      : `colgroup-item-${colgroupIndex}`,
+					innerHTML   : 'clear',
+					eventObject : {
+						listener : 'click',
+						func     : () => {
+							document.getElementById( `col-width-input-${colgroupIndex}` ).value = 0;
+							state.columnSettings[ colgroupIndex ].width = "0";
+							reload( state, true );
+						},
+					},
+				} );
 			}
 		}
 	}

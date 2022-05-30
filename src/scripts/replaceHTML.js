@@ -4,7 +4,7 @@ const replaceHTML = (text, encode) => {
     }
 
     if (typeof text !== 'string') {
-        return 'replaceHTML error: Parameter "text" not a string.';
+        return 'replaceHTML error: Argument at parameter "text" is not of type "string".';
     }
 
     if (encode) {
