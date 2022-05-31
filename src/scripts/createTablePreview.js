@@ -22,6 +22,39 @@ const createTablePreview = state => {
         });
     }
 
+    if (state.colgroup) {
+        createElement({
+            type: 'colgroup',
+            id: 'preview-colgroup',
+            parent: 'preview-table'
+        });
+
+        for (let col = 0; col < state.columnSettings.length; col++) {
+            let colAttrs = [];
+
+            if (state.columnSettings[col].width) {
+                colAttrs.push({
+                    attr: 'style',
+                    value: `width:${state.columnSettings[col].width}${state.columnSettings[col].widthUnits}`
+                });
+            }
+
+            if (state.colgroupProps[col].useSpan && state.colgroupProps[col].span > 1) {
+                colAttrs.push({
+                    attr: 'span',
+                    value: state.colgroupProps[col].span
+                });
+            }
+
+            createElement({
+               type: 'col',
+               id: `preview-col-${col}`,
+               parent: 'preview-colgroup',
+                attrs: colAttrs,
+            });
+        }
+    }
+
     if (state.header) {
         createElement({
             type: 'thead',

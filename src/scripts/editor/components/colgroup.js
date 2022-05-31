@@ -111,6 +111,7 @@ const colgroup = state => {
 						label   : `Amount (current max is ${state.content.length + state.headerContent.length + state.footerContent.length})`,
 						name    : 'span-toggle',
 						for     : `colgroup-use-span-${colgroupIndex}`,
+						value   : state.colgroupProps[ colgroupIndex ].span,
 						checked : state.colgroupProps[ colgroupIndex ].useSpan,
 					},
 					eventObject : {
@@ -172,7 +173,7 @@ const colgroup = state => {
 						label : 'name',
 						name  : `colgroup-use-classname-name-${colgroupIndex}`,
 						for   : `colgroup-use-classname-name-${colgroupIndex}`,
-						value: state.colgroupProps[ colgroupIndex ].className ? state.colgroupProps[ colgroupIndex ].className : '',
+						value : state.colgroupProps[ colgroupIndex ].className ? state.colgroupProps[ colgroupIndex ].className : '',
 					},
 					eventObject : {
 						listener : 'input',
