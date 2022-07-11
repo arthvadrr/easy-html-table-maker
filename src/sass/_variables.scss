@@ -1,1 +1,6 @@
 $color_dark-gray: #444444;
+
+[dir='rtl']:is(.form-line-column, .form-label-right, .form-radio-item) {
+    float: right;
+    text-align: right;
+}

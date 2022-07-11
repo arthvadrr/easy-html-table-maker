@@ -358,6 +358,25 @@ const controls = state => {
         },
     });
 
+    createElement({
+        type: 'input',
+        id: 'allow-tags',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Allow tags',
+            for: 'allow-tags',
+            checked: state.allowTags,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.allowTags = !state.allowTags;
+                reload(state, true);
+            },
+        },
+    });
+
     if (state.useClassName) {
         createElement({
             type: 'input',

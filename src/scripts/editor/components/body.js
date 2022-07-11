@@ -3,6 +3,7 @@ import setCollision from '../utl/setCollision';
 import createElement from '../utl/createElement';
 import createTableRow from '../utl/createTableRow';
 import createColControls from '../utl/createColControls';
+import filterInnerHTML from '../utl/filterInnerHTML';
 
 const body = state => {
     createElement({
@@ -70,24 +71,23 @@ const body = state => {
             });
 
             createElement({
-                type: 'p',
+                type: 'input',
                 id: `p-${r}${c}`,
                 parent: `td-${r}${c}`,
-                innerHTML: state.content[r][c].innerHTML,
                 attrs: [
                     {
-                        attr: 'classname',
-                        value: 'td-p',
-                    },
-                    {
-                        attr: 'contenteditable',
-                        value: 'true',
+                        attr: 'class',
+                        value: 'td-input',
                     },
                 ],
+                inputProps: {
+                    type: 'text',
+                    value: state.content[r][c].innerHTML,
+                },
                 eventObject: {
                     listener: 'input',
                     func: e => {
-                        state.content[r][c].innerHTML = e.target.innerHTML;
+                        state.content[r][c].innerHTML = filterInnerHTML(e.target.value, state.allowTags);
                         reload(state);
                     },
                 },

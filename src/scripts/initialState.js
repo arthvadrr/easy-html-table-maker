@@ -1,5 +1,6 @@
 export default {
     loading: true,
+    allowTags: false,
     header: true,
     footer: true,
     colgroup: true,

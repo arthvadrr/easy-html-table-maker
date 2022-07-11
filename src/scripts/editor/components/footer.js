@@ -2,6 +2,7 @@ import { reload } from '../createEditorTable';
 import createElement from '../utl/createElement';
 import createTableFooterRow from '../utl/createTableFooterRow';
 import setCollision from '../utl/setCollision';
+import filterInnerHTML from '../utl/filterInnerHTML';
 
 const footer = state => {
     if (state.footer) {
@@ -67,6 +68,29 @@ const footer = state => {
                         listener: 'input',
                         func: e => {
                             state.footerContent[r][c].innerHTML = e.target.innerHTML;
+                            reload(state);
+                        },
+                    },
+                });
+
+                createElement({
+                    type: 'input',
+                    id: `fp-${r}${c}`,
+                    parent: `footer-td-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'td-input',
+                        },
+                    ],
+                    inputProps: {
+                        type: 'text',
+                        value: state.footerContent[r][c].innerHTML,
+                    },
+                    eventObject: {
+                        listener: 'input',
+                        func: e => {
+                            state.footerContent[r][c].innerHTML = filterInnerHTML(e.target.value, state.allowTags);
                             reload(state);
                         },
                     },

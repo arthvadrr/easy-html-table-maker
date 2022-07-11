@@ -9,7 +9,7 @@ const createElement = (
         attrs,
     }
 ) => {
-    let {type, id, parent, innerHTML, inputProps, eventObject, attrs} = props;
+    let { type, id, parent, innerHTML, inputProps, eventObject, attrs } = props;
 
     let inputContainer;
 
@@ -75,7 +75,7 @@ const createElement = (
         for (let a = 0; a < attrs.length; a++) {
             ele.setAttribute(attrs[a].attr, attrs[a].value);
 
-            // Hacky fix for disabled=false not being valid on HTML elements.
+            // Hacky fix for disabled=false evaluating to true on HTML elements.
             if (attrs[a].attr === 'disabled' && attrs[a].value === 'false') {
                 ele.removeAttribute('disabled');
             }

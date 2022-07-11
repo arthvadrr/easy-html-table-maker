@@ -2,6 +2,7 @@ import { reload } from '../createEditorTable';
 import createElement from '../utl/createElement';
 import createTableHeaderRow from '../utl/createTableHeaderRow';
 import setCollision from '../utl/setCollision';
+import filterInnerHTML from '../utl/filterInnerHTML';
 
 const header = state => {
     if (state.header) {
@@ -49,24 +50,23 @@ const header = state => {
                 });
 
                 createElement({
-                    type: 'p',
+                    type: 'input',
                     id: `hp-${r}${c}`,
                     parent: `th-${r}${c}`,
-                    innerHTML: state.headerContent[r][c].innerHTML,
                     attrs: [
                         {
-                            attr: 'classname',
-                            value: 'th-p',
-                        },
-                        {
-                            attr: 'contenteditable',
-                            value: 'true',
+                            attr: 'class',
+                            value: 'td-input',
                         },
                     ],
+                    inputProps: {
+                        type: 'text',
+                        value: state.headerContent[r][c].innerHTML,
+                    },
                     eventObject: {
                         listener: 'input',
                         func: e => {
-                            state.headerContent[r][c].innerHTML = e.target.innerHTML;
+                            state.headerContent[r][c].innerHTML = filterInnerHTML(e.target.value, state.allowTags);
                             reload(state);
                         },
                     },
