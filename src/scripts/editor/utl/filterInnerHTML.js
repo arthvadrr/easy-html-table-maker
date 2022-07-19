@@ -14,4 +14,18 @@ const filterInnerHTML = (str, allowTags) => {
     return $divTextContent || $divInnerText || '';
 };
 
+export function addFilterInnerHTMLToInputs() {
+    const $td_inputArr = document.querySelectorAll('.td-input');
+
+    $td_inputArr.forEach(td => {
+        td.addEventListener('input', e => {
+            e.target.value = filterInnerHTML(e.target.value);
+        });
+
+        td.addEventListener('paste', e => {
+            e.target.value = filterInnerHTML(e.target.value);
+        });
+    });
+}
+
 export default filterInnerHTML;

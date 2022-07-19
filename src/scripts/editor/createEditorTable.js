@@ -8,13 +8,17 @@ import colgroup from './components/colgroup';
 import header from './components/header';
 import body from './components/body';
 import footer from './components/footer';
-import filterInnerHTML from './utl/filterInnerHTML';
+import filterInnerHTML, { addFilterInnerHTMLToInputs } from './utl/filterInnerHTML';
 
 export const reload = (state, reloadEditor) => {
     localStorage.setItem('savedState', JSON.stringify(state));
 
     if (reloadEditor) {
         createEditorTable(state);
+    }
+
+    if (!state.allowTags) {
+        addFilterInnerHTMLToInputs();
     }
 
     createTableCode(state);
