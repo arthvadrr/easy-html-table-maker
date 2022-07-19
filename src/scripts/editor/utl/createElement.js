@@ -24,12 +24,18 @@ const createElement = (
 
     let ele = document.createElement(type);
 
-    if (type === 'input') {
+    if (type === 'input' || type === 'textarea') {
         if (inputProps.checked) {
             ele.checked = inputProps.checked;
         }
 
-        ele.type = inputProps.type;
+        if (type === 'input') {
+            ele.type = inputProps.type;
+
+            if (inputProps.value) {
+                ele.setAttribute('value', inputProps.value);
+            }
+        }
 
         if (inputProps.container) {
             inputContainer = document.createElement(inputProps.container);
@@ -48,10 +54,6 @@ const createElement = (
             inputContainer.appendChild(label);
             parent.appendChild(inputContainer);
             parent = inputContainer;
-        }
-
-        if (inputProps.value) {
-            ele.setAttribute('value', inputProps.value);
         }
 
         if (inputProps.min) {

@@ -50,9 +50,10 @@ const header = state => {
                 });
 
                 createElement({
-                    type: 'input',
-                    id: `hp-${r}${c}`,
+                    type: 'textarea',
+                    id: `p-${r}${c}`,
                     parent: `th-${r}${c}`,
+                    innerHTML: state.headerContent[r][c].innerHTML,
                     attrs: [
                         {
                             attr: 'class',
@@ -60,7 +61,6 @@ const header = state => {
                         },
                     ],
                     inputProps: {
-                        type: 'text',
                         value: state.headerContent[r][c].innerHTML,
                     },
                     eventObject: {

@@ -12,7 +12,7 @@ const createTableCol = state => {
 
     state.content.forEach(element =>
         element.push({
-            innerHTML: 'innerHTML',
+            innerHTML: '',
             rowspan: 1,
             colspan: 1,
             rowCollision: false,
@@ -24,7 +24,7 @@ const createTableCol = state => {
 
     state.headerContent.forEach(element =>
         element.push({
-            innerHTML: 'innerHTML',
+            innerHTML: '',
             rowspan: 1,
             colspan: 1,
             rowCollision: false,
@@ -34,7 +34,7 @@ const createTableCol = state => {
 
     state.footerContent.forEach(element =>
         element.push({
-            innerHTML: 'innerHTML',
+            innerHTML: '',
             rowspan: 1,
             colspan: 1,
             rowCollision: false,

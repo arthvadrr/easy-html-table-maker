@@ -71,9 +71,10 @@ const body = state => {
             });
 
             createElement({
-                type: 'input',
+                type: 'textarea',
                 id: `p-${r}${c}`,
                 parent: `td-${r}${c}`,
+                innerHTML: state.content[r][c].innerHTML,
                 attrs: [
                     {
                         attr: 'class',
@@ -81,7 +82,6 @@ const body = state => {
                     },
                 ],
                 inputProps: {
-                    type: 'text',
                     value: state.content[r][c].innerHTML,
                 },
                 eventObject: {

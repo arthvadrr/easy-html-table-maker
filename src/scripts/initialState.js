@@ -2,9 +2,9 @@ export default {
     loading: true,
     allowTags: false,
     header: true,
-    footer: true,
-    colgroup: true,
-    caption: false,
+    footer: false,
+    colgroup: false,
+    caption: true,
     captionText: 'captionText',
     useClassName: false,
     className: '',
@@ -52,21 +52,21 @@ export default {
     headerContent: [
         [
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
                 colCollision: false,
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
                 colCollision: false,
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -78,7 +78,7 @@ export default {
     content: [
         [
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -87,7 +87,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -96,7 +96,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -107,7 +107,7 @@ export default {
         ],
         [
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -116,7 +116,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -125,7 +125,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -138,7 +138,7 @@ export default {
     footerContent: [
         [
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -147,7 +147,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -156,7 +156,7 @@ export default {
                 headerScope: 'col',
             },
             {
-                innerHTML: 'innerHTML',
+                innerHTML: '',
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,

@@ -50,33 +50,10 @@ const footer = state => {
                 });
 
                 createElement({
-                    type: 'p',
+                    type: 'textarea',
                     id: `fp-${r}${c}`,
                     parent: `footer-td-${r}${c}`,
                     innerHTML: state.footerContent[r][c].innerHTML,
-                    attrs: [
-                        {
-                            attr: 'classname',
-                            value: 'footer-td-p',
-                        },
-                        {
-                            attr: 'contenteditable',
-                            value: 'true',
-                        },
-                    ],
-                    eventObject: {
-                        listener: 'input',
-                        func: e => {
-                            state.footerContent[r][c].innerHTML = e.target.innerHTML;
-                            reload(state);
-                        },
-                    },
-                });
-
-                createElement({
-                    type: 'input',
-                    id: `fp-${r}${c}`,
-                    parent: `footer-td-${r}${c}`,
                     attrs: [
                         {
                             attr: 'class',
@@ -84,7 +61,6 @@ const footer = state => {
                         },
                     ],
                     inputProps: {
-                        type: 'text',
                         value: state.footerContent[r][c].innerHTML,
                     },
                     eventObject: {

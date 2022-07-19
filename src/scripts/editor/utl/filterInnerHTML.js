@@ -5,7 +5,13 @@ const filterInnerHTML = (str, allowTags) => {
 
     const $div = document.createElement('div');
     $div.innerHTML = str;
-    return $div.textContent || $div.innerText || '';
+
+    let $divTextContent = $div.textContent;
+    let $divInnerText = $div.innerHTML;
+
+    $div.remove();
+
+    return $divTextContent || $divInnerText || '';
 };
 
 export default filterInnerHTML;
