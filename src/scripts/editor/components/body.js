@@ -94,13 +94,25 @@ const body = state => {
             });
 
             createElement({
+                type: 'div',
+                id: `td-body-controls-${r}${c}`,
+                parent: `td-${r}${c}`,
+                attrs: [
+                    {
+                        attr: 'class',
+                        value: 'td-body-controls',
+                    },
+                ],
+            });
+
+            createElement({
                 type: 'button',
                 id: `increase-rowspan-button-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-body-controls-${r}${c}`,
                 innerHTML: 'rs+',
                 attrs: [
                     {
-                        attr: 'classname',
+                        attr: 'class',
                         value: 'increase-rowspan-button',
                     },
                 ],
@@ -130,11 +142,11 @@ const body = state => {
             createElement({
                 type: 'button',
                 id: `decrease-rowspan-button-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-body-controls-${r}${c}`,
                 innerHTML: 'rs-',
                 attrs: [
                     {
-                        attr: 'classname',
+                        attr: 'class',
                         value: 'decrease-rowspan-button',
                     },
                     {
@@ -155,7 +167,7 @@ const body = state => {
             createElement({
                 type: 'button',
                 id: `increase-colspan-button-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-body-controls-${r}${c}`,
                 innerHTML: 'cs+',
                 eventObject: {
                     listener: 'click',
@@ -228,11 +240,11 @@ const body = state => {
             createElement({
                 type: 'button',
                 id: `decrease-colspan-button-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-body-controls-${r}${c}`,
                 innerHTML: 'CS-',
                 attrs: [
                     {
-                        attr: 'classname',
+                        attr: 'class',
                         value: 'decrease-colspan-button',
                     },
                     {
@@ -253,10 +265,10 @@ const body = state => {
             createElement({
                 type: 'input',
                 id: `isHeader-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-body-controls-${r}${c}`,
                 attrs: [
                     {
-                        attr: 'classname',
+                        attr: 'class',
                         value: 'isheader',
                     },
                 ],
@@ -281,7 +293,7 @@ const body = state => {
                 createElement({
                     type: 'div',
                     id: `isHeaderContainer-${r}${c}`,
-                    parent: `td-${r}${c}`,
+                    parent: `td-body-controls-${r}${c}`,
                 });
 
                 createElement({
@@ -296,7 +308,7 @@ const body = state => {
                     parent: `isHeaderContainer-${r}${c}`,
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'headerScope',
                         },
                     ],
@@ -323,7 +335,7 @@ const body = state => {
                     parent: `isHeaderContainer-${r}${c}`,
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'headerScope',
                         },
                     ],

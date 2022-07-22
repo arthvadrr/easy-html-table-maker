@@ -31,7 +31,6 @@ const createEditorTable = state => {
     tableComponents.map(item => item(state));
 
     const $inputArr = document.querySelectorAll('input.td-input');
-    console.log($inputArr);
 
     $inputArr.forEach($input => {
         $input.addEventListener('input', e => {

@@ -5,6 +5,7 @@ import createTableRow from '../utl/createTableRow';
 import createTableCol from '../utl/createTableCol';
 import createTableHeaderRow from '../utl/createTableHeaderRow';
 import createTableFooterRow from '../utl/createTableFooterRow';
+import filterInnerHTML from '../utl/filterInnerHTML';
 
 const controls = state => {
     createElement({
@@ -372,6 +373,22 @@ const controls = state => {
             listener: 'click',
             func: () => {
                 state.allowTags = !state.allowTags;
+                if (!state.allowTags && confirm('Remove all existing tags from the table?')) {
+                    console.time('loop');
+                    for (let i = 0; i < state.headerContent.length; i++) {
+                        console.timeLog('loop');
+                        for (let x = 0; x < state.headerContent[i].length; x++) {
+                            state.headerContent[i][x].innerHTML = filterInnerHTML(state.headerContent[i][x].innerHTML);
+                        }
+                    }
+
+                    for (let i = 0; i < state.content.length; i++) {
+                        for (let x = 0; x < state.content[i].length; x++) {
+                            state.content[i][x].innerHTML = filterInnerHTML(state.content[i][x].innerHTML);
+                        }
+                    }
+                    console.timeEnd('loop');
+                }
                 reload(state, true);
             },
         },

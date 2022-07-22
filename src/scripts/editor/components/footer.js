@@ -79,7 +79,7 @@ const footer = state => {
                     innerHTML: 'rs+',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'increase-rowspan-button',
                         },
                     ],
@@ -113,7 +113,7 @@ const footer = state => {
                     innerHTML: 'rs-',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'decrease-rowspan-button',
                         },
                         {
@@ -209,7 +209,7 @@ const footer = state => {
                     innerHTML: 'cs-',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'decrease-colspan-button',
                         },
                         {
@@ -233,7 +233,7 @@ const footer = state => {
                     parent: `footer-td-${r}${c}`,
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'isheader',
                         },
                     ],
@@ -273,7 +273,7 @@ const footer = state => {
                         parent: `footer-isHeaderContainer-${r}${c}`,
                         attrs: [
                             {
-                                attr: 'classname',
+                                attr: 'class',
                                 value: 'headerScope',
                             },
                         ],
@@ -300,7 +300,7 @@ const footer = state => {
                         parent: `footer-isHeaderContainer-${r}${c}`,
                         attrs: [
                             {
-                                attr: 'classname',
+                                attr: 'class',
                                 value: 'headerScope',
                             },
                         ],

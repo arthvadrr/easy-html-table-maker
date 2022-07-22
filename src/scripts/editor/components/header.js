@@ -73,13 +73,25 @@ const header = state => {
                 });
 
                 createElement({
+                    type: 'div',
+                    id: `th-controls-${r}${c}`,
+                    parent: `th-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'th-controls',
+                        },
+                    ],
+                });
+
+                createElement({
                     type: 'button',
                     id: `increase-header-rowspan-button-${r}${c}`,
-                    parent: `th-${r}${c}`,
+                    parent: `th-controls-${r}${c}`,
                     innerHTML: 'rs+',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'increase-rowspan-button',
                         },
                     ],
@@ -109,11 +121,11 @@ const header = state => {
                 createElement({
                     type: 'button',
                     id: `decrease-header-rowspan-button-${r}${c}`,
-                    parent: `th-${r}${c}`,
+                    parent: `th-controls-${r}${c}`,
                     innerHTML: 'rs-',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'decrease-rowspan-button',
                         },
                         {
@@ -134,7 +146,7 @@ const header = state => {
                 createElement({
                     type: 'button',
                     id: `increase-header-colspan-button-${r}${c}`,
-                    parent: `th-${r}${c}`,
+                    parent: `th-controls-${r}${c}`,
                     innerHTML: 'cs+',
                     eventObject: {
                         listener: 'click',
@@ -207,11 +219,11 @@ const header = state => {
                 createElement({
                     type: 'button',
                     id: `decrease-colspan-button-${r}${c}`,
-                    parent: `th-${r}${c}`,
+                    parent: `th-controls-${r}${c}`,
                     innerHTML: 'cs-',
                     attrs: [
                         {
-                            attr: 'classname',
+                            attr: 'class',
                             value: 'decrease-colspan-button',
                         },
                         {
