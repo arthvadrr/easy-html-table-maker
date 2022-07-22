@@ -371,14 +371,14 @@ const controls = state => {
         },
         eventObject: {
             listener: 'click',
-            func: () => {
+            func: e => {
                 state.allowTags = !state.allowTags;
+
                 if (!state.allowTags && confirm('Remove all existing tags from the table?')) {
-                    console.time('loop');
                     for (let i = 0; i < state.headerContent.length; i++) {
-                        console.timeLog('loop');
                         for (let x = 0; x < state.headerContent[i].length; x++) {
                             state.headerContent[i][x].innerHTML = filterInnerHTML(state.headerContent[i][x].innerHTML);
+                            console.log(filterInnerHTML(state.headerContent[i][x].innerHTML));
                         }
                     }
 
@@ -387,7 +387,6 @@ const controls = state => {
                             state.content[i][x].innerHTML = filterInnerHTML(state.content[i][x].innerHTML);
                         }
                     }
-                    console.timeEnd('loop');
                 }
                 reload(state, true);
             },

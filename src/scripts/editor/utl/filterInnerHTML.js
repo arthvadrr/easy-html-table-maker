@@ -11,7 +11,9 @@ const filterInnerHTML = (str, allowTags) => {
 
     $div.remove();
 
-    return $divTextContent || $divInnerText || '';
+    $divTextContent = $divTextContent === '<>' ? '' : $divTextContent; //this is dumb
+
+    return $divTextContent || '';
 };
 
 export function addFilterInnerHTMLToInputs() {
