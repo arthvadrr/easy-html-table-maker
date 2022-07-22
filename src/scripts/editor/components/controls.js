@@ -342,25 +342,6 @@ const controls = state => {
 
     createElement({
         type: 'input',
-        id: 'table-use-classname',
-        parent: 'editor-table-controls',
-        inputProps: {
-            type: 'checkbox',
-            label: 'Use table classname',
-            for: 'table-use-classname',
-            checked: state.useClassName,
-        },
-        eventObject: {
-            listener: 'click',
-            func: () => {
-                state.useClassName = !state.useClassName;
-                reload(state, true);
-            },
-        },
-    });
-
-    createElement({
-        type: 'input',
         id: 'allow-tags',
         parent: 'editor-table-controls',
         inputProps: {
@@ -388,6 +369,25 @@ const controls = state => {
                         }
                     }
                 }
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
+        id: 'table-use-class',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Use table class',
+            for: 'table-use-class',
+            checked: state.useClassName,
+        },
+        eventObject: {
+            listener: 'click',
+            func: () => {
+                state.useClassName = !state.useClassName;
                 reload(state, true);
             },
         },

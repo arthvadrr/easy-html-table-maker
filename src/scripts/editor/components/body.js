@@ -241,7 +241,7 @@ const body = state => {
                 type: 'button',
                 id: `decrease-colspan-button-${r}${c}`,
                 parent: `td-body-controls-${r}${c}`,
-                innerHTML: 'CS-',
+                innerHTML: 'cs-',
                 attrs: [
                     {
                         attr: 'class',

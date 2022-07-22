@@ -7,17 +7,18 @@ import filterInnerHTML from '../utl/filterInnerHTML';
 const header = state => {
     if (state.header) {
         createElement({
-            type: 'h3',
-            id: 'header-heading',
-            parent: 'editor-table',
-            innerHTML: 'table header',
-        });
-
-        createElement({
             type: 'thead',
             id: 'table-header',
             parent: 'editor-table',
         });
+
+        createElement({
+            type: 'h3',
+            id: 'header-heading',
+            parent: 'table-header',
+            innerHTML: 'table header',
+        });
+
         for (let r = 0; r < state.headerContent.length; r++) {
             createElement({
                 type: 'tr',
