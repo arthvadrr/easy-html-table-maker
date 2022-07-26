@@ -226,6 +226,25 @@ const controls = state => {
 
     createElement({
         type: 'input',
+        id: 'show-cell-controls-toggle',
+        parent: 'editor-table-controls',
+        inputProps: {
+            type: 'checkbox',
+            label: 'Cell Controls',
+            for: 'show-cell-controls-toggle',
+            checked: state.showCellControls,
+        },
+        eventObject: {
+            listener: 'input',
+            func: () => {
+                state.showCellControls = !state.showCellControls;
+                reload(state, true);
+            },
+        },
+    });
+
+    createElement({
+        type: 'input',
         id: 'colgroup-toggle',
         parent: 'editor-table-controls',
         inputProps: {

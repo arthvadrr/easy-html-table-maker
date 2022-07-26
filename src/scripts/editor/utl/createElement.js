@@ -39,6 +39,9 @@ const createElement = (
 
         if (inputProps.container) {
             inputContainer = document.createElement(inputProps.container);
+            if (inputProps.containerClass) {
+                inputContainer.classList.add(inputProps.containerClass);
+            }
         } else {
             inputContainer = document.createElement('div');
             inputContainer.classList.add(`${props.id}-container`);

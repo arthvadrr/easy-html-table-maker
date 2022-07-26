@@ -92,238 +92,171 @@ const body = state => {
                     },
                 },
             });
-
-            createElement({
-                type: 'div',
-                id: `td-body-controls-${r}${c}`,
-                parent: `td-${r}${c}`,
-                attrs: [
-                    {
-                        attr: 'class',
-                        value: 'td-body-controls',
-                    },
-                ],
-            });
-
-            createElement({
-                type: 'button',
-                id: `increase-rowspan-button-${r}${c}`,
-                parent: `td-body-controls-${r}${c}`,
-                innerHTML: 'rs+',
-                attrs: [
-                    {
-                        attr: 'class',
-                        value: 'increase-rowspan-button',
-                    },
-                ],
-                eventObject: {
-                    listener: 'click',
-                    func: () => {
-                        // Determining if there is enough room for the rowspans
-                        let totalColumnRowspans = 0;
-                        for (let row = 0; row < state.content.length - 1; row++) {
-                            if (!state.content[row][c].rowCollision) {
-                                totalColumnRowspans += state.content[row][c].rowspan;
-                            }
-                        }
-
-                        // If there isn't enough room, create another row
-                        if (totalColumnRowspans >= state.content.length || r === state.content.length - 1) {
-                            state.content.push(createTableRow(state));
-                        }
-
-                        state.content[r][c].rowspan++;
-                        setCollision(state, r, c, true, 1);
-                        reload(state, true);
-                    },
-                },
-            });
-
-            createElement({
-                type: 'button',
-                id: `decrease-rowspan-button-${r}${c}`,
-                parent: `td-body-controls-${r}${c}`,
-                innerHTML: 'rs-',
-                attrs: [
-                    {
-                        attr: 'class',
-                        value: 'decrease-rowspan-button',
-                    },
-                    {
-                        attr: 'disabled',
-                        value: state.content[r][c].rowspan > 1 ? 'false' : 'true',
-                    },
-                ],
-                eventObject: {
-                    listener: 'click',
-                    func: () => {
-                        setCollision(state, r, c, false, 0);
-                        state.content[r][c].rowspan--;
-                        reload(state, true);
-                    },
-                },
-            });
-
-            createElement({
-                type: 'button',
-                id: `increase-colspan-button-${r}${c}`,
-                parent: `td-body-controls-${r}${c}`,
-                innerHTML: 'cs+',
-                eventObject: {
-                    listener: 'click',
-                    func: () => {
-                        // Determining if there is enough room for the colspans
-                        let totalRowColumnSpans = 0;
-                        for (let column = 0; column < state.content[r].length - 1; column++) {
-                            if (!state.content[r][column].colCollision) {
-                                totalRowColumnSpans += state.content[r][column].colspan;
-                            }
-                        }
-
-                        // If there isn't enough room, create another column (to thead and tbody)
-                        if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
-                            state.colgroupProps.push({
-                                useWidth: false,
-                                width: 0,
-                                widthUnits: 'px',
-                                span: 1,
-                            });
-
-                            state.columnSettings.push({
-                                useWidth: false,
-                                width: 0,
-                                widthUnits: 'px',
-                                align: 'none',
-                            });
-
-                            state.content.forEach(element =>
-                                element.push({
-                                    innerHTML: 'innerHTML',
-                                    rowspan: 1,
-                                    colspan: 1,
-                                    rowCollision: false,
-                                    colCollision: false,
-                                    isHeader: false,
-                                    headerScope: 'col',
-                                })
-                            );
-
-                            state.headerContent.forEach(element =>
-                                element.push({
-                                    innerHTML: 'innerHTML',
-                                    rowspan: 1,
-                                    colspan: 1,
-                                    rowCollision: false,
-                                    colCollision: false,
-                                })
-                            );
-
-                            state.footerContent.forEach(element =>
-                                element.push({
-                                    innerHTML: 'innerHTML',
-                                    rowspan: 1,
-                                    colspan: 1,
-                                    rowCollision: false,
-                                    colCollision: false,
-                                    isHeader: false,
-                                    headerScope: 'col',
-                                })
-                            );
-                        }
-                        state.content[r][c].colspan++;
-                        setCollision(state, r, c, true, 1);
-                        reload(state, true);
-                    },
-                },
-            });
-
-            createElement({
-                type: 'button',
-                id: `decrease-colspan-button-${r}${c}`,
-                parent: `td-body-controls-${r}${c}`,
-                innerHTML: 'cs-',
-                attrs: [
-                    {
-                        attr: 'class',
-                        value: 'decrease-colspan-button',
-                    },
-                    {
-                        attr: 'disabled',
-                        value: state.content[r][c].colspan > 1 ? 'false' : 'true',
-                    },
-                ],
-                eventObject: {
-                    listener: 'click',
-                    func: () => {
-                        setCollision(state, r, c, false, 0);
-                        state.content[r][c].colspan--;
-                        reload(state, true);
-                    },
-                },
-            });
-
-            createElement({
-                type: 'input',
-                id: `isHeader-${r}${c}`,
-                parent: `td-body-controls-${r}${c}`,
-                attrs: [
-                    {
-                        attr: 'class',
-                        value: 'isheader',
-                    },
-                ],
-                inputProps: {
-                    type: 'checkbox',
-                    container: 'div',
-                    label: 'Is header',
-                    for: `isHeader-${r}${c}`,
-                    name: `isHeader-${r}${c}`,
-                    checked: state.content[r][c].isHeader,
-                },
-                eventObject: {
-                    listener: 'change',
-                    func: e => {
-                        state.content[r][c].isHeader = !state.content[r][c].isHeader;
-                        reload(state, true);
-                    },
-                },
-            });
-
-            if (state.content[r][c].isHeader) {
+            if (state.showCellControls) {
                 createElement({
                     type: 'div',
-                    id: `isHeaderContainer-${r}${c}`,
+                    id: `td-body-controls-${r}${c}`,
+                    parent: `td-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'td-body-controls',
+                        },
+                    ],
+                });
+
+                createElement({
+                    type: 'button',
+                    id: `increase-rowspan-button-${r}${c}`,
                     parent: `td-body-controls-${r}${c}`,
-                });
-
-                createElement({
-                    type: 'span',
-                    innerHTML: 'scope',
-                    parent: `isHeaderContainer-${r}${c}`,
-                });
-
-                createElement({
-                    type: 'input',
-                    id: `headerScopeCol-${r}${c}`,
-                    parent: `isHeaderContainer-${r}${c}`,
+                    innerHTML: 'rs+',
                     attrs: [
                         {
                             attr: 'class',
-                            value: 'headerScope',
+                            value: 'increase-rowspan-button',
                         },
                     ],
-                    inputProps: {
-                        type: 'radio',
-                        container: 'div',
-                        label: 'Col',
-                        for: `headerScopeCol-${r}${c}`,
-                        name: `scope-${r}${c}`,
-                        checked: state.content[r][c].headerScope === 'col',
-                    },
                     eventObject: {
-                        listener: 'change',
+                        listener: 'click',
                         func: () => {
-                            state.content[r][c].headerScope = 'col';
+                            // Determining if there is enough room for the rowspans
+                            let totalColumnRowspans = 0;
+                            for (let row = 0; row < state.content.length - 1; row++) {
+                                if (!state.content[row][c].rowCollision) {
+                                    totalColumnRowspans += state.content[row][c].rowspan;
+                                }
+                            }
+
+                            // If there isn't enough room, create another row
+                            if (totalColumnRowspans >= state.content.length || r === state.content.length - 1) {
+                                state.content.push(createTableRow(state));
+                            }
+
+                            state.content[r][c].rowspan++;
+                            setCollision(state, r, c, true, 1);
+                            reload(state, true);
+                        },
+                    },
+                });
+
+                createElement({
+                    type: 'button',
+                    id: `decrease-rowspan-button-${r}${c}`,
+                    parent: `td-body-controls-${r}${c}`,
+                    innerHTML: 'rs-',
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'decrease-rowspan-button',
+                        },
+                        {
+                            attr: 'disabled',
+                            value: state.content[r][c].rowspan > 1 ? 'false' : 'true',
+                        },
+                    ],
+                    eventObject: {
+                        listener: 'click',
+                        func: () => {
+                            setCollision(state, r, c, false, 0);
+                            state.content[r][c].rowspan--;
+                            reload(state, true);
+                        },
+                    },
+                });
+
+                createElement({
+                    type: 'button',
+                    id: `increase-colspan-button-${r}${c}`,
+                    parent: `td-body-controls-${r}${c}`,
+                    innerHTML: 'cs+',
+                    eventObject: {
+                        listener: 'click',
+                        func: () => {
+                            // Determining if there is enough room for the colspans
+                            let totalRowColumnSpans = 0;
+                            for (let column = 0; column < state.content[r].length - 1; column++) {
+                                if (!state.content[r][column].colCollision) {
+                                    totalRowColumnSpans += state.content[r][column].colspan;
+                                }
+                            }
+
+                            // If there isn't enough room, create another column (to thead and tbody)
+                            if (totalRowColumnSpans >= state.content[r].length || c === state.content[r].length - 1) {
+                                state.colgroupProps.push({
+                                    useWidth: false,
+                                    width: 0,
+                                    widthUnits: 'px',
+                                    span: 1,
+                                });
+
+                                state.columnSettings.push({
+                                    useWidth: false,
+                                    width: 0,
+                                    widthUnits: 'px',
+                                    align: 'none',
+                                });
+
+                                state.content.forEach(element =>
+                                    element.push({
+                                        innerHTML: '',
+                                        rowspan: 1,
+                                        colspan: 1,
+                                        rowCollision: false,
+                                        colCollision: false,
+                                        isHeader: false,
+                                        headerScope: 'col',
+                                    })
+                                );
+
+                                state.headerContent.forEach(element =>
+                                    element.push({
+                                        innerHTML: '',
+                                        rowspan: 1,
+                                        colspan: 1,
+                                        rowCollision: false,
+                                        colCollision: false,
+                                    })
+                                );
+
+                                state.footerContent.forEach(element =>
+                                    element.push({
+                                        innerHTML: '',
+                                        rowspan: 1,
+                                        colspan: 1,
+                                        rowCollision: false,
+                                        colCollision: false,
+                                        isHeader: false,
+                                        headerScope: 'col',
+                                    })
+                                );
+                            }
+                            state.content[r][c].colspan++;
+                            setCollision(state, r, c, true, 1);
+                            reload(state, true);
+                        },
+                    },
+                });
+
+                createElement({
+                    type: 'button',
+                    id: `decrease-colspan-button-${r}${c}`,
+                    parent: `td-body-controls-${r}${c}`,
+                    innerHTML: 'cs-',
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'decrease-colspan-button',
+                        },
+                        {
+                            attr: 'disabled',
+                            value: state.content[r][c].colspan > 1 ? 'false' : 'true',
+                        },
+                    ],
+                    eventObject: {
+                        listener: 'click',
+                        func: () => {
+                            setCollision(state, r, c, false, 0);
+                            state.content[r][c].colspan--;
                             reload(state, true);
                         },
                     },
@@ -331,30 +264,105 @@ const body = state => {
 
                 createElement({
                     type: 'input',
-                    id: `headerScopeRow-${r}${c}`,
-                    parent: `isHeaderContainer-${r}${c}`,
+                    id: `isHeader-${r}${c}`,
+                    parent: `td-body-controls-${r}${c}`,
                     attrs: [
                         {
                             attr: 'class',
-                            value: 'headerScope',
+                            value: 'isheader',
                         },
                     ],
                     inputProps: {
-                        type: 'radio',
-                        container: 'div',
-                        label: 'Row',
-                        for: `headerScopeRow-${r}${c}`,
-                        name: `scope-${r}${c}`,
-                        checked: state.content[r][c].headerScope === 'row',
+                        type: 'checkbox',
+                        container: 'span',
+                        containerClass: 'isheader-container',
+                        label: 'Is header?',
+                        for: `isHeader-${r}${c}`,
+                        name: `isHeader-${r}${c}`,
+                        checked: state.content[r][c].isHeader,
                     },
                     eventObject: {
                         listener: 'change',
-                        func: () => {
-                            state.content[r][c].headerScope = 'row';
+                        func: e => {
+                            state.content[r][c].isHeader = !state.content[r][c].isHeader;
                             reload(state, true);
                         },
                     },
                 });
+
+                if (state.content[r][c].isHeader) {
+                    createElement({
+                        type: 'div',
+                        id: `isHeaderContainer-${r}${c}`,
+                        parent: `td-body-controls-${r}${c}`,
+                        attrs: [
+                            {
+                                attr: 'class',
+                                value: 'isheader-scope-container',
+                            },
+                        ],
+                    });
+
+                    createElement({
+                        type: 'span',
+                        innerHTML: 'Header scope:',
+                        parent: `isHeaderContainer-${r}${c}`,
+                    });
+
+                    createElement({
+                        type: 'input',
+                        id: `headerScopeCol-${r}${c}`,
+                        parent: `isHeaderContainer-${r}${c}`,
+                        attrs: [
+                            {
+                                attr: 'class',
+                                value: 'headerScope',
+                            },
+                        ],
+                        inputProps: {
+                            type: 'radio',
+                            container: 'div',
+                            label: 'Col',
+                            for: `headerScopeCol-${r}${c}`,
+                            name: `scope-${r}${c}`,
+                            checked: state.content[r][c].headerScope === 'col',
+                        },
+                        eventObject: {
+                            listener: 'change',
+                            func: () => {
+                                state.content[r][c].headerScope = 'col';
+                                reload(state, true);
+                            },
+                        },
+                    });
+
+                    createElement({
+                        type: 'input',
+                        id: `headerScopeRow-${r}${c}`,
+                        parent: `isHeaderContainer-${r}${c}`,
+                        attrs: [
+                            {
+                                attr: 'class',
+                                value: 'headerScope',
+                            },
+                        ],
+                        inputProps: {
+                            type: 'radio',
+                            container: 'div',
+                            label: 'Row',
+                            for: `headerScopeRow-${r}${c}`,
+                            name: `scope-${r}${c}`,
+                            checked: state.content[r][c].headerScope === 'row',
+                        },
+                        eventObject: {
+                            listener: 'change',
+                            func: () => {
+                                state.content[r][c].headerScope = 'row';
+                                reload(state, true);
+                            },
+                        },
+                    });
+                }
             }
         }
     }

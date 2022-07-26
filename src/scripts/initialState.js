@@ -1,5 +1,6 @@
 export default {
     loading: true,
+    showCellControls: true,
     allowTags: false,
     header: true,
     footer: false,
