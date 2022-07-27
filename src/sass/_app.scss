@@ -10,19 +10,6 @@ h1 {
     font-size: 2rem;
 }
 
-h3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #123456;
-}
-
-h4 {
-    display: flex;
-    justify-self: unset;
-    align-items: center;
-}
-
 h2 {
     display: inline-block;
     padding: 1rem;
@@ -109,6 +96,9 @@ h3 {
 }
 
 .editor-table {
+    table-layout: auto;
+    width: 100%;
+    height: 100%;
     display: block;
     border-collapse: separate;
     background-color: $color_gray;
@@ -120,9 +110,6 @@ h3 {
     max-width: calc(100vw - 290px);
 
     #table-body {
-    }
-
-    tr {
     }
 
     .th-controls,
@@ -146,22 +133,35 @@ h3 {
         }
     }
 
+    tr {
+        height: 100%;
+    }
+
     th,
     td {
+        height: inherit;
         text-align: center;
-        border: 2px solid #fff;
+        border: 1px solid #fff;
 
-        textarea {
-            word-wrap: break-word;
-            font-size: 1.2rem;
-            width: 100%;
+        .grid-container {
+            display: flex;
+            flex-direction: column;
             height: 100%;
-            resize: none;
-            border-radius: none;
-            background: $color_light-gray;
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+
+            textarea {
+                flex-grow: 1;
+                word-wrap: break-word;
+                font-size: 1.2rem;
+                width: 100%;
+                resize: none;
+                border-radius: none;
+                background: $color_light-gray;
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                border: none;
+                min-width: 180px;
+            }
         }
     }
 

@@ -71,9 +71,21 @@ const body = state => {
             });
 
             createElement({
+                type: 'div',
+                parent: `td-${r}${c}`,
+                id: `td-grid-container-${r}${c}`,
+                attrs: [
+                    {
+                        attr: 'class',
+                        value: 'grid-container',
+                    },
+                ],
+            });
+
+            createElement({
                 type: 'textarea',
                 id: `p-${r}${c}`,
-                parent: `td-${r}${c}`,
+                parent: `td-grid-container-${r}${c}`,
                 innerHTML: state.content[r][c].innerHTML,
                 attrs: [
                     {
@@ -96,7 +108,7 @@ const body = state => {
                 createElement({
                     type: 'div',
                     id: `td-body-controls-${r}${c}`,
-                    parent: `td-${r}${c}`,
+                    parent: `td-grid-container-${r}${c}`,
                     attrs: [
                         {
                             attr: 'class',

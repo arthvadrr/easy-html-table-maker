@@ -51,9 +51,21 @@ const header = state => {
                 });
 
                 createElement({
+                    type: 'div',
+                    parent: `th-${r}${c}`,
+                    id: `th-grid-container-${r}${c}`,
+                    attrs: [
+                        {
+                            attr: 'class',
+                            value: 'grid-container',
+                        },
+                    ],
+                });
+
+                createElement({
                     type: 'textarea',
                     id: `p-${r}${c}`,
-                    parent: `th-${r}${c}`,
+                    parent: `th-grid-container-${r}${c}`,
                     innerHTML: state.headerContent[r][c].innerHTML,
                     attrs: [
                         {
@@ -77,7 +89,7 @@ const header = state => {
                     createElement({
                         type: 'div',
                         id: `th-controls-${r}${c}`,
-                        parent: `th-${r}${c}`,
+                        parent: `th-grid-container-${r}${c}`,
                         attrs: [
                             {
                                 attr: 'class',
