@@ -1,4 +1,4 @@
-import { reload } from '../createEditorTable';
+import reload from '../utl/reload';
 import createElement from '../utl/createElement';
 import createTableFooterRow from '../utl/createTableFooterRow';
 import setCollision from '../utl/setCollision';

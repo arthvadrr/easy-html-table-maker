@@ -1,6 +1,5 @@
+import reload from '../utl/reload';
 import createElement from '../utl/createElement';
-import { reload } from '../createEditorTable';
-import initialState from '../../initialState';
 import createTableRow from '../utl/createTableRow';
 import createTableCol from '../utl/createTableCol';
 import createTableHeaderRow from '../utl/createTableHeaderRow';

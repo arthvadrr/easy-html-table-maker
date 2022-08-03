@@ -1,8 +1,9 @@
+import reload from './editor/utl/reload';
 import initialState from './initialState';
-import createEditorTable, { reload } from './editor/createEditorTable';
+import createEditorTable from './editor/createEditorTable';
 import createTableCode from './createTableCode';
 import createTablePreview from './createTablePreview';
-import filterInnerHTML, { addFilterInnerHTMLToInputs } from './editor/utl/filterInnerHTML';
+import { addFilterInnerHTMLToInputs } from './editor/utl/filterInnerHTML';
 
 let localState = '';
 let state = initialState;
@@ -19,11 +20,11 @@ const statePromise = new Promise((resolve, reject) => {
 
 const statePromiseOnResolve = () => {
   state = localState;
-  init();
+  init(reload);
 };
 const statePromiseOnReject = () => {
   console.log('No local state');
-  init();
+  init(reload);
 };
 
 statePromise.then(statePromiseOnResolve).catch(statePromiseOnReject);
