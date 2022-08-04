@@ -1,4 +1,3 @@
-import reload from './editor/utl/reload';
 import initialState from './initialState';
 import createEditorTable from './editor/createEditorTable';
 import createTableCode from './createTableCode';
@@ -20,11 +19,11 @@ const statePromise = new Promise((resolve, reject) => {
 
 const statePromiseOnResolve = () => {
   state = localState;
-  init(reload);
+  init();
 };
 const statePromiseOnReject = () => {
   console.log('No local state');
-  init(reload);
+  init();
 };
 
 statePromise.then(statePromiseOnResolve).catch(statePromiseOnReject);
