@@ -4,7 +4,7 @@ body {
 
 h1 {
   background-color: $color_very-dark-grey;
-  color: $color_minty-green;
+  color: $color_light-gray;
   margin: 0;
   padding: 1rem;
   font-size: 2rem;
@@ -14,7 +14,7 @@ h2 {
   display: inline-block;
   padding: 1rem;
   margin: 2rem;
-  color: $color_purple;
+  color: $color_orange;
   font-size: 2.4rem;
   text-shadow: 1px 1px 0 darken($color_purple, 10%);
 }

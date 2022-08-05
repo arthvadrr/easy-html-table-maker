@@ -18,7 +18,7 @@ $color_strawberry: #ea6962;
 $color_yummy-orange: #e78a4e;
 $color_blue-coconut: #2f7b97;
 
-[dir='rtl']:is(.form-line-column, .form-label-right, .form-radio-item) {
+1 [dir='rtl']:is(.form-line-column, .form-label-right, .form-radio-item) {
   float: right;
   text-align: right;
 }
