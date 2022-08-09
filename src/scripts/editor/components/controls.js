@@ -418,7 +418,7 @@ const controls = state => {
       parent: 'editor-table-controls',
       inputProps: {
         type: 'text',
-        label: 'Table classname',
+        label: 'table class',
         for: 'table-class-selector',
         value: state.className,
       },
@@ -439,7 +439,7 @@ const controls = state => {
     innerHTML: 'reset table',
     eventObject: {
       listener: 'click',
-      func: e => {
+      func: () => {
         let clearTableAlert = confirm('Are you sure you want to clear the current table data?');
         if (clearTableAlert) {
           localStorage.removeItem('savedState');

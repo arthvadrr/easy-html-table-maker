@@ -8,9 +8,9 @@ This is a tool for quickly generating html markup for those troublesome tables.
 
 ### Font attribution
 
-The font is Courier Prime from [quoteunquoteapps](https://www.1001fonts.com/users/quoteunquoteapps/)
+The font is [Courier Prime Sans](https://www.1001fonts.com/courier-prime-sans-font.html) from [quote unquote apps](https://www.1001fonts.com/users/quoteunquoteapps/).
 
-Courier Prime is licensed under SIL [Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL)
+Courier Prime Sans is licensed under SIL [Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
 
 ### Colors
 

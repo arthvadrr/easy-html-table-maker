@@ -10,7 +10,7 @@ const footer = state => {
       type: 'h3',
       id: 'footer-heading',
       parent: 'editor-table',
-      innerHTML: 'table footer',
+      innerHTML: 'footer',
     });
 
     createElement({

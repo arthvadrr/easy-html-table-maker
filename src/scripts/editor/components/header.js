@@ -16,7 +16,7 @@ const header = state => {
       type: 'h3',
       id: 'header-heading',
       parent: 'table-header',
-      innerHTML: 'table header',
+      innerHTML: 'header',
     });
 
     for (let r = 0; r < state.headerContent.length; r++) {

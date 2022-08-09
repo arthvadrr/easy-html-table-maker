@@ -10,7 +10,7 @@ const body = state => {
     type: 'h3',
     id: 'body-heading',
     parent: 'editor-table',
-    innerHTML: 'table body',
+    innerHTML: 'body',
   });
 
   createElement({

@@ -1,29 +1,24 @@
 @font-face {
-  font-family: 'Yomogi-regular';
-  src: url('../src/fonts/Yomogi-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'DraftingMono';
-  src: url('../src/fonts/DraftingMono-regular.ttf') format('truetype');
+  font-family: 'CourierPrimeSans';
+  src: url('../src/fonts/courier-prime-sans.ttf') format('truetype');
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'DraftingMono';
-  src: url('../src/fonts/DraftingMono-MediumItalic.ttf') format('truetype');
+  font-family: 'CourierPrimeSans';
+  src: url('../src/fonts/courier-prime-sans-italic.ttf') format('truetype');
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'DraftingMono';
-  src: url('../src/fonts/DraftingMono-Bold.ttf') format('truetype');
+  font-family: 'CourierPrimeSans';
+  src: url('../src/fonts/courier-prime-sans-bold.ttf') format('truetype');
   font-weight: 700;
 }
 
 @font-face {
-  font-family: 'DraftingMono';
-  src: url('../src/fonts/DraftingMono-BoldItalic.ttf') format('truetype');
+  font-family: 'CourierPrimeSans';
+  src: url('../src/fonts/courier-prime-sans-bold-italic.ttf') format('truetype');
   font-weight: 700;
   font-style: italic;
 }
