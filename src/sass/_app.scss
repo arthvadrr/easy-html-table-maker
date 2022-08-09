@@ -1,22 +1,41 @@
+html,
+body {
+  // TODO debug
+  //  overflow-x: hidden;
+}
+
 body {
   background-color: $color_very-dark-grey;
 }
 
 h1 {
   background-color: $color_very-dark-grey;
-  color: $color_light-gray;
+  color: $color_orange;
   margin: 0;
   padding: 1rem;
-  font-size: 2rem;
+  font-size: 3rem;
+
+  &:before,
+  &:after {
+    color: $color_very-light-kinda-brownish;
+  }
+
+  &:before {
+    content: '<';
+  }
+
+  &:after {
+    content: '/>';
+  }
 }
 
 h2 {
   display: inline-block;
   padding: 1rem;
   margin: 2rem;
-  color: $color_orange;
+  color: $color_very-light-kinda-brownish;
+  text-shadow: 1px 1px 0 darken($color_light-kinda-brownish, 20%);
   font-size: 2.4rem;
-  text-shadow: 1px 1px 0 darken($color_purple, 10%);
 }
 
 h3 {
