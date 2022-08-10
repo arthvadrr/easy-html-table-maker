@@ -9,8 +9,8 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
-  font-weight: 400;
+  font-size: 2.5rem;
+  font-weight: 700;
   letter-spacing: -2px;
   line-height: 4rem;
   color: $color_light-kinda-brownish;
@@ -18,30 +18,31 @@ h1 {
   margin: 0 0 2rem 0;
   padding: 1rem 2rem;
 
-  span {
-    letter-spacing: -3px;
+  // meh, not sure about this
+  // span {
+  //   letter-spacing: -3px;
 
-    &:before,
-    &:after {
-      opacity: 0.3;
-    }
+  //   &:before,
+  //   &:after {
+  //     opacity: 0.3;
+  //   }
 
-    &:before {
-      content: '<';
-    }
+  //   &:before {
+  //     content: '<';
+  //   }
 
-    &:after {
-      content: '></table>';
-    }
-  }
+  //   &:after {
+  //     content: '></table>';
+  //   }
+  // }
 }
 
 h2 {
   display: inline-block;
-  padding: 0.2rem;
   margin: 0 2rem;
-  color: $color_light-gray;
-  font-size: 2.5rem;
+  padding: 0.2rem;
+  font-size: 2.2rem;
+  color: $color_very-light-kinda-brownish;
 }
 
 h3 {
@@ -63,12 +64,16 @@ h3 {
     border: 1px solid lighten($color_gray, 10%);
 
     button {
-      background-color: $color_light-gray;
+      background-color: $color_grass;
       font-size: 1.6rem;
+      color: #fff;
       text-align: left;
       box-shadow: none;
-      border: 1px solid darken($color_light-gray, 15%);
-      padding: 0.4rem;
+      letter-spacing: -1px;
+      border: 1px solid darken($color_strawberry, 15%);
+      border-radius: 3px;
+      margin: 1px;
+      padding: 0.6rem;
 
       &:hover,
       &:focus {
