@@ -398,7 +398,7 @@ const controls = state => {
     parent: 'editor-table-controls',
     inputProps: {
       type: 'checkbox',
-      label: 'Use table class',
+      label: 'Table class',
       for: 'table-use-class',
       checked: state.useClassName,
     },

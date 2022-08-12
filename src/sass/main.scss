@@ -7,9 +7,17 @@
   display: none;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
 body {
   font-family: 'CourierPrimeSans';
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -1px;
 }
