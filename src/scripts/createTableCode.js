@@ -11,6 +11,9 @@ Closing Bracket
 
 Space
 \u00a0 == ' '
+
+line break
+?
 */
 
 const createTableCode = state => {

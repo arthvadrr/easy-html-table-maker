@@ -103,9 +103,33 @@ const footer = state => {
           });
 
           createElement({
+            type: 'div',
+            id: `footer-controls-top-container-${r}${c}`,
+            parent: `td-footer-controls-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'controls-top-container',
+              },
+            ],
+          });
+
+          createElement({
+            type: 'span',
+            id: `footer-rowcol-button-container-${r}${c}`,
+            parent: `footer-controls-top-container-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'rowcol-button-container',
+              },
+            ],
+          });
+
+          createElement({
             type: 'button',
             id: `increase-footer-rowspan-button-${r}${c}`,
-            parent: `td-footer-controls-${r}${c}`,
+            parent: `footer-rowcol-button-container-${r}${c}`,
             innerHTML: 'rs+',
             attrs: [
               {
@@ -139,7 +163,7 @@ const footer = state => {
           createElement({
             type: 'button',
             id: `decrease-footer-rowspan-button-${r}${c}`,
-            parent: `td-footer-controls-${r}${c}`,
+            parent: `footer-rowcol-button-container-${r}${c}`,
             innerHTML: 'rs-',
             attrs: [
               {
@@ -164,7 +188,7 @@ const footer = state => {
           createElement({
             type: 'button',
             id: `increase-footer-colspan-button-${r}${c}`,
-            parent: `td-footer-controls-${r}${c}`,
+            parent: `footer-rowcol-button-container-${r}${c}`,
             innerHTML: 'cs+',
             eventObject: {
               listener: 'click',
@@ -235,7 +259,7 @@ const footer = state => {
           createElement({
             type: 'button',
             id: `decrease-colspan-button-${r}${c}`,
-            parent: `td-footer-controls-${r}${c}`,
+            parent: `footer-rowcol-button-container-${r}${c}`,
             innerHTML: 'cs-',
             attrs: [
               {
@@ -260,7 +284,7 @@ const footer = state => {
           createElement({
             type: 'input',
             id: `footer-isHeader-${r}${c}`,
-            parent: `td-footer-controls-${r}${c}`,
+            parent: `footer-controls-top-container-${r}${c}`,
             attrs: [
               {
                 attr: 'class',
@@ -269,8 +293,9 @@ const footer = state => {
             ],
             inputProps: {
               type: 'checkbox',
-              container: 'div',
-              label: 'Is header',
+              container: 'span',
+              containerClass: 'isheader-container',
+              label: 'Is header?',
               for: `footer-isHeader-${r}${c}`,
               name: `footer-isHeader-${r}${c}`,
               checked: state.footerContent[r][c].isHeader,
@@ -289,11 +314,17 @@ const footer = state => {
               type: 'div',
               id: `footer-isHeaderContainer-${r}${c}`,
               parent: `td-footer-controls-${r}${c}`,
+              attrs: [
+                {
+                  attr: 'class',
+                  value: 'isheader-scope-container',
+                },
+              ],
             });
 
             createElement({
               type: 'span',
-              innerHTML: 'scope',
+              innerHTML: 'Header scope:',
               parent: `footer-isHeaderContainer-${r}${c}`,
             });
 

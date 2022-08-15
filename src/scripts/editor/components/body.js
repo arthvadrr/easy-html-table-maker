@@ -7,16 +7,16 @@ import filterInnerHTML from '../utl/filterInnerHTML';
 
 const body = state => {
   createElement({
-    type: 'h3',
-    id: 'body-heading',
-    parent: 'editor-table',
-    innerHTML: 'body',
-  });
-
-  createElement({
     type: 'tbody',
     id: 'table-body',
     parent: 'editor-table',
+  });
+
+  createElement({
+    type: 'h3',
+    id: 'body-heading',
+    parent: 'table-body',
+    innerHTML: 'body',
   });
 
   createElement({
@@ -126,9 +126,33 @@ const body = state => {
         });
 
         createElement({
+          type: 'div',
+          id: `body-controls-top-container-${r}${c}`,
+          parent: `td-body-controls-${r}${c}`,
+          attrs: [
+            {
+              attr: 'class',
+              value: 'controls-top-container',
+            },
+          ],
+        });
+
+        createElement({
+          type: 'span',
+          id: `body-rowcol-button-container-${r}${c}`,
+          parent: `body-controls-top-container-${r}${c}`,
+          attrs: [
+            {
+              attr: 'class',
+              value: 'rowcol-button-container',
+            },
+          ],
+        });
+
+        createElement({
           type: 'button',
           id: `increase-rowspan-button-${r}${c}`,
-          parent: `td-body-controls-${r}${c}`,
+          parent: `body-rowcol-button-container-${r}${c}`,
           innerHTML: 'rs+',
           attrs: [
             {
@@ -162,7 +186,7 @@ const body = state => {
         createElement({
           type: 'button',
           id: `decrease-rowspan-button-${r}${c}`,
-          parent: `td-body-controls-${r}${c}`,
+          parent: `body-rowcol-button-container-${r}${c}`,
           innerHTML: 'rs-',
           attrs: [
             {
@@ -187,7 +211,7 @@ const body = state => {
         createElement({
           type: 'button',
           id: `increase-colspan-button-${r}${c}`,
-          parent: `td-body-controls-${r}${c}`,
+          parent: `body-rowcol-button-container-${r}${c}`,
           innerHTML: 'cs+',
           eventObject: {
             listener: 'click',
@@ -260,7 +284,7 @@ const body = state => {
         createElement({
           type: 'button',
           id: `decrease-colspan-button-${r}${c}`,
-          parent: `td-body-controls-${r}${c}`,
+          parent: `body-rowcol-button-container-${r}${c}`,
           innerHTML: 'cs-',
           attrs: [
             {
@@ -285,7 +309,7 @@ const body = state => {
         createElement({
           type: 'input',
           id: `isHeader-${r}${c}`,
-          parent: `td-body-controls-${r}${c}`,
+          parent: `body-controls-top-container-${r}${c}`,
           attrs: [
             {
               attr: 'class',

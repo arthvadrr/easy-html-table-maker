@@ -13,43 +13,6 @@ const controls = state => {
     parent: 'editor-table-container',
   });
 
-  createElement({
-    type: 'button',
-    id: 'add-row',
-    parent: 'editor-table-controls',
-    innerHTML: 'add row',
-    eventObject: {
-      listener: 'click',
-      func: () => {
-        state.content.push(createTableRow(state));
-        reload(state, true);
-      },
-    },
-  });
-
-  createElement({
-    type: 'button',
-    id: 'remove-row',
-    parent: 'editor-table-controls',
-    innerHTML: 'remove row',
-    eventObject: {
-      listener: 'click',
-      func: () => {
-        for (let td = 0; td < state.content.at(-1).length; td++) {
-          if (state.content.at(-1)[td].rowCollision === true) {
-            alert('Rowspan detected, cannot delete row. Remove rowspan first.');
-            return;
-          }
-        }
-
-        if (state.content.length > 1) {
-          state.content.pop();
-        }
-        reload(state, true);
-      },
-    },
-  });
-
   if (state.header) {
     createElement({
       type: 'button',
@@ -94,6 +57,44 @@ const controls = state => {
       },
     });
   }
+
+  //body
+  createElement({
+    type: 'button',
+    id: 'add-row',
+    parent: 'editor-table-controls',
+    innerHTML: 'add row',
+    eventObject: {
+      listener: 'click',
+      func: () => {
+        state.content.push(createTableRow(state));
+        reload(state, true);
+      },
+    },
+  });
+
+  createElement({
+    type: 'button',
+    id: 'remove-row',
+    parent: 'editor-table-controls',
+    innerHTML: 'remove row',
+    eventObject: {
+      listener: 'click',
+      func: () => {
+        for (let td = 0; td < state.content.at(-1).length; td++) {
+          if (state.content.at(-1)[td].rowCollision === true) {
+            alert('Rowspan detected, cannot delete row. Remove rowspan first.');
+            return;
+          }
+        }
+
+        if (state.content.length > 1) {
+          state.content.pop();
+        }
+        reload(state, true);
+      },
+    },
+  });
 
   if (state.footer) {
     createElement({
@@ -373,7 +374,16 @@ const controls = state => {
       func: e => {
         state.allowTags = !state.allowTags;
 
-        if (!state.allowTags && confirm('Remove all existing tags from the table?')) {
+        const confirmMsg = `
+        🚫Tags are now disallowed in the table.🚫
+
+        "Ok": Delete all tags currently in the table.
+
+        "Cancel": Tags will now be blocked, but keeps any existing tags.
+        (editing a field with existing tags will remove the tags)
+        `;
+
+        if (!state.allowTags && confirm(confirmMsg)) {
           for (let i = 0; i < state.headerContent.length; i++) {
             for (let x = 0; x < state.headerContent[i].length; x++) {
               state.headerContent[i][x].innerHTML = filterInnerHTML(state.headerContent[i][x].innerHTML);

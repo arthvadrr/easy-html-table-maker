@@ -104,9 +104,21 @@ const header = state => {
           });
 
           createElement({
+            type: 'span',
+            id: `header-rowcol-button-container-${r}${c}`,
+            parent: `th-controls-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'rowcol-button-container',
+              },
+            ],
+          });
+
+          createElement({
             type: 'button',
             id: `increase-header-rowspan-button-${r}${c}`,
-            parent: `th-controls-${r}${c}`,
+            parent: `header-rowcol-button-container-${r}${c}`,
             innerHTML: 'rs+',
             attrs: [
               {
@@ -140,7 +152,7 @@ const header = state => {
           createElement({
             type: 'button',
             id: `decrease-header-rowspan-button-${r}${c}`,
-            parent: `th-controls-${r}${c}`,
+            parent: `header-rowcol-button-container-${r}${c}`,
             innerHTML: 'rs-',
             attrs: [
               {
@@ -165,7 +177,7 @@ const header = state => {
           createElement({
             type: 'button',
             id: `increase-header-colspan-button-${r}${c}`,
-            parent: `th-controls-${r}${c}`,
+            parent: `header-rowcol-button-container-${r}${c}`,
             innerHTML: 'cs+',
             eventObject: {
               listener: 'click',
@@ -238,7 +250,7 @@ const header = state => {
           createElement({
             type: 'button',
             id: `decrease-colspan-button-${r}${c}`,
-            parent: `th-controls-${r}${c}`,
+            parent: `header-rowcol-button-container-${r}${c}`,
             innerHTML: 'cs-',
             attrs: [
               {
