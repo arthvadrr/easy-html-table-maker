@@ -2,6 +2,7 @@ export default {
   loading: true,
   showCellControls: true,
   allowTags: false,
+  allowLineBreaks: true,
   header: true,
   footer: false,
   colgroup: false,

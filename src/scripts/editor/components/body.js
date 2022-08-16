@@ -98,7 +98,7 @@ const body = state => {
         attrs: [
           {
             attr: 'class',
-            value: 'td-input',
+            value: 'td-input pre-wrap',
           },
         ],
         inputProps: {

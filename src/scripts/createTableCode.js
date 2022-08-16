@@ -13,7 +13,7 @@ Space
 \u00a0 == ' '
 
 line break
-?
+&lt;br&gt
 */
 
 const createTableCode = state => {
@@ -78,6 +78,9 @@ const createTableCode = state => {
       output += `${indent(4)}&lt;tr&gt<br>`;
 
       for (let c = 0; c < state.headerContent[r].length; c++) {
+        let headerContent = replaceHTML(state.headerContent[r][c].innerHTML, true);
+        headerContent = headerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+        console.log(headerContent);
         let cellType = 'th';
 
         if (!state.headerContent[r][c].colCollision && !state.headerContent[r][c].rowCollision) {
@@ -89,7 +92,7 @@ const createTableCode = state => {
           if (state.headerContent[r][c].colspan > 1) {
             output += ` colspan="${state.headerContent[r][c].colspan}"`;
           }
-          output += `&gt${replaceHTML(state.headerContent[r][c].innerHTML, true)}&lt;/${cellType}&gt<br>`;
+          output += `&gt${headerContent}&lt;/${cellType}&gt<br>`;
         }
       }
       output += `${indent(4)}&lt;/tr&gt<br>`;
@@ -102,6 +105,8 @@ const createTableCode = state => {
     output += `${indent(4)}&lt;tr&gt<br>`;
 
     for (let c = 0; c < state.content[r].length; c++) {
+      let bodyContent = replaceHTML(state.content[r][c].innerHTML, true);
+      bodyContent = bodyContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
       let isHeader = state.content[r][c].isHeader;
       let headerScope = state.content[r][c].headerScope;
       let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
@@ -116,7 +121,7 @@ const createTableCode = state => {
         if (state.content[r][c].colspan > 1) {
           output += ` colspan="${state.content[r][c].colspan}"`;
         }
-        output += `&gt${replaceHTML(state.content[r][c].innerHTML, true)}&lt;/${cellTypeClose}&gt<br>`;
+        output += `&gt${bodyContent}&lt;/${cellTypeClose}&gt<br>`;
       }
     }
     output += `${indent(4)}&lt;/tr&gt<br>`;
@@ -129,6 +134,8 @@ const createTableCode = state => {
       output += `${indent(4)}&lt;tr&gt<br>`;
 
       for (let c = 0; c < state.footerContent[r].length; c++) {
+        let footerContent = replaceHTML(state.content[r][c].innerHTML, true);
+        footerContent = footerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
         let isHeader = state.footerContent[r][c].isHeader;
         let headerScope = state.footerContent[r][c].headerScope;
         let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
@@ -143,7 +150,7 @@ const createTableCode = state => {
           if (state.footerContent[r][c].colspan > 1) {
             output += ` colspan="${state.footerContent[r][c].colspan}"`;
           }
-          output += `&gt${replaceHTML(state.footerContent[r][c].innerHTML, true)}&lt;/${cellTypeClose}&gt<br>`;
+          output += `&gt${footerContent}&lt;/${cellTypeClose}&gt<br>`;
         }
       }
 

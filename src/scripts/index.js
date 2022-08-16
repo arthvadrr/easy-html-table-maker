@@ -2,6 +2,7 @@ import initialState from './initialState';
 import createEditorTable from './editor/createEditorTable';
 import createTableCode from './createTableCode';
 import createTablePreview from './createTablePreview';
+import addResizingToTextareas from './editor/utl/addResizingToTextareas';
 import { addFilterInnerHTMLToInputs } from './editor/utl/filterInnerHTML';
 
 let localState = '';
@@ -37,5 +38,6 @@ const init = () => {
     addFilterInnerHTMLToInputs();
   }
 
+  addResizingToTextareas();
   document.getElementById('loading-modal').classList.add('display-none');
 };
