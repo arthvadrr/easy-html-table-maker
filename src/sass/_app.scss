@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  background-color: $color_very-dark-grey;
+  background-color: $color_very-dark-gray;
 }
 
 .pre-wrap {
@@ -18,7 +18,7 @@ h1 {
   letter-spacing: -2px;
   line-height: 4rem;
   color: #fff;
-  background-color: darken($color_very-dark-grey, 4%);
+  background-color: darken($color_very-dark-gray, 4%);
   margin: 0 0 2rem 0;
   padding: 1px 2rem;
 
@@ -98,6 +98,7 @@ h3 {
       padding-top: 0.5rem;
 
       label {
+        padding-right: 2px;
         color: $color_light-gray;
 
         &:hover {
@@ -193,6 +194,8 @@ h3 {
       height: 100%;
 
       textarea {
+        display: table-cell;
+        vertical-align: middle;
         flex-grow: 1;
         word-wrap: break-word;
         font-size: 1.2rem;
@@ -265,6 +268,34 @@ deprecated.
   }
 
   #markup {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
     margin-right: 0;
+
+    .title-and-copy-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        margin: 0.5rem 0;
+      }
+    }
+
+    code#table-code {
+      display: block;
+      flex-grow: 1;
+      overflow-y: scroll;
+      padding: 0;
+      background-color: $color_very-dark-gray;
+      border: 5px solid $color_gray;
+      border-radius: 5px;
+      color: $color_very-light-kinda-brownish;
+
+      .tag {
+        color: $color_light-orange;
+      }
+    }
   }
 }

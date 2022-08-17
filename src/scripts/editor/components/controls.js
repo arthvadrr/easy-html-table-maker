@@ -361,18 +361,18 @@ const controls = state => {
 
   createElement({
     type: 'input',
-    id: 'allow-line-breaks',
+    id: 'use-line-breaks',
     parent: 'editor-table-controls',
     inputProps: {
       type: 'checkbox',
       label: 'Use line breaks',
-      for: 'allow-line-breaks',
-      checked: state.allowLineBreaks,
+      for: 'use-line-breaks',
+      checked: state.useLineBreaks,
     },
     eventObject: {
       listener: 'click',
       func: () => {
-        state.allowLineBreaks = !state.allowLineBreaks;
+        state.useLineBreaks = !state.useLineBreaks;
         reload(state, true);
       },
     },

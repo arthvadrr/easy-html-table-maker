@@ -33,11 +33,11 @@ const init = () => {
   createEditorTable(state);
   createTableCode(state);
   createTablePreview(state);
+  addResizingToTextareas();
 
   if (!state.allowTags) {
     addFilterInnerHTMLToInputs();
   }
 
-  addResizingToTextareas();
   document.getElementById('loading-modal').classList.add('display-none');
 };

@@ -74,7 +74,11 @@ const createTablePreview = state => {
           continue;
         }
 
-        let headerContent = state.headerContent[r][c].innerHTML.replace(/(\r\n|\n|\r)/gm, '<br>');
+        let headerContent = state.headerContent[r][c].innerHTML;
+
+        if (state.useLineBreaks) {
+          headerContent = headerContent.replace(/(\r\n|\n|\r)/gm, '<br>');
+        }
 
         let cellType = 'th';
 
@@ -116,7 +120,11 @@ const createTablePreview = state => {
         continue;
       }
 
-      let bodyContent = state.content[r][c].innerHTML.replace(/(\r\n|\n|\r)/gm, '<br>');
+      let bodyContent = state.content[r][c].innerHTML;
+
+      if (state.useLineBreaks) {
+        bodyContent = bodyContent.replace(/(\r\n|\n|\r)/gm, '<br>');
+      }
 
       let cellType = state.content[r][c].isHeader ? 'th' : 'td';
 
@@ -161,7 +169,11 @@ const createTablePreview = state => {
           continue;
         }
 
-        let footerContent = state.footerContent[r][c].innerHTML.replace(/(\r\n|\n|\r)/gm, '<br>');
+        let footerContent = state.footerContent[r][c].innerHTML;
+
+        if (state.useLineBreaks) {
+          footerContent = footerContent.replace(/(\r\n|\n|\r)/gm, '<br>');
+        }
 
         let cellType = state.footerContent[r][c].isHeader ? 'th' : 'td';
 

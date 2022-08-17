@@ -35,7 +35,7 @@ const createTableCode = state => {
       output += '<br>';
       output += state.styles.length === style ? '' : '<br>';
     }
-    output += '&lt;/style&gt;';
+    output += '<span class="tag">&lt;/style&gt;';
     output += '<br><br>';
   }
 
@@ -43,16 +43,16 @@ const createTableCode = state => {
     className = ` class="${state.className}"`;
   }
 
-  output += `&lt;table${className}&gt<br>`;
+  output += `<span class="tag">&lt;table${className}&gt</span><br>`;
 
   if (state.caption) {
-    output += `${indent(2)}&lt;caption&gt${state.captionText}&lt;/caption&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;caption&gt</span>${state.captionText}<span class="tag">&lt;/caption&gt</span><br>`;
   }
 
   if (state.colgroup) {
-    output += `${indent(2)}&lt;colgroup${colgroupProps}&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;colgroup${colgroupProps}&gt</span><br>`;
     for (let colgroup = 0; colgroup < state.colgroupProps.length; colgroup++) {
-      let colOutput = `${indent(4)}&lt;col`;
+      let colOutput = `${indent(4)}<span class="tag">&lt;col`;
 
       if (state.colgroupProps[colgroup].span > 1 && state.colgroupProps[colgroup].useSpan) {
         colOutput += ` span="${state.colgroupProps[colgroup].span}"`;
@@ -66,25 +66,27 @@ const createTableCode = state => {
         colOutput += ` style="width:${state.columnSettings[colgroup].width}${state.columnSettings[colgroup].widthUnits}"`;
       }
 
-      colOutput += '&gt<br>';
+      colOutput += '&gt</span><br>';
       output += colOutput;
     }
-    output += `${indent(2)}&lt;/colgroup&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;/colgroup&gt</span><br>`;
   }
 
   if (state.header) {
-    output += `${indent(2)}&lt;thead&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;thead&gt</span><br>`;
     for (let r = 0; r < state.headerContent.length; r++) {
-      output += `${indent(4)}&lt;tr&gt<br>`;
+      output += `${indent(4)}<span class="tag">&lt;tr&gt</span><br>`;
 
       for (let c = 0; c < state.headerContent[r].length; c++) {
         let headerContent = replaceHTML(state.headerContent[r][c].innerHTML, true);
-        headerContent = headerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
-        console.log(headerContent);
+        if (state.useLineBreaks) {
+          headerContent = headerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+        }
+
         let cellType = 'th';
 
         if (!state.headerContent[r][c].colCollision && !state.headerContent[r][c].rowCollision) {
-          output += `${indent(6)}&lt;${cellType}`;
+          output += `${indent(6)}<span class="tag">&lt;${cellType}`;
 
           if (state.headerContent[r][c].rowspan > 1) {
             output += ` rowspan="${state.headerContent[r][c].rowspan}"`;
@@ -92,28 +94,32 @@ const createTableCode = state => {
           if (state.headerContent[r][c].colspan > 1) {
             output += ` colspan="${state.headerContent[r][c].colspan}"`;
           }
-          output += `&gt${headerContent}&lt;/${cellType}&gt<br>`;
+          output += `&gt</span>${headerContent}<span class="tag">&lt;/${cellType}&gt</span><br>`;
         }
       }
-      output += `${indent(4)}&lt;/tr&gt<br>`;
+      output += `${indent(4)}<span class="tag">&lt;/tr&gt<br></span>`;
     }
-    output += `${indent(2)}&lt;/thead&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;/thead&gt</span><br>`;
   }
 
-  output += `${indent(2)}&lt;tbody&gt<br>`;
+  output += `${indent(2)}<span class="tag">&lt;tbody&gt</span><br>`;
   for (let r = 0; r < state.content.length; r++) {
-    output += `${indent(4)}&lt;tr&gt<br>`;
+    output += `${indent(4)}<span class="tag">&lt;tr&gt<br></span>`;
 
     for (let c = 0; c < state.content[r].length; c++) {
       let bodyContent = replaceHTML(state.content[r][c].innerHTML, true);
-      bodyContent = bodyContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+
+      if (state.useLineBreaks) {
+        bodyContent = bodyContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+      }
+
       let isHeader = state.content[r][c].isHeader;
       let headerScope = state.content[r][c].headerScope;
       let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
       let cellTypeClose = isHeader ? 'th' : 'td';
 
       if (!state.content[r][c].colCollision && !state.content[r][c].rowCollision) {
-        output += `${indent(6)}&lt;${cellTypeOpen}`;
+        output += `${indent(6)}<span class="tag">&lt;${cellTypeOpen}`;
 
         if (state.content[r][c].rowspan > 1) {
           output += ` rowspan="${state.content[r][c].rowspan}"`;
@@ -121,28 +127,32 @@ const createTableCode = state => {
         if (state.content[r][c].colspan > 1) {
           output += ` colspan="${state.content[r][c].colspan}"`;
         }
-        output += `&gt${bodyContent}&lt;/${cellTypeClose}&gt<br>`;
+        output += `&gt</span>${bodyContent}<span class="tag">&lt;/${cellTypeClose}&gt</span><br>`;
       }
     }
-    output += `${indent(4)}&lt;/tr&gt<br>`;
+    output += `${indent(4)}<span class="tag">&lt;/tr&gt</span><br>`;
   }
-  output += `${indent(2)}&lt;/tbody&gt<br>`;
+  output += `${indent(2)}<span class="tag">&lt;/tbody&gt</span><br>`;
 
   if (state.footer) {
-    output += `${indent(2)}&lt;tfoot&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;tfoot&gt</span><br>`;
     for (let r = 0; r < state.footerContent.length; r++) {
-      output += `${indent(4)}&lt;tr&gt<br>`;
+      output += `${indent(4)}<span class="tag">&lt;tr&gt</span><br>`;
 
       for (let c = 0; c < state.footerContent[r].length; c++) {
         let footerContent = replaceHTML(state.content[r][c].innerHTML, true);
-        footerContent = footerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+
+        if (state.useLineBreaks) {
+          footerContent = footerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');
+        }
+
         let isHeader = state.footerContent[r][c].isHeader;
         let headerScope = state.footerContent[r][c].headerScope;
         let cellTypeOpen = isHeader ? `th scope="${headerScope}"` : 'td';
         let cellTypeClose = isHeader ? 'th' : 'td';
 
         if (!state.footerContent[r][c].colCollision && !state.footerContent[r][c].rowCollision) {
-          output += `${indent(6)}&lt;${cellTypeOpen}`;
+          output += `${indent(6)}<span class="tag">&lt;${cellTypeOpen}`;
 
           if (state.footerContent[r][c].rowspan > 1) {
             output += ` rowspan="${state.content[r][c].rowspan}"`;
@@ -150,16 +160,16 @@ const createTableCode = state => {
           if (state.footerContent[r][c].colspan > 1) {
             output += ` colspan="${state.footerContent[r][c].colspan}"`;
           }
-          output += `&gt${footerContent}&lt;/${cellTypeClose}&gt<br>`;
+          output += `&gt</span>${footerContent}<span class="tag">&lt;/${cellTypeClose}&gt</span><br>`;
         }
       }
 
-      output += `${indent(4)}&lt;/tr&gt<br>`;
+      output += `${indent(4)}<span class="tag">&lt;/tr&gt</span><br>`;
     }
-    output += `${indent(2)}&lt;/tfoot&gt<br>`;
+    output += `${indent(2)}<span class="tag">&lt;/tfoot&gt</span><br>`;
   }
 
-  output += `&lt;/table&gt<br>`;
+  output += `<span class="tag">&lt;/table&gt</span><br>`;
 
   $code_tableCode.innerHTML = output;
 
@@ -172,7 +182,7 @@ const createTableCode = state => {
       eventObject: {
         listener: 'click',
         func: () => {
-          copyTextToClipboard(replaceHTML($code_tableCode.innerHTML));
+          copyTextToClipboard(replaceHTML($code_tableCode.innerText));
         },
       },
     });

@@ -1,8 +1,8 @@
 export default {
   loading: true,
-  showCellControls: true,
+  showCellControls: false,
   allowTags: false,
-  allowLineBreaks: true,
+  useLineBreaks: true,
   header: true,
   footer: false,
   colgroup: false,
