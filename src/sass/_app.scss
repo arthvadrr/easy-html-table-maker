@@ -101,8 +101,8 @@ h3 {
     opacity: 0;
     transform: rotate(-45deg);
   }
-  10%,
-  70% {
+  5%,
+  80% {
     opacity: 1;
     transform: rotate(0);
   }
@@ -350,7 +350,34 @@ deprecated.
       color: $color_very-light-kinda-brownish;
 
       .tag {
-        color: $color_light-orange;
+        color: lighten($color_light-orange, 10%);
+      }
+    }
+  }
+  #preview {
+    h2 {
+      padding: 7px 0;
+      margin: 0;
+    }
+    caption {
+      color: $color_light-gray;
+    }
+
+    #preview-table {
+      border: 1px solid #000;
+      border-collapse: collapse;
+      color: $color_very-dark-gray;
+
+      background-color: $color_light-gray;
+
+      th {
+        font-weight: 700;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        border: 1px solid $color_very-dark-gray;
       }
     }
   }
