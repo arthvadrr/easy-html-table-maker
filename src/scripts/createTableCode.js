@@ -1,6 +1,7 @@
 import copyTextToClipboard from './copyTextToClipboard';
 import createElement from './editor/utl/createElement';
 import replaceHTML from './replaceHTML';
+import toaster from './editor/utl/toaster';
 
 /*
 Opening Bracket

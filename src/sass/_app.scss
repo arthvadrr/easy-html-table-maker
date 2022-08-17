@@ -56,6 +56,62 @@ h3 {
   color: $color_light-gray;
 }
 
+.toast {
+  position: fixed;
+  background-color: #fff;
+  border: 1px solid $color_gray;
+  border-bottom: none;
+  border-radius: 2px;
+  z-index: 9000;
+  top: 20px;
+  right: 20px;
+  opacity: 1;
+  animation: 3.2s cubic-bezier(0.2, 1.2, 0.2, 1.2) toastAnimation;
+  transform-origin: top right;
+  overflow: hidden;
+
+  .toast-msg {
+    padding: 10px 15px;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background-color: $color_minty-green;
+    animation: 3s linear toastBorderAnimation;
+  }
+
+  @keyframes toastBorderAnimation {
+    0% {
+      filter: hue-rotate(0);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+}
+
+@keyframes toastAnimation {
+  0% {
+    opacity: 0;
+    transform: rotate(-45deg);
+  }
+  10%,
+  70% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(45deg);
+  }
+}
+
 #editor-table-container {
   display: flex;
   flex-direction: row-reverse;
