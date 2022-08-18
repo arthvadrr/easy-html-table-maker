@@ -48,6 +48,10 @@ const header = state => {
               attr: 'colspan',
               value: state.headerContent[r][c].colspan,
             },
+            {
+              attr: 'style',
+              value: getCellStyleWidth(state.headerContent[r][c].colspan, state.cellWidth),
+            },
           ],
         });
 
@@ -59,10 +63,6 @@ const header = state => {
             {
               attr: 'class',
               value: 'grid-container',
-            },
-            {
-              attr: 'style',
-              value: getCellStyleWidth(state.headerContent[r][c].colspan, state.cellWidth),
             },
           ],
         });
