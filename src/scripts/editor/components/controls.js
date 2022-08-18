@@ -6,6 +6,11 @@ import createTableHeaderRow from '../utl/createTableHeaderRow';
 import createTableFooterRow from '../utl/createTableFooterRow';
 import filterInnerHTML from '../utl/filterInnerHTML';
 
+/*
+plus: &#x2b;
+minus: &#8722;
+*/
+
 const controls = state => {
   createElement({
     type: 'div',
@@ -18,7 +23,7 @@ const controls = state => {
       type: 'button',
       id: 'add-header-row',
       parent: 'editor-table-controls',
-      innerHTML: 'add header row',
+      innerHTML: '&#x2b; add header row',
       eventObject: {
         listener: 'click',
         func: () => {
@@ -34,7 +39,7 @@ const controls = state => {
       type: 'button',
       id: 'remove-header-row',
       parent: 'editor-table-controls',
-      innerHTML: 'remove header row',
+      innerHTML: '&#8722; remove header row',
       eventObject: {
         listener: 'click',
         func: () => {
@@ -63,7 +68,7 @@ const controls = state => {
     type: 'button',
     id: 'add-row',
     parent: 'editor-table-controls',
-    innerHTML: 'add row',
+    innerHTML: '&#x2b; add row',
     eventObject: {
       listener: 'click',
       func: () => {
@@ -77,7 +82,7 @@ const controls = state => {
     type: 'button',
     id: 'remove-row',
     parent: 'editor-table-controls',
-    innerHTML: 'remove row',
+    innerHTML: '&#8722 remove row',
     eventObject: {
       listener: 'click',
       func: () => {
@@ -101,7 +106,7 @@ const controls = state => {
       type: 'button',
       id: 'add-footer-row',
       parent: 'editor-table-controls',
-      innerHTML: 'add footer row',
+      innerHTML: '&#x2b; add footer row',
       eventObject: {
         listener: 'click',
         func: () => {
@@ -117,7 +122,7 @@ const controls = state => {
       type: 'button',
       id: 'remove-footer-row',
       parent: 'editor-table-controls',
-      innerHTML: 'remove footer row',
+      innerHTML: '&#8722 remove footer row',
       eventObject: {
         listener: 'click',
         func: () => {
@@ -145,7 +150,7 @@ const controls = state => {
     type: 'button',
     id: 'add-column',
     parent: 'editor-table-controls',
-    innerHTML: 'add column',
+    innerHTML: '&#x2b; add column',
     attrs: [
       {
         attr: 'class',
@@ -165,7 +170,7 @@ const controls = state => {
     type: 'button',
     id: 'remove-column',
     parent: 'editor-table-controls',
-    innerHTML: 'remove column',
+    innerHTML: '&#8722 remove column',
     eventObject: {
       listener: 'click',
       func: () => {

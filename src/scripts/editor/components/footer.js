@@ -1,5 +1,6 @@
 import reload from '../utl/reload';
 import createElement from '../utl/createElement';
+import getCellStyleWidth from '../utl/getCellStyleWidth';
 import createTableFooterRow from '../utl/createTableFooterRow';
 import setCollision from '../utl/setCollision';
 import filterInnerHTML from '../utl/filterInnerHTML';
@@ -46,6 +47,11 @@ const footer = state => {
               attr: 'colspan',
               value: state.footerContent[r][c].colspan,
             },
+            {
+              attr: 'style',
+              //algorithm for finding the exact width when using BOTH colspan and rowspan, since display:table-row cannot handle width; TODO this is not exact and needs refining.
+              value: getCellStyleWidth(state.footerContent[r][c].colspan, state.cellWidth),
+            },
           ],
         });
 
@@ -58,11 +64,6 @@ const footer = state => {
               attr: 'class',
               value: 'grid-container',
             },
-            // {
-            //   attr: 'style',
-            //   //algorithm for finding the exact width when using BOTH colspan and rowspan, since display:table-row cannot handle width; TODO this is not exact and needs refining.
-            //   value: `${state.content[r][c].rowspan > 1 && state.content[r][c].colspan > 1 ? 'width:calc(' + (180 * state.content[r][c].colspan + 'px + ' + (state.content[r][c].colspan * 5 - 3) + 'px') + ')' : ''}`,
-            // },
           ],
         });
 

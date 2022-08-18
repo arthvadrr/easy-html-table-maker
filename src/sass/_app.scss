@@ -193,13 +193,14 @@ h3 {
   height: 100%;
   display: block;
   border-collapse: separate;
+  border-spacing: 0;
   background-color: $color_gray;
   padding: 2rem;
   margin: 0;
   border-radius: 5px;
   border: 1px solid lighten($color_gray, 10%);
   overflow-x: scroll;
-  max-width: calc(100vw - 245px);
+  max-width: calc(100vw - 245px); //TODO recalculate
 
   .th-controls,
   .td-body-controls,
@@ -243,6 +244,7 @@ h3 {
   td {
     height: inherit;
     text-align: center;
+    border: 1px solid #000;
 
     .grid-container {
       display: flex;

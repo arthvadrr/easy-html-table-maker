@@ -9,6 +9,7 @@ export default {
   caption: false,
   captionText: '',
   useClassName: false,
+  cellWidth: 180,
   className: '',
   styles: [],
   columnSettings: [
