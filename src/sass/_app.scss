@@ -3,12 +3,15 @@ body {
   // TODO debug
   //  overflow-x: hidden;
 }
+
 body {
   background-color: $color_very-dark-gray;
 }
+
 .pre-wrap {
   white-space: pre-wrap;
 }
+
 h1 {
   font-size: 2.5rem;
   font-weight: 300;
@@ -33,6 +36,7 @@ h1 {
   //   }
   // }
 }
+
 h2 {
   display: inline-block;
   margin: 0 2rem;
@@ -40,17 +44,18 @@ h2 {
   font-size: 2.2rem;
   color: #fff;
 }
+
 h3 {
   font-size: 1.6rem;
   padding: 0;
   margin: 0;
   color: $color_light-gray;
 }
+
 .toast {
   position: fixed;
-  background-color: #fff;
-  border: 1px solid $color_gray;
-  border-bottom: none;
+  background-color: lighten($color_grass, 30%);
+  border: 2px solid $color_grass;
   z-index: 9000;
   top: 20px;
   right: 20px;
@@ -58,29 +63,12 @@ h3 {
   animation: 3.2s cubic-bezier(0.2, 1.2, 0.2, 1.2) toastAnimation;
   transform-origin: top right;
   overflow: hidden;
+
   .toast-msg {
     padding: 10px 15px;
   }
-  &::after {
-    content: '';
-    display: block;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    height: 5px;
-    width: 100%;
-    background-color: $color_minty-green;
-    animation: 3s linear toastBorderAnimation;
-  }
-  @keyframes toastBorderAnimation {
-    0% {
-      filter: hue-rotate(0);
-    }
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
 }
+
 @keyframes toastAnimation {
   0% {
     opacity: 0;
@@ -96,10 +84,12 @@ h3 {
     transform: rotate(45deg);
   }
 }
+
 #editor-table-container {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
+
   #editor-table-controls {
     background-color: $color_gray;
     padding: 2rem;
@@ -107,6 +97,7 @@ h3 {
     display: flex;
     flex-direction: column;
     border: 1px solid lighten($color_gray, 10%);
+
     button {
       background-color: $color_light-gray;
       font-size: 1.4rem;
@@ -114,38 +105,46 @@ h3 {
       box-shadow: none;
       letter-spacing: -1px;
       margin: 1px;
-      height: 30px;
+      padding: 5px;
       border: 1px solid transparent;
+
       &:hover,
       &:focus {
         background-color: $color_orange;
         border: 1px solid darken($color_orange, 15%);
       }
+
       &:active {
         background-color: lighten($color_orange, 15%);
       }
     }
+
     div {
       display: flex;
       justify-content: space-between;
       padding-top: 0.5rem;
+
       label {
         padding-right: 2px;
         color: $color_light-gray;
+
         &:hover {
           color: #fff;
         }
+
         &:active {
           color: $color_orange;
         }
       }
     }
+
     .table-class-selector-container,
     .table-caption-input-container {
       display: flex;
       flex-direction: column;
       font-size: 1.4rem;
       padding: 0.8rem 0;
+
       label {
         &:hover,
         &:active {
@@ -153,11 +152,30 @@ h3 {
         }
       }
     }
+
     #reset-table {
-      padding-top: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .import-from-csv-container {
+      display: flex;
+      flex-direction: column;
+      padding-top: 1rem;
+      color: $color_light-gray;
+
+      label {
+        font-size: 18px;
+      }
+
+      input {
+        font-size: 12px;
+        box-shadow: none;
+        border-radius: 0;
+      }
     }
   }
 }
+
 .editor-table {
   table-layout: auto;
   height: 100%;
@@ -170,29 +188,36 @@ h3 {
   border: 1px solid lighten($color_gray, 10%);
   overflow-x: scroll;
   max-width: calc(100vw - 245px); //TODO recalculate
+
   #header-heading {
     padding-bottom: 0.5rem;
   }
+
   #body-heading,
   #footer-heading {
     padding: 0.5rem 0;
   }
+
   .th-controls,
   .td-body-controls,
   .td-footer-controls {
     display: flex;
     flex-direction: column;
     background-color: $color_grass;
+
     .controls-top-container {
       display: flex;
     }
+
     .rowcol-button-container {
       display: flex;
     }
+
     button,
     label {
       font-size: 1rem;
     }
+
     button {
       display: inline-block;
       padding: 0;
@@ -200,22 +225,27 @@ h3 {
       width: auto;
       border-radius: none;
     }
+
     input {
       height: 10px;
       width: 10px;
     }
   }
+
   tr {
     height: 100%;
   }
+
   th,
   td {
     height: inherit;
     text-align: center;
+
     .grid-container {
       display: flex;
       flex-direction: column;
       height: 100%;
+
       textarea {
         display: table-cell;
         vertical-align: middle;
@@ -235,27 +265,33 @@ h3 {
       }
     }
   }
+
   td {
     .isheader-container {
       display: flex;
       align-items: center;
       margin: 0 0.5rem;
+
       label {
         padding: 2px 0;
         margin-right: 0.2rem;
       }
     }
+
     .isheader-scope-container {
       display: flex;
       justify-content: center;
       font-size: 1rem;
       padding-top: 0.4rem;
+
       span {
         margin-right: 0.5rem;
       }
+
       label {
         margin-right: 0.2rem;
       }
+
       input {
         margin-right: 0.5rem;
       }
@@ -270,8 +306,10 @@ deprecated.
 #table-col-control-row {
   display: none;
 }
+
 .table-code-and-preview-section {
   display: flex;
+
   #markup,
   #preview {
     padding: 1rem;
@@ -279,19 +317,23 @@ deprecated.
     border: 1px solid lighten($color_gray, 10%);
     background-color: $color_gray;
   }
+
   #markup {
     display: flex;
     flex-direction: column;
     height: 500px;
     margin-right: 0;
+
     .title-and-copy-button {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       h2 {
         margin: 0.5rem 0;
       }
     }
+
     code#table-code {
       display: block;
       flex-grow: 1;
@@ -300,27 +342,33 @@ deprecated.
       background-color: $color_very-dark-gray;
       border: 5px solid $color_gray;
       color: $color_very-light-kinda-brownish;
+
       .tag {
         color: lighten($color_light-orange, 10%);
       }
     }
   }
+
   #preview {
     h2 {
       padding: 7px 0;
       margin: 0;
     }
+
     caption {
       color: $color_light-gray;
     }
+
     #preview-table {
       border: 1px solid #000;
       border-collapse: collapse;
       color: $color_very-dark-gray;
       background-color: $color_light-gray;
+
       th {
         font-weight: 700;
       }
+
       th,
       td {
         padding: 5px;

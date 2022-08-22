@@ -5,6 +5,7 @@ import createTableCol from '../utl/createTableCol';
 import createTableHeaderRow from '../utl/createTableHeaderRow';
 import createTableFooterRow from '../utl/createTableFooterRow';
 import filterInnerHTML from '../utl/filterInnerHTML';
+import toaster from '../utl/toaster.js';
 
 /*
 plus: &#x2b;
@@ -485,10 +486,12 @@ const controls = state => {
   createElement({
     type: 'input',
     id: 'import-from-csv',
-    innerHTML: 'Import from CSV',
     parent: 'editor-table-controls',
     inputProps: {
       type: 'file',
+      label: 'import from CSV',
+      for: 'import-from-csv',
+      name: 'import-from-csv',
     },
     eventObject: {
       listener: 'change',
@@ -506,11 +509,29 @@ const controls = state => {
             const headerContent = [];
 
             const str = e.target.result.split('\r\n');
-            const headerArr = str[0].split(',');
+            const headerArr = str[0].match(/("[^"]*")|[^,]+/g);
 
-            for (let hi = 0; hi < headerArr.length; hi++) {
+            const findRowArrMaxLength = () => {
+              let maxLength = 0;
+
+              for (let i = 0; i < str.length; i++) {
+                let arr = str[i].match(/("[^"]*")|[^,]+/g);
+                if (maxLength < arr.length) {
+                  maxLength = arr.length;
+                }
+              }
+
+              return maxLength;
+            };
+
+            const strRowArrMaxLength = findRowArrMaxLength();
+
+            for (let hi = 0; hi < strRowArrMaxLength; hi++) {
+              let cell = hi + 1 > headerArr.length ? '' : headerArr[hi].toString().trim();
+              cell = cell.replace(/"([^"]+(?="))"/g, '$1');
+
               let obj = {
-                innerHTML: headerArr[hi],
+                innerHTML: cell,
                 rowspan: 1,
                 colspan: 1,
                 rowCollision: false,
@@ -521,19 +542,28 @@ const controls = state => {
             state.headerContent.push(headerContent);
 
             for (let br = 1; br < str.length; br++) {
-              let strRowArr = str[br].split(',');
-              console.log(strRowArr);
+              let strRowArr = str[br].match(/("[^"]*")|[^,]+/g);
               let bodyRow = [];
 
-              for (let bi = 0; bi < strRowArr.length; bi++) {
+              for (let bi = 0; bi < strRowArrMaxLength; bi++) {
+                let cell = bi + 1 > strRowArr.length ? '' : strRowArr[bi].toString().trim();
+                let cellNoQuotes = cell.replace(/"([^"]+(?="))"/g, '$1');
+                let isHeader = false;
+                let headerScope = 'col';
+
+                if (cell !== cellNoQuotes) {
+                  isHeader = true;
+                  headerScope = 'row';
+                }
+
                 let obj = {
-                  innerHTML: strRowArr[bi],
+                  innerHTML: cellNoQuotes,
                   rowspan: 1,
                   colspan: 1,
                   rowCollision: false,
                   colCollision: false,
-                  isHeader: false,
-                  headerScope: 'col',
+                  isHeader: isHeader,
+                  headerScope: headerScope,
                 };
 
                 bodyRow.push(obj);
@@ -544,6 +574,8 @@ const controls = state => {
 
             reload(state, true);
           };
+
+          toaster(`${e.target.files[0].name} has been imported!`, document.body);
         }
       },
     },
