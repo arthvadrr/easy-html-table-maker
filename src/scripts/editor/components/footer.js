@@ -49,7 +49,6 @@ const footer = state => {
             },
             {
               attr: 'style',
-              //algorithm for finding the exact width when using BOTH colspan and rowspan, since display:table-row cannot handle width; TODO this is not exact and needs refining.
               value: getCellStyleWidth(state.footerContent[r][c].colspan, state.cellWidth),
             },
           ],

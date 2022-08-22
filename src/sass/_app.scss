@@ -3,15 +3,12 @@ body {
   // TODO debug
   //  overflow-x: hidden;
 }
-
 body {
   background-color: $color_very-dark-gray;
 }
-
 .pre-wrap {
   white-space: pre-wrap;
 }
-
 h1 {
   font-size: 2.5rem;
   font-weight: 300;
@@ -21,26 +18,21 @@ h1 {
   background-color: darken($color_very-dark-gray, 4%);
   margin: 0 0 2rem 0;
   padding: 1px 2rem;
-
   // meh, not sure about this
   // span {
   //   letter-spacing: -3px;
-
   //   &:before,
   //   &:after {
   //     opacity: 0.3;
   //   }
-
   //   &:before {
   //     content: '<';
   //   }
-
   //   &:after {
   //     content: '></table>';
   //   }
   // }
 }
-
 h2 {
   display: inline-block;
   margin: 0 2rem;
@@ -48,20 +40,17 @@ h2 {
   font-size: 2.2rem;
   color: #fff;
 }
-
 h3 {
   font-size: 1.6rem;
   padding: 0;
   margin: 0;
   color: $color_light-gray;
 }
-
 .toast {
   position: fixed;
   background-color: #fff;
   border: 1px solid $color_gray;
   border-bottom: none;
-  border-radius: 2px;
   z-index: 9000;
   top: 20px;
   right: 20px;
@@ -69,11 +58,9 @@ h3 {
   animation: 3.2s cubic-bezier(0.2, 1.2, 0.2, 1.2) toastAnimation;
   transform-origin: top right;
   overflow: hidden;
-
   .toast-msg {
     padding: 10px 15px;
   }
-
   &::after {
     content: '';
     display: block;
@@ -85,7 +72,6 @@ h3 {
     background-color: $color_minty-green;
     animation: 3s linear toastBorderAnimation;
   }
-
   @keyframes toastBorderAnimation {
     0% {
       filter: hue-rotate(0);
@@ -95,7 +81,6 @@ h3 {
     }
   }
 }
-
 @keyframes toastAnimation {
   0% {
     opacity: 0;
@@ -111,69 +96,56 @@ h3 {
     transform: rotate(45deg);
   }
 }
-
 #editor-table-container {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-
   #editor-table-controls {
     background-color: $color_gray;
     padding: 2rem;
     margin: 0 2rem;
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
     border: 1px solid lighten($color_gray, 10%);
-
     button {
       background-color: $color_light-gray;
       font-size: 1.4rem;
       text-align: left;
       box-shadow: none;
       letter-spacing: -1px;
-      border-radius: 3px;
       margin: 1px;
       height: 30px;
       border: 1px solid transparent;
-
       &:hover,
       &:focus {
         background-color: $color_orange;
         border: 1px solid darken($color_orange, 15%);
       }
-
       &:active {
         background-color: lighten($color_orange, 15%);
       }
     }
-
     div {
       display: flex;
       justify-content: space-between;
       padding-top: 0.5rem;
-
       label {
         padding-right: 2px;
         color: $color_light-gray;
-
         &:hover {
           color: #fff;
         }
-
         &:active {
           color: $color_orange;
         }
       }
     }
-
     .table-class-selector-container,
     .table-caption-input-container {
       display: flex;
       flex-direction: column;
       font-size: 1.4rem;
       padding: 0.8rem 0;
-
       label {
         &:hover,
         &:active {
@@ -181,13 +153,11 @@ h3 {
         }
       }
     }
-
     #reset-table {
       padding-top: 0.5rem;
     }
   }
 }
-
 .editor-table {
   table-layout: auto;
   height: 100%;
@@ -197,31 +167,32 @@ h3 {
   background-color: $color_gray;
   padding: 2rem;
   margin: 0;
-  border-radius: 5px;
   border: 1px solid lighten($color_gray, 10%);
   overflow-x: scroll;
   max-width: calc(100vw - 245px); //TODO recalculate
-
+  #header-heading {
+    padding-bottom: 0.5rem;
+  }
+  #body-heading,
+  #footer-heading {
+    padding: 0.5rem 0;
+  }
   .th-controls,
   .td-body-controls,
   .td-footer-controls {
     display: flex;
     flex-direction: column;
     background-color: $color_grass;
-
     .controls-top-container {
       display: flex;
     }
-
     .rowcol-button-container {
       display: flex;
     }
-
     button,
     label {
       font-size: 1rem;
     }
-
     button {
       display: inline-block;
       padding: 0;
@@ -229,28 +200,22 @@ h3 {
       width: auto;
       border-radius: none;
     }
-
     input {
       height: 10px;
       width: 10px;
     }
   }
-
   tr {
     height: 100%;
   }
-
   th,
   td {
     height: inherit;
     text-align: center;
-    border: 1px solid #000;
-
     .grid-container {
       display: flex;
       flex-direction: column;
       height: 100%;
-
       textarea {
         display: table-cell;
         vertical-align: middle;
@@ -270,40 +235,33 @@ h3 {
       }
     }
   }
-
   td {
     .isheader-container {
       display: flex;
       align-items: center;
       margin: 0 0.5rem;
-
       label {
         padding: 2px 0;
         margin-right: 0.2rem;
       }
     }
-
     .isheader-scope-container {
       display: flex;
       justify-content: center;
       font-size: 1rem;
       padding-top: 0.4rem;
-
       span {
         margin-right: 0.5rem;
       }
-
       label {
         margin-right: 0.2rem;
       }
-
       input {
         margin-right: 0.5rem;
       }
     }
   }
 }
-
 /*
 deprecated.
  TODO 
@@ -312,35 +270,28 @@ deprecated.
 #table-col-control-row {
   display: none;
 }
-
 .table-code-and-preview-section {
   display: flex;
-
   #markup,
   #preview {
     padding: 1rem;
     margin: 2rem;
-    border-radius: 5px;
     border: 1px solid lighten($color_gray, 10%);
     background-color: $color_gray;
   }
-
   #markup {
     display: flex;
     flex-direction: column;
     height: 500px;
     margin-right: 0;
-
     .title-and-copy-button {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       h2 {
         margin: 0.5rem 0;
       }
     }
-
     code#table-code {
       display: block;
       flex-grow: 1;
@@ -348,9 +299,7 @@ deprecated.
       padding: 0;
       background-color: $color_very-dark-gray;
       border: 5px solid $color_gray;
-      border-radius: 5px;
       color: $color_very-light-kinda-brownish;
-
       .tag {
         color: lighten($color_light-orange, 10%);
       }
@@ -364,18 +313,14 @@ deprecated.
     caption {
       color: $color_light-gray;
     }
-
     #preview-table {
       border: 1px solid #000;
       border-collapse: collapse;
       color: $color_very-dark-gray;
-
       background-color: $color_light-gray;
-
       th {
         font-weight: 700;
       }
-
       th,
       td {
         padding: 5px;

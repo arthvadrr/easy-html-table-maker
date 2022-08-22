@@ -411,7 +411,6 @@ const controls = state => {
           for (let i = 0; i < state.headerContent.length; i++) {
             for (let x = 0; x < state.headerContent[i].length; x++) {
               state.headerContent[i][x].innerHTML = filterInnerHTML(state.headerContent[i][x].innerHTML);
-              console.log(filterInnerHTML(state.headerContent[i][x].innerHTML));
             }
           }
 
@@ -482,6 +481,72 @@ const controls = state => {
       },
     },
   });
-};
 
+  createElement({
+    type: 'input',
+    id: 'import-from-csv',
+    innerHTML: 'Import from CSV',
+    parent: 'editor-table-controls',
+    inputProps: {
+      type: 'file',
+    },
+    eventObject: {
+      listener: 'change',
+      func: e => {
+        if (confirm('Clear current table contents and import from csv?')) {
+          const reader = new FileReader();
+          reader.readAsText(e.target.files[0]);
+
+          reader.onload = e => {
+            state.header = true;
+            state.footer = false;
+            state.headerContent = [];
+            state.content = [];
+
+            const headerContent = [];
+
+            const str = e.target.result.split('\r\n');
+            const headerArr = str[0].split(',');
+
+            for (let hi = 0; hi < headerArr.length; hi++) {
+              let obj = {
+                innerHTML: headerArr[hi],
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+              };
+              headerContent.push(obj);
+            }
+            state.headerContent.push(headerContent);
+
+            for (let br = 1; br < str.length; br++) {
+              let strRowArr = str[br].split(',');
+              console.log(strRowArr);
+              let bodyRow = [];
+
+              for (let bi = 0; bi < strRowArr.length; bi++) {
+                let obj = {
+                  innerHTML: strRowArr[bi],
+                  rowspan: 1,
+                  colspan: 1,
+                  rowCollision: false,
+                  colCollision: false,
+                  isHeader: false,
+                  headerScope: 'col',
+                };
+
+                bodyRow.push(obj);
+              }
+
+              state.content.push(bodyRow);
+            }
+
+            reload(state, true);
+          };
+        }
+      },
+    },
+  });
+};
 export default controls;

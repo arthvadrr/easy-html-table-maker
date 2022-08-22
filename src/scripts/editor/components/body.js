@@ -71,6 +71,10 @@ const body = state => {
             attr: 'colspan',
             value: state.content[r][c].colspan,
           },
+          {
+            attr: 'style',
+            value: getCellStyleWidth(state.content[r][c].colspan, state.cellWidth),
+          },
         ],
       });
 
@@ -82,10 +86,6 @@ const body = state => {
           {
             attr: 'class',
             value: 'grid-container',
-          },
-          {
-            attr: 'style',
-            value: getCellStyleWidth(state.content[r][c].colspan, state.cellWidth),
           },
         ],
       });
