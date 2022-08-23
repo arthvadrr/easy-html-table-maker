@@ -189,6 +189,72 @@ const createTableCode = state => {
     });
   }
 
+  if (!document.getElementById('export-as-csv')) {
+    createElement({
+      type: 'button',
+      id: 'export-as-csv',
+      innerHTML: 'export as CSV',
+      parent: 'markup-controls',
+      eventObject: {
+        listener: 'click',
+        func: () => {
+          let csvName = 'table-csv';
+          let headerArr = '';
+          let bodyArr = '';
+
+          if (state.className !== '' && state.className) {
+            csvName = state.className.replace(' ', '-');
+          }
+
+          if (state.caption !== '' && state.caption) {
+            csvName = state.caption + 'csv';
+          }
+
+          for (let r = 0; r < state.headerContent.length; r++) {
+            let headerRow = '';
+
+            for (let c = 0; c < state.headerContent[r].length; c++) {
+              let innerHTML = state.headerContent[r][c].innerHTML;
+              innerHTML = innerHTML.indexOf(',') === -1 ? innerHTML : `"${innerHTML}"`;
+
+              headerRow += innerHTML + ',';
+            }
+
+            headerRow += '\n';
+
+            headerArr += headerRow;
+          }
+
+          for (let r = 0; r < state.content.length; r++) {
+            let bodyRow = '';
+
+            for (let c = 0; c < state.content[r].length; c++) {
+              let innerHTML = state.content[r][c].innerHTML;
+              innerHTML = innerHTML.indexOf(',') === -1 ? innerHTML : `"${innerHTML}"`;
+              bodyRow += innerHTML + ',';
+            }
+
+            bodyRow += '\n';
+            bodyArr += bodyRow;
+          }
+
+          let csv = headerArr + bodyArr;
+          csv = csv.slice(0, -2);
+          const csvHeader = 'data:text/csv;charset=utf-8,';
+          const csvFile = csvHeader + csv;
+          const csvFileURI = encodeURI(csvFile);
+
+          const a = document.createElement('a');
+          a.setAttribute('download', csvName);
+          a.setAttribute('href', csvFileURI);
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        },
+      },
+    });
+  }
+
   return output;
 };
 
