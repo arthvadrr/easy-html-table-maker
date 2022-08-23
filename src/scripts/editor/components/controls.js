@@ -508,13 +508,17 @@ const controls = state => {
 
             const headerContent = [];
 
-            const str = e.target.result.split('\r\n');
+            let str = e.target.result.replaceAll('\r', '');
+            str = e.target.result.split('\n');
+            str = str.slice(0, -1);
+            console.log(`1st instance ${str}`);
             const headerArr = str[0].match(/("[^"]*")|[^,]+/g);
 
             const findRowArrMaxLength = () => {
               let maxLength = 0;
 
               for (let i = 0; i < str.length; i++) {
+                console.log(str[i]);
                 let arr = str[i].match(/("[^"]*")|[^,]+/g);
                 if (maxLength < arr.length) {
                   maxLength = arr.length;

@@ -217,10 +217,10 @@ const createTableCode = state => {
               let innerHTML = state.headerContent[r][c].innerHTML;
               innerHTML = innerHTML.indexOf(',') === -1 ? innerHTML : `"${innerHTML}"`;
 
-              headerRow += innerHTML + ',';
+              headerRow += c + 1 === state.headerContent[r].length ? innerHTML : innerHTML + ',';
             }
 
-            headerRow += '\n';
+            headerRow += '\r\n';
 
             headerArr += headerRow;
           }
@@ -231,15 +231,16 @@ const createTableCode = state => {
             for (let c = 0; c < state.content[r].length; c++) {
               let innerHTML = state.content[r][c].innerHTML;
               innerHTML = innerHTML.indexOf(',') === -1 ? innerHTML : `"${innerHTML}"`;
-              bodyRow += innerHTML + ',';
+              bodyRow += c + 1 === state.content[r].length ? innerHTML : innerHTML + ',';
             }
 
-            bodyRow += '\n';
+            bodyRow += '\r\n';
             bodyArr += bodyRow;
           }
 
           let csv = headerArr + bodyArr;
-          csv = csv.slice(0, -2);
+          csv = csv.slice(0, -2) + '\r\n';
+          console.log(csv);
           const csvHeader = 'data:text/csv;charset=utf-8,';
           const csvFile = csvHeader + csv;
           const csvFileURI = encodeURI(csvFile);
@@ -250,6 +251,7 @@ const createTableCode = state => {
           document.body.appendChild(a);
           a.click();
           a.remove();
+          toaster(`\'${csvName}\' downloaded!`, document.body);
         },
       },
     });
