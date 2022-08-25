@@ -174,21 +174,6 @@ const createTableCode = state => {
 
   $code_tableCode.innerHTML = output;
 
-  if (!document.getElementById('copy-table-code')) {
-    createElement({
-      type: 'button',
-      id: 'copy-table-code',
-      parent: 'markup-controls',
-      innerHTML: 'copy html',
-      eventObject: {
-        listener: 'click',
-        func: () => {
-          copyTextToClipboard(replaceHTML($code_tableCode.innerText));
-        },
-      },
-    });
-  }
-
   if (!document.getElementById('export-as-csv')) {
     createElement({
       type: 'button',
@@ -239,6 +224,7 @@ const createTableCode = state => {
           }
 
           let csv = headerArr + bodyArr;
+          console.log(csv);
           csv = csv.slice(0, -2) + '\r\n';
           console.log(csv);
           const csvHeader = 'data:text/csv;charset=utf-8,';
@@ -252,6 +238,21 @@ const createTableCode = state => {
           a.click();
           a.remove();
           toaster(`\'${csvName}\' downloaded!`, document.body);
+        },
+      },
+    });
+  }
+
+  if (!document.getElementById('copy-table-code')) {
+    createElement({
+      type: 'button',
+      id: 'copy-table-code',
+      parent: 'markup-controls',
+      innerHTML: 'copy html',
+      eventObject: {
+        listener: 'click',
+        func: () => {
+          copyTextToClipboard(replaceHTML($code_tableCode.innerText));
         },
       },
     });

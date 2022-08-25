@@ -54,8 +54,8 @@ h3 {
 
 .toast {
   position: fixed;
-  background-color: lighten($color_grass, 30%);
-  border: 2px solid $color_grass;
+  background-color: $color_light-gray;
+  border: 2px solid $color_dark-gray;
   z-index: 9000;
   top: 20px;
   right: 20px;
@@ -88,6 +88,7 @@ h3 {
 #editor-table-container {
   display: flex;
   flex-direction: row-reverse;
+  align-items: stretch;
   justify-content: flex-end;
 
   #editor-table-controls {
@@ -187,7 +188,7 @@ h3 {
   margin: 0;
   border: 1px solid lighten($color_gray, 10%);
   overflow-x: scroll;
-  max-width: calc(100vw - 245px); //TODO recalculate
+  max-width: calc(100vw - 316px); //TODO recalculate
 
   #header-heading {
     padding-bottom: 0.5rem;
@@ -203,7 +204,8 @@ h3 {
   .td-footer-controls {
     display: flex;
     flex-direction: column;
-    background-color: $color_grass;
+    background-color: darken($color_light-gray, 10%);
+    border-top: 1px solid $color_dark-gray;
 
     .controls-top-container {
       display: flex;
@@ -223,7 +225,17 @@ h3 {
       padding: 0;
       margin: 0;
       width: auto;
+      border: 1px solid transparent;
+      border-right: 1px solid $color_dark-gray;
       border-radius: none;
+      box-shadow: none;
+
+      &:hover,
+      &:focus {
+        &:not([disabled='true']) {
+          background-color: $color_orange;
+        }
+      }
     }
 
     input {
@@ -334,7 +346,17 @@ deprecated.
       }
 
       button {
-        margin: 0 2px;
+        font-size: 1.4rem;
+        padding: 5px;
+        margin: 0 5px;
+        border: 1px solid transparent;
+        border-radius: none;
+
+        &:hover,
+        &:focus {
+          background-color: $color_orange;
+          border: 1px solid darken($color_orange, 10%);
+        }
       }
     }
 

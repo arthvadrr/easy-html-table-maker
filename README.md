@@ -6,6 +6,12 @@ This is a tool for quickly generating html markup for those troublesome tables.
 
 ## Theme information
 
+## Contributions
+
+### 8/25/2022 @twitchuser brahminha
+
+Helped save my ass with the regex that handles CSV imports!
+
 ### Font attribution
 
 The font is [Courier Prime Sans](https://www.1001fonts.com/courier-prime-sans-font.html) from [quote unquote apps](https://www.1001fonts.com/users/quoteunquoteapps/).

@@ -511,15 +511,15 @@ const controls = state => {
             let str = e.target.result.replaceAll('\r', '');
             str = e.target.result.split('\n');
             str = str.slice(0, -1);
-            console.log(`1st instance ${str}`);
-            const headerArr = str[0].match(/("[^"]*")|[^,]+/g);
+            console.log(str);
+            const headerArr = str[0].match(/[^\s,"]+|"([^"]*)"+/g);
+            console.log(headerArr);
 
             const findRowArrMaxLength = () => {
               let maxLength = 0;
 
               for (let i = 0; i < str.length; i++) {
-                console.log(str[i]);
-                let arr = str[i].match(/("[^"]*")|[^,]+/g);
+                let arr = str[i].match(/[^\s,"]+|"([^"]*)"+/g);
                 if (maxLength < arr.length) {
                   maxLength = arr.length;
                 }
@@ -551,23 +551,15 @@ const controls = state => {
 
               for (let bi = 0; bi < strRowArrMaxLength; bi++) {
                 let cell = bi + 1 > strRowArr.length ? '' : strRowArr[bi].toString().trim();
-                let cellNoQuotes = cell.replace(/"([^"]+(?="))"/g, '$1');
-                let isHeader = false;
-                let headerScope = 'col';
-
-                if (cell !== cellNoQuotes) {
-                  isHeader = true;
-                  headerScope = 'row';
-                }
 
                 let obj = {
-                  innerHTML: cellNoQuotes,
+                  innerHTML: cell,
                   rowspan: 1,
                   colspan: 1,
                   rowCollision: false,
                   colCollision: false,
-                  isHeader: isHeader,
-                  headerScope: headerScope,
+                  isHeader: false,
+                  headerScope: 'col',
                 };
 
                 bodyRow.push(obj);

@@ -2,6 +2,7 @@ import createEditorTable from '../createEditorTable';
 import createTableCode from '../../createTableCode';
 import createTablePreview from '../../createTablePreview';
 import addResizingToTextareas from './addResizingToTextareas';
+import hackilySetEditorTableHeight from './hackilySetEditorTableHeight';
 import { addFilterInnerHTMLToInputs } from './filterInnerHTML';
 
 const reload = (state, reloadEditor = false) => {
@@ -29,6 +30,8 @@ const reload = (state, reloadEditor = false) => {
   console.time('table-preview');
   createTablePreview(state);
   console.timeEnd('table-preview');
+
+  hackilySetEditorTableHeight();
 };
 
 export default reload;
