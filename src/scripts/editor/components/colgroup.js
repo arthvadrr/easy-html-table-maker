@@ -65,6 +65,10 @@ const colgroup = state => {
             attr: 'style',
             value: `display: table-cell; ${state.columnSettings[colgroupIndex].width > 1 && state.columnSettings[colgroupIndex].useWidth ? 'width:' + state.columnSettings[colgroupIndex].width + 'px;' : ''}`,
           },
+          {
+            attr: 'class',
+            value: 'colgroup-settings-col',
+          },
         ],
       });
 

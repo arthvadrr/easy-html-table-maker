@@ -190,6 +190,26 @@ h3 {
   overflow-x: scroll;
   max-width: calc(100vw - 316px); //TODO recalculate
 
+  .colgroup-settings-col {
+    color: $color_light-gray;
+    font-size: 12px;
+    padding: 10px 0;
+
+    div {
+      margin-bottom: 2px;
+    }
+
+    label {
+      padding-right: 2px;
+    }
+
+    h4 {
+      padding: 0.5rem 0;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+
   #header-heading {
     padding-bottom: 0.5rem;
   }
@@ -204,8 +224,9 @@ h3 {
   .td-footer-controls {
     display: flex;
     flex-direction: column;
-    background-color: darken($color_light-gray, 10%);
+    background-color: $color_light-kinda-brownish;
     border-top: 1px solid $color_dark-gray;
+    color: #000;
 
     .controls-top-container {
       display: flex;

@@ -501,25 +501,33 @@ const controls = state => {
           reader.readAsText(e.target.files[0]);
 
           reader.onload = e => {
+            console.log(state);
             state.header = true;
             state.footer = false;
             state.headerContent = [];
             state.content = [];
+            state.colgroupProps = [];
+            state.colgroupSettings = [];
 
             const headerContent = [];
+            const colgroupProps = [];
+            const columnSettings = [];
 
             let str = e.target.result.replaceAll('\r', '');
             str = e.target.result.split('\n');
             str = str.slice(0, -1);
-            console.log(str);
-            const headerArr = str[0].match(/[^\s,"]+|"([^"]*)"+/g);
-            console.log(headerArr);
+
+            while ((str[str.length - 1] === '' || str[str.length - 1 === ' ']) && str.length > 0) {
+              str.pop();
+            }
+
+            const headerArr = str[0].match(/[^,\n\r]+|"([^"]*)"+/g);
 
             const findRowArrMaxLength = () => {
               let maxLength = 0;
 
               for (let i = 0; i < str.length; i++) {
-                let arr = str[i].match(/[^\s,"]+|"([^"]*)"+/g);
+                let arr = str[i].match(/[^,\n\r]+|"([^"]*)"+/g);
                 if (maxLength < arr.length) {
                   maxLength = arr.length;
                 }
@@ -545,6 +553,29 @@ const controls = state => {
             }
             state.headerContent.push(headerContent);
 
+            for (let hc = 0; hc < headerContent.length; hc++) {
+              let colgroupPropsObj = {
+                useSpan: false,
+                span: 1,
+                useClassName: false,
+                className: '',
+              };
+
+              let columnSettingsObj = {
+                useWidth: false,
+                width: 0,
+                widthUnits: 'px',
+                align: 'none',
+              };
+
+              columnSettings.push(columnSettingsObj);
+              colgroupProps.push(colgroupPropsObj);
+            }
+
+            console.log(colgroupProps);
+            state.colgroupProps = colgroupProps;
+            state.columnSettings = columnSettings;
+
             for (let br = 1; br < str.length; br++) {
               let strRowArr = str[br].match(/("[^"]*")|[^,]+/g);
               let bodyRow = [];
@@ -552,7 +583,7 @@ const controls = state => {
               for (let bi = 0; bi < strRowArrMaxLength; bi++) {
                 let cell = bi + 1 > strRowArr.length ? '' : strRowArr[bi].toString().trim();
 
-                let obj = {
+                let contentObj = {
                   innerHTML: cell,
                   rowspan: 1,
                   colspan: 1,
@@ -562,7 +593,7 @@ const controls = state => {
                   headerScope: 'col',
                 };
 
-                bodyRow.push(obj);
+                bodyRow.push(contentObj);
               }
 
               state.content.push(bodyRow);
