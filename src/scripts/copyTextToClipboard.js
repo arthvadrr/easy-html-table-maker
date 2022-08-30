@@ -8,7 +8,6 @@ const copyTextToClipboard = text => {
   textarea.select();
   const copy = document.execCommand('copy');
   document.body.removeChild(textarea);
-  console.log(toaster);
   toaster('Copied to clipboard!', document.getElementsByTagName('body')[0]);
 };
 

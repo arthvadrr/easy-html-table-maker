@@ -224,9 +224,7 @@ const createTableCode = state => {
           }
 
           let csv = headerArr + bodyArr;
-          console.log(csv);
           csv = csv.slice(0, -2) + '\r\n';
-          console.log(csv);
           const csvHeader = 'data:text/csv;charset=utf-8,';
           const csvFile = csvHeader + csv;
           const csvFileURI = encodeURI(csvFile);

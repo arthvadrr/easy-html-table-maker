@@ -11,7 +11,6 @@ export default {
   useClassName: false,
   cellWidth: 180,
   className: '',
-  styles: [],
   columnSettings: [
     {
       useWidth: false,

@@ -4,7 +4,7 @@ import createTableCode from './createTableCode';
 import createTablePreview from './createTablePreview';
 import addResizingToTextareas from './editor/utl/addResizingToTextareas';
 import { addFilterInnerHTMLToInputs } from './editor/utl/filterInnerHTML';
-import hackilySetEditorTableHeight from '.scripts/utl/hackilySetEditorTableHeight';
+
 let localState = '';
 let state = initialState;
 
@@ -31,9 +31,15 @@ const statePromiseOnReject = () => {
 statePromise.then(statePromiseOnResolve).catch(statePromiseOnReject);
 
 const init = () => {
+  console.time('editor-table');
   createEditorTable(state);
+  console.timeEnd('editor-table');
+  console.time('table-code');
   createTableCode(state);
+  console.timeEnd('table-code');
+  console.time('table-preview');
   createTablePreview(state);
+  console.timeEnd('table-preview');
   addResizingToTextareas();
 
   if (!state.allowTags) {
@@ -41,7 +47,6 @@ const init = () => {
   }
 
   const controlContainerHeight = document.getElementById('editor-table-controls').offsetHeight;
-  console.log(controlContainerHeight);
 
   document.getElementById('editor-table').style.height = controlContainerHeight + 'px';
 

@@ -9,8 +9,10 @@ import filterInnerHTML from './utl/filterInnerHTML';
 
 const createEditorTable = state => {
   // Render the table components
+  console.time('table-components');
   const tableComponents = [table, controls, colgroup, header, body, footer];
   tableComponents.map(item => item(state));
+  console.timeEnd('table-components');
 
   const $inputArr = document.querySelectorAll('input.td-input');
 

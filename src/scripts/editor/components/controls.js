@@ -13,6 +13,7 @@ minus: &#8722;
 */
 
 const controls = state => {
+  console.time('controls');
   createElement({
     type: 'div',
     id: `editor-table-controls`,
@@ -501,7 +502,6 @@ const controls = state => {
           reader.readAsText(e.target.files[0]);
 
           reader.onload = e => {
-            console.log(state);
             state.header = true;
             state.footer = false;
             state.headerContent = [];

@@ -2,11 +2,11 @@ import reload from '../utl/reload';
 import setCollision from '../utl/setCollision';
 import createElement from '../utl/createElement';
 import createTableRow from '../utl/createTableRow';
-import createColControls from '../utl/createColControls';
 import filterInnerHTML from '../utl/filterInnerHTML';
 import getCellStyleWidth from '../utl/getCellStyleWidth';
 
 const body = state => {
+  console.time('body');
   createElement({
     type: 'tbody',
     id: 'table-body',
@@ -44,15 +44,6 @@ const body = state => {
           id: `td-colcon-${c}`,
           parent: `table-col-control-row`,
         });
-        createColControls(
-          {
-            id: `colcon-${c}`,
-            parent: `td-colcon-${c}`,
-            state: state,
-            c: c,
-          },
-          reload
-        );
       }
 
       // Ignore TDs based on rowspan and colspan
@@ -112,6 +103,7 @@ const body = state => {
           },
         },
       });
+
       if (state.showCellControls) {
         createElement({
           type: 'div',
@@ -410,6 +402,7 @@ const body = state => {
       }
     }
   }
+  console.timeEnd('body');
 };
 
 export default body;

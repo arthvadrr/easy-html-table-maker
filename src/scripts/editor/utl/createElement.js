@@ -1,14 +1,4 @@
-const createElement = (
-  props = {
-    type,
-    id,
-    parent,
-    innerHTML,
-    inputProps,
-    eventObject,
-    attrs,
-  }
-) => {
+const createElement = (props = { ...props }) => {
   let { type, id, parent, innerHTML, inputProps, eventObject, attrs } = props;
 
   let inputContainer;
@@ -24,17 +14,15 @@ const createElement = (
 
   let ele = document.createElement(type);
 
-  if (type === 'input' || type === 'textarea') {
+  if (type === 'input') {
     if (inputProps.checked) {
       ele.checked = inputProps.checked;
     }
 
-    if (type === 'input') {
-      ele.type = inputProps.type;
+    ele.type = inputProps.type;
 
-      if (inputProps.value) {
-        ele.setAttribute('value', inputProps.value);
-      }
+    if (inputProps.value) {
+      ele.setAttribute('value', inputProps.value);
     }
 
     if (inputProps.container) {
@@ -54,7 +42,7 @@ const createElement = (
     if (inputProps.label && inputProps.for) {
       const label = document.createElement('label');
       label.setAttribute('for', inputProps.for);
-      label.innerHTML = inputProps.label;
+      label.innerText = inputProps.label;
       inputContainer.appendChild(label);
       parent.appendChild(inputContainer);
       parent = inputContainer;
@@ -81,7 +69,6 @@ const createElement = (
     for (let a = 0; a < attrs.length; a++) {
       ele.setAttribute(attrs[a].attr, attrs[a].value);
 
-      // TODO Hacky fix for disabled=false evaluating to true on HTML elements.
       if (attrs[a].attr === 'disabled' && attrs[a].value === 'false') {
         ele.removeAttribute('disabled');
       }
