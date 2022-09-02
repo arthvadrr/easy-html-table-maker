@@ -272,10 +272,10 @@ h3 {
     .delete-col-btn {
       display: block;
       text-align: center;
-      height: 21px;
+      height: 100%;
       width: 100%;
       border: none;
-      border-bottom: 1px solid darken($color_light-gray, 40%);
+      border-bottom: 1px inset darken($color_light-gray, 40%);
       background: transparent;
       color: $color_light-gray;
       font-size: 8px;
@@ -287,7 +287,7 @@ h3 {
         opacity: 1;
         background: $color_strawberry;
         color: #000;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px inset #000;
       }
 
       &:active {
@@ -332,7 +332,7 @@ h3 {
         flex-grow: 1;
         word-wrap: break-word;
         font-size: 1.2rem;
-        height: 21px; // 16 + padding. Also set in "addResizingToTextareas.js"
+        height: 24px; // 16 + padding. Also set in "addResizingToTextareas.js"
         width: 100%;
         resize: none;
         border-radius: none;

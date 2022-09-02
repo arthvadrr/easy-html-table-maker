@@ -2,7 +2,7 @@ const addResizingToTextareas = () => {
   const $textarea_arr = document.getElementsByTagName('textarea');
 
   for (let i = 0; i < $textarea_arr.length; i++) {
-    $textarea_arr[i].style = `height: 21px; overflow-y: hidden;`;
+    $textarea_arr[i].style = `height: 24px; overflow-y: hidden;`;
 
     const setScrollHeight = e => {
       e.target.style.height = '21px'; // also set in "_app.scss"
