@@ -267,6 +267,53 @@ h3 {
 
   tr {
     height: 100%;
+
+    .delete-row-btn,
+    .delete-col-btn {
+      display: block;
+      text-align: center;
+      height: 21px;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid darken($color_light-gray, 40%);
+      background: transparent;
+      color: $color_light-gray;
+      font-size: 8px;
+      padding: 0;
+      opacity: 0.9;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+        background: $color_strawberry;
+        color: #000;
+        border-bottom: 1px solid #000;
+      }
+
+      &:active {
+        background: lighten($color_strawberry, 5%);
+      }
+
+      &[disabled='true'] {
+        opacity: 0.2;
+
+        &:hover,
+        &:focus,
+        &:active {
+          color: $color_light-gray;
+          background-color: transparent;
+          border-bottom: 1px solid $color_light-gray;
+        }
+      }
+    }
+
+    .delete-row-btn {
+      margin-left: 15px;
+    }
+
+    .delete-col-btn {
+      margin-top: 15px;
+    }
   }
 
   th,
@@ -295,6 +342,7 @@ h3 {
         box-sizing: border-box;
         border: none;
         min-width: 180px;
+        outline: 0 solid transparent;
       }
     }
   }

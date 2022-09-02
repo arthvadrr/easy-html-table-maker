@@ -506,10 +506,12 @@ const controls = state => {
             state.footer = false;
             state.headerContent = [];
             state.content = [];
+            state.footerContent = [];
             state.colgroupProps = [];
             state.colgroupSettings = [];
 
             const headerContent = [];
+            const footerContent = [];
             const colgroupProps = [];
             const columnSettings = [];
 
@@ -549,9 +551,22 @@ const controls = state => {
                 rowCollision: false,
                 colCollision: false,
               };
+
+              let footerObj = {
+                innerHTML: '',
+                rowspan: 1,
+                colspan: 1,
+                rowCollision: false,
+                colCollision: false,
+                isHeader: false,
+                headerScope: 'col',
+              };
+
+              footerContent.push(footerObj);
               headerContent.push(obj);
             }
             state.headerContent.push(headerContent);
+            state.footerContent.push(footerContent);
 
             for (let hc = 0; hc < headerContent.length; hc++) {
               let colgroupPropsObj = {
@@ -572,13 +587,13 @@ const controls = state => {
               colgroupProps.push(colgroupPropsObj);
             }
 
-            console.log(colgroupProps);
             state.colgroupProps = colgroupProps;
             state.columnSettings = columnSettings;
 
             for (let br = 1; br < str.length; br++) {
               let strRowArr = str[br].match(/("[^"]*")|[^,]+/g);
               let bodyRow = [];
+              let footerRow = [];
 
               for (let bi = 0; bi < strRowArrMaxLength; bi++) {
                 let cell = bi + 1 > strRowArr.length ? '' : strRowArr[bi].toString().trim();

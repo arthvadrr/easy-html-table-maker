@@ -387,7 +387,7 @@ const footer = state => {
 
       createElement({
         type: 'button',
-        innerHTML: '&#10006;',
+        innerHTML: '&#10006; delete row',
         parent: `table-footer-row-${r}`,
         attrs: [
           {
@@ -397,6 +397,10 @@ const footer = state => {
           {
             attr: 'aria-label',
             value: `delete footer row ${r}`,
+          },
+          {
+            attr: 'class',
+            value: 'delete-row-btn',
           },
         ],
         eventObject: {

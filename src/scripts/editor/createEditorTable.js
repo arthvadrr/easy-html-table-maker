@@ -5,11 +5,12 @@ import colgroup from './components/colgroup';
 import header from './components/header';
 import body from './components/body';
 import footer from './components/footer';
+import removeCols from './components/removeCols';
 import filterInnerHTML from './utl/filterInnerHTML';
 
 const createEditorTable = state => {
   // Render the table components
-  const tableComponents = [table, controls, colgroup, header, body, footer];
+  const tableComponents = [table, controls, colgroup, header, body, footer, removeCols];
   tableComponents.map(item => item(state));
 
   const $inputArr = document.querySelectorAll('input.td-input');

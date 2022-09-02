@@ -403,7 +403,7 @@ const body = state => {
 
     createElement({
       type: 'button',
-      innerHTML: '&#10006;',
+      innerHTML: '&#10006; delete row',
       parent: `table-row-${r}`,
       attrs: [
         {
@@ -413,6 +413,10 @@ const body = state => {
         {
           attr: 'aria-label',
           value: `delete body row ${r}`,
+        },
+        {
+          attr: 'class',
+          value: 'delete-row-btn',
         },
       ],
       eventObject: {

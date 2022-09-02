@@ -276,7 +276,7 @@ const header = state => {
 
       createElement({
         type: 'button',
-        innerHTML: '&#10006;',
+        innerHTML: '&#10006; delete row',
         parent: `table-header-row-${r}`,
         attrs: [
           {
@@ -286,6 +286,10 @@ const header = state => {
           {
             attr: 'aria-label',
             value: `delete header row ${r}`,
+          },
+          {
+            attr: 'class',
+            value: 'delete-row-btn',
           },
         ],
         eventObject: {
