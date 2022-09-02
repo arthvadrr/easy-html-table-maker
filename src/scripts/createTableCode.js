@@ -141,7 +141,7 @@ const createTableCode = state => {
       output += `${indent(4)}<span class="tag">&lt;tr&gt</span><br>`;
 
       for (let c = 0; c < state.footerContent[r].length; c++) {
-        let footerContent = replaceHTML(state.content[r][c].innerHTML, true);
+        let footerContent = replaceHTML(state.footerContent[r][c].innerHTML, true);
 
         if (state.useLineBreaks) {
           footerContent = footerContent.replace(/(\r\n|\n|\r)/gm, '&lt;br&gt');

@@ -6,7 +6,6 @@ import filterInnerHTML from '../utl/filterInnerHTML';
 import getCellStyleWidth from '../utl/getCellStyleWidth';
 
 const body = state => {
-  console.time('body');
   createElement({
     type: 'tbody',
     id: 'table-body',
@@ -401,8 +400,33 @@ const body = state => {
         }
       }
     }
+
+    createElement({
+      type: 'button',
+      innerHTML: '&#10006;',
+      parent: `table-row-${r}`,
+      attrs: [
+        {
+          attr: 'disabled',
+          value: state.content.length > 1 ? 'false' : true,
+        },
+        {
+          attr: 'aria-label',
+          value: `delete body row ${r}`,
+        },
+      ],
+      eventObject: {
+        listener: 'click',
+        func: () => {
+          if (state.content.length > 1 && confirm(`Delete row ${r} and all of its contents?`)) {
+            state.content.splice(r, 1);
+
+            reload(state, true);
+          }
+        },
+      },
+    });
   }
-  console.timeEnd('body');
 };
 
 export default body;

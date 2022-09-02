@@ -384,6 +384,32 @@ const footer = state => {
           }
         }
       }
+
+      createElement({
+        type: 'button',
+        innerHTML: '&#10006;',
+        parent: `table-footer-row-${r}`,
+        attrs: [
+          {
+            attr: 'disabled',
+            value: state.footerContent.length > 1 ? 'false' : true,
+          },
+          {
+            attr: 'aria-label',
+            value: `delete footer row ${r}`,
+          },
+        ],
+        eventObject: {
+          listener: 'click',
+          func: () => {
+            if (state.footerContent.length > 1 && confirm(`Delete row ${r} and all of its contents?`)) {
+              state.footerContent.splice(r, 1);
+
+              reload(state, true);
+            }
+          },
+        },
+      });
     }
   }
 };

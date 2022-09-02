@@ -31,15 +31,9 @@ const statePromiseOnReject = () => {
 statePromise.then(statePromiseOnResolve).catch(statePromiseOnReject);
 
 const init = () => {
-  console.time('editor-table');
   createEditorTable(state);
-  console.timeEnd('editor-table');
-  console.time('table-code');
   createTableCode(state);
-  console.timeEnd('table-code');
-  console.time('table-preview');
   createTablePreview(state);
-  console.timeEnd('table-preview');
   addResizingToTextareas();
 
   if (!state.allowTags) {
@@ -49,6 +43,5 @@ const init = () => {
   const controlContainerHeight = document.getElementById('editor-table-controls').offsetHeight;
 
   document.getElementById('editor-table').style.height = controlContainerHeight + 'px';
-
   document.getElementById('loading-modal').classList.add('display-none');
 };

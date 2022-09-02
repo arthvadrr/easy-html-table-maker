@@ -273,6 +273,32 @@ const header = state => {
           });
         }
       }
+
+      createElement({
+        type: 'button',
+        innerHTML: '&#10006;',
+        parent: `table-header-row-${r}`,
+        attrs: [
+          {
+            attr: 'disabled',
+            value: state.headerContent.length > 1 ? 'false' : true,
+          },
+          {
+            attr: 'aria-label',
+            value: `delete header row ${r}`,
+          },
+        ],
+        eventObject: {
+          listener: 'click',
+          func: () => {
+            if (state.headerContent.length > 1 && confirm(`Delete row ${r} and all of its contents?`)) {
+              state.headerContent.splice(r, 1);
+
+              reload(state, true);
+            }
+          },
+        },
+      });
     }
   }
 };
