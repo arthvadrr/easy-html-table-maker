@@ -80,6 +80,16 @@ const body = state => {
         ],
       });
 
+      let stylesStr = () => {
+        let str = '';
+
+        for (const [key, value] of Object.entries(state.content[r][c].styles)) {
+          str += `${key}:${value};`;
+        }
+
+        return str;
+      };
+
       createElement({
         type: 'textarea',
         id: `p-${r}${c}`,
@@ -88,7 +98,7 @@ const body = state => {
         attrs: [
           {
             attr: 'class',
-            value: 'td-input pre-wrap',
+            value: `td-input pre-wrap text-align-${state.content[r][c].styles['text-align']}`,
           },
         ],
         inputProps: {
@@ -172,7 +182,14 @@ const body = state => {
             eventObject: {
               listener: 'input',
               func: () => {
-                state.content[r][c].styles['text-align'] = alignment.dir;
+                if (alignment.dir === 'left') {
+                  if (state.content[r][c].styles['text-align']) {
+                    delete state.content[r][c].styles['text-align'];
+                  }
+                } else {
+                  state.content[r][c].styles['text-align'] = alignment.dir;
+                }
+
                 reload(state, true);
               },
             },

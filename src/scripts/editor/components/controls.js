@@ -550,6 +550,7 @@ const controls = state => {
                 colspan: 1,
                 rowCollision: false,
                 colCollision: false,
+                styles: {},
               };
 
               let footerObj = {
@@ -560,6 +561,7 @@ const controls = state => {
                 colCollision: false,
                 isHeader: false,
                 headerScope: 'col',
+                styles: {},
               };
 
               footerContent.push(footerObj);
@@ -606,6 +608,7 @@ const controls = state => {
                   colCollision: false,
                   isHeader: false,
                   headerScope: 'col',
+                  styles: {},
                 };
 
                 bodyRow.push(contentObj);

@@ -75,7 +75,7 @@ const header = state => {
           attrs: [
             {
               attr: 'class',
-              value: 'td-input',
+              value: `td-input pre-wrap text-align-${state.headerContent[r][c].styles['text-align']}`,
             },
           ],
           inputProps: {
@@ -159,7 +159,14 @@ const header = state => {
               eventObject: {
                 listener: 'click',
                 func: () => {
-                  state.headerContent[r][c].styles['text-align'] = alignment.dir;
+                  if (alignment.dir === 'left') {
+                    if (state.headerContent[r][c].styles['text-align']) {
+                      delete state.headerContent[r][c].styles['text-align'];
+                    }
+                  } else {
+                    state.headerContent[r][c].styles['text-align'] = alignment.dir;
+                  }
+
                   reload(state, true);
                 },
               },

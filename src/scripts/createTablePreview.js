@@ -141,6 +141,16 @@ const createTablePreview = state => {
 
       let cellType = state.content[r][c].isHeader ? 'th' : 'td';
 
+      let stylesStr = () => {
+        let str = '';
+
+        for (const [key, value] of Object.entries(state.content[r][c].styles)) {
+          str += `${key}:${value};`;
+        }
+
+        return str;
+      };
+
       createElement({
         type: cellType,
         id: `preview-td-${r}${c}`,
@@ -158,6 +168,10 @@ const createTablePreview = state => {
           {
             attr: 'scope',
             value: state.content[r][c].headerScope,
+          },
+          {
+            attr: 'style',
+            value: stylesStr(),
           },
         ],
       });
@@ -190,6 +204,16 @@ const createTablePreview = state => {
 
         let cellType = state.footerContent[r][c].isHeader ? 'th' : 'td';
 
+        let stylesStr = () => {
+          let str = '';
+
+          for (const [key, value] of Object.entries(state.footerContent[r][c].styles)) {
+            str += `${key}:${value};`;
+          }
+
+          return str;
+        };
+
         createElement({
           type: cellType,
           id: `preview-footer-td-${r}${c}`,
@@ -207,6 +231,10 @@ const createTablePreview = state => {
             {
               attr: 'scope',
               value: state.footerContent[r][c].headerScope,
+            },
+            {
+              attr: 'style',
+              value: stylesStr(),
             },
           ],
         });

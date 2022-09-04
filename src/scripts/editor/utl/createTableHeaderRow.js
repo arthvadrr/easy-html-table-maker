@@ -1,17 +1,18 @@
 const createTableHeaderRow = state => {
-    let newRow = [];
+  let newRow = [];
 
-    for (let i = 0; i < state.headerContent[0].length; i++) {
-        newRow.push({
-            innerHTML: '',
-            rowspan: 1,
-            colspan: 1,
-            rowCollision: false,
-            colCollision: false,
-        });
-    }
+  for (let i = 0; i < state.headerContent[0].length; i++) {
+    newRow.push({
+      innerHTML: '',
+      rowspan: 1,
+      colspan: 1,
+      rowCollision: false,
+      colCollision: false,
+      styles: {},
+    });
+  }
 
-    return newRow;
+  return newRow;
 };
 
 export default createTableHeaderRow;

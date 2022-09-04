@@ -12,6 +12,14 @@ body {
   white-space: pre-wrap;
 }
 
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
 h1 {
   font-size: 2.5rem;
   font-weight: 300;
@@ -306,6 +314,14 @@ h3 {
   td {
     height: inherit;
     text-align: center;
+
+    .td-text-align-controls-container {
+      display: flex;
+
+      input {
+        display: none;
+      }
+    }
 
     .grid-container {
       display: flex;

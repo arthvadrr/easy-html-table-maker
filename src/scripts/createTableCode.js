@@ -100,7 +100,6 @@ const createTableCode = state => {
             output += ' style="';
 
             for (const [key, value] of Object.entries(state.headerContent[r][c].styles)) {
-              console.log(`${key}, ${value}`);
               output += `${key}:${value};`;
             }
 
@@ -139,6 +138,17 @@ const createTableCode = state => {
         if (state.content[r][c].colspan > 1) {
           output += ` colspan="${state.content[r][c].colspan}"`;
         }
+
+        if (Object.keys(state.content[r][c].styles).length > 0) {
+          output += ' style="';
+
+          for (const [key, value] of Object.entries(state.content[r][c].styles)) {
+            output += `${key}:${value};`;
+          }
+
+          output += '"';
+        }
+
         output += `&gt</span>${bodyContent}<span class="tag">&lt;/${cellTypeClose}&gt</span><br>`;
       }
     }
@@ -172,6 +182,17 @@ const createTableCode = state => {
           if (state.footerContent[r][c].colspan > 1) {
             output += ` colspan="${state.footerContent[r][c].colspan}"`;
           }
+
+          if (Object.keys(state.footerContent[r][c].styles).length > 0) {
+            output += ' style="';
+
+            for (const [key, value] of Object.entries(state.footerContent[r][c].styles)) {
+              output += `${key}:${value};`;
+            }
+
+            output += '"';
+          }
+
           output += `&gt</span>${footerContent}<span class="tag">&lt;/${cellTypeClose}&gt</span><br>`;
         }
       }
