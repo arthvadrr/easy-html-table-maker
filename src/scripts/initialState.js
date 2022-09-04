@@ -59,6 +59,7 @@ export default {
         colspan: 1,
         rowCollision: false,
         colCollision: false,
+        styles: {},
       },
       {
         innerHTML: '',
@@ -66,6 +67,7 @@ export default {
         colspan: 1,
         rowCollision: false,
         colCollision: false,
+        styles: {},
       },
       {
         innerHTML: '',
@@ -73,6 +75,7 @@ export default {
         colspan: 1,
         rowCollision: false,
         colCollision: false,
+        styles: {},
       },
     ],
   ],
@@ -87,6 +90,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -96,6 +100,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -105,6 +110,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
     ],
     [
@@ -116,6 +122,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -125,6 +132,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -134,6 +142,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
     ],
   ],
@@ -147,6 +156,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -156,6 +166,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
       {
         innerHTML: '',
@@ -165,6 +176,7 @@ export default {
         colCollision: false,
         isHeader: false,
         headerScope: 'col',
+        styles: {},
       },
     ],
   ],

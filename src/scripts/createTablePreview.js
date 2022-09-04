@@ -81,6 +81,15 @@ const createTablePreview = state => {
         }
 
         let cellType = 'th';
+        let stylesStr = () => {
+          let str = '';
+
+          for (const [key, value] of Object.entries(state.headerContent[r][c].styles)) {
+            str += `${key}:${value};`;
+          }
+
+          return str;
+        };
 
         createElement({
           type: cellType,
@@ -95,6 +104,10 @@ const createTablePreview = state => {
             {
               attr: 'colspan',
               value: state.headerContent[r][c].colspan,
+            },
+            {
+              attr: 'style',
+              value: stylesStr(),
             },
           ],
         });

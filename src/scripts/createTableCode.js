@@ -95,6 +95,17 @@ const createTableCode = state => {
           if (state.headerContent[r][c].colspan > 1) {
             output += ` colspan="${state.headerContent[r][c].colspan}"`;
           }
+
+          if (Object.keys(state.headerContent[r][c].styles).length > 0) {
+            output += ' style="';
+
+            for (const [key, value] of Object.entries(state.headerContent[r][c].styles)) {
+              console.log(`${key}, ${value}`);
+              output += `${key}:${value};`;
+            }
+
+            output += '"';
+          }
           output += `&gt</span>${headerContent}<span class="tag">&lt;/${cellType}&gt</span><br>`;
         }
       }

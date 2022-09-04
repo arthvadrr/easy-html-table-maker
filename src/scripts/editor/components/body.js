@@ -118,6 +118,69 @@ const body = state => {
 
         createElement({
           type: 'div',
+          id: `td-styles-controls-container-${r}${c}`,
+          parent: `td-body-controls-${r}${c}`,
+          attrs: [
+            {
+              attr: 'class',
+              value: 'td-styles-controls',
+            },
+          ],
+        });
+
+        createElement({
+          type: 'div',
+          id: `text-align-controls-${r}${c}`,
+          parent: `td-styles-controls-container-${r}${c}`,
+          attrs: [
+            {
+              attr: 'class',
+              value: 'td-text-align-controls-container',
+            },
+          ],
+        });
+
+        const textAlignments = [
+          { dir: 'left', entity: '↦' },
+          { dir: 'center', entity: '↔' },
+          { dir: 'right', entity: '↤' },
+        ];
+
+        textAlignments.forEach(alignment => {
+          createElement({
+            type: 'input',
+            id: `text-align-${alignment.dir}-${r}${c}`,
+            parent: `text-align-controls-${r}${c}`,
+            inputProps: {
+              type: 'radio',
+              container: 'div',
+              label: alignment.entity,
+              for: `text-align-${alignment.dir}-${r}${c}`,
+              name: `td-text-align-${r}${c}`,
+              checked: state.content[r][c].styles['text-align'] === alignment.dir,
+            },
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-align-button',
+              },
+              {
+                attr: 'aria-label',
+                value: `align text ${alignment.dir}`,
+              },
+            ],
+            eventObject: {
+              listener: 'input',
+              func: () => {
+                state.content[r][c].styles['text-align'] = alignment.dir;
+                reload(state, true);
+              },
+            },
+          });
+        });
+
+        createElement({
+          type: 'div',
           id: `body-controls-top-container-${r}${c}`,
           parent: `td-body-controls-${r}${c}`,
           attrs: [
@@ -240,6 +303,7 @@ const body = state => {
                     colCollision: false,
                     isHeader: false,
                     headerScope: 'col',
+                    styles: {},
                   })
                 );
 
@@ -250,6 +314,7 @@ const body = state => {
                     colspan: 1,
                     rowCollision: false,
                     colCollision: false,
+                    styles: {},
                   })
                 );
 
@@ -262,6 +327,7 @@ const body = state => {
                     colCollision: false,
                     isHeader: false,
                     headerScope: 'col',
+                    styles: {},
                   })
                 );
               }

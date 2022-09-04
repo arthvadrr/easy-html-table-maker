@@ -21,20 +21,6 @@ h1 {
   background-color: darken($color_very-dark-gray, 4%);
   margin: 0 0 2rem 0;
   padding: 1px 2rem;
-  // meh, not sure about this
-  // span {
-  //   letter-spacing: -3px;
-  //   &:before,
-  //   &:after {
-  //     opacity: 0.3;
-  //   }
-  //   &:before {
-  //     content: '<';
-  //   }
-  //   &:after {
-  //     content: '></table>';
-  //   }
-  // }
 }
 
 h2 {
@@ -278,7 +264,7 @@ h3 {
       border-bottom: 1px inset darken($color_light-gray, 40%);
       background: transparent;
       color: $color_light-gray;
-      font-size: 8px;
+      font-size: 11px;
       padding: 0;
       opacity: 0.9;
 

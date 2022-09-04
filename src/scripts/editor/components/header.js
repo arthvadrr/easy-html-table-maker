@@ -104,6 +104,69 @@ const header = state => {
           });
 
           createElement({
+            type: 'div',
+            id: `th-styles-controls-container-${r}${c}`,
+            parent: `th-controls-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-styles-controls',
+              },
+            ],
+          });
+
+          createElement({
+            type: 'div',
+            id: `header-text-align-controls-${r}${c}`,
+            parent: `th-styles-controls-container-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-text-align-controls-container',
+              },
+            ],
+          });
+
+          const textAlignments = [
+            { dir: 'left', entity: '↦' },
+            { dir: 'center', entity: '↔' },
+            { dir: 'right', entity: '↤' },
+          ];
+
+          textAlignments.forEach(alignment => {
+            createElement({
+              type: 'input',
+              id: `header-text-align-${alignment.dir}-${r}${c}`,
+              parent: `header-text-align-controls-${r}${c}`,
+              inputProps: {
+                type: 'radio',
+                container: 'div',
+                label: alignment.entity,
+                for: `header-text-align-${alignment.dir}-${r}${c}`,
+                name: `th-text-align-${r}${c}`,
+                checked: state.headerContent[r][c].styles['text-align'] === alignment.dir,
+              },
+              attrs: [
+                {
+                  attr: 'class',
+                  value: 'td-align-button',
+                },
+                {
+                  attr: 'aria-label',
+                  value: `align text ${alignment.dir}`,
+                },
+              ],
+              eventObject: {
+                listener: 'click',
+                func: () => {
+                  state.headerContent[r][c].styles['text-align'] = alignment.dir;
+                  reload(state, true);
+                },
+              },
+            });
+          });
+
+          createElement({
             type: 'span',
             id: `header-rowcol-button-container-${r}${c}`,
             parent: `th-controls-${r}${c}`,
@@ -213,6 +276,7 @@ const header = state => {
                       colspan: 1,
                       rowCollision: false,
                       colCollision: false,
+                      styles: {},
                     })
                   );
 
@@ -225,6 +289,7 @@ const header = state => {
                       colCollision: false,
                       isHeader: false,
                       headerScope: 'col',
+                      styles: {},
                     })
                   );
 
@@ -237,6 +302,7 @@ const header = state => {
                       colCollision: false,
                       isHeader: false,
                       headerScope: 'col',
+                      styles: {},
                     })
                   );
                 }

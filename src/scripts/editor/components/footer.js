@@ -15,7 +15,7 @@ const footer = state => {
     });
 
     createElement({
-      type: 'tfoot',
+      type: 'tbody', // tfoot causes styling errors
       id: 'table-footer',
       parent: 'editor-table',
     });
@@ -100,6 +100,69 @@ const footer = state => {
                 value: 'td-footer-controls',
               },
             ],
+          });
+
+          createElement({
+            type: 'div',
+            id: `tf-styles-controls-container-${r}${c}`,
+            parent: `td-footer-controls-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-styles-controls',
+              },
+            ],
+          });
+
+          createElement({
+            type: 'div',
+            id: `footer-text-align-controls-${r}${c}`,
+            parent: `tf-styles-controls-container-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-text-align-controls-container',
+              },
+            ],
+          });
+
+          const textAlignments = [
+            { dir: 'left', entity: '↦' },
+            { dir: 'center', entity: '↔' },
+            { dir: 'right', entity: '↤' },
+          ];
+
+          textAlignments.forEach(alignment => {
+            createElement({
+              type: 'input',
+              id: `footer-text-align-${alignment.dir}-${r}${c}`,
+              parent: `footer-text-align-controls-${r}${c}`,
+              inputProps: {
+                type: 'radio',
+                container: 'div',
+                label: alignment.entity,
+                for: `footer-text-align-${alignment.dir}-${r}${c}`,
+                name: `tf-text-align-${r}${c}`,
+                checked: state.footerContent[r][c].styles['text-align'] === alignment.dir,
+              },
+              attrs: [
+                {
+                  attr: 'class',
+                  value: 'td-align-button',
+                },
+                {
+                  attr: 'aria-label',
+                  value: `align text ${alignment.dir}`,
+                },
+              ],
+              eventObject: {
+                listener: 'click',
+                func: () => {
+                  state.footerContent[r][c].styles['text-align'] = alignment.dir;
+                  reload(state, true);
+                },
+              },
+            });
           });
 
           createElement({
@@ -224,6 +287,7 @@ const footer = state => {
                       colspan: 1,
                       rowCollision: false,
                       colCollision: false,
+                      styles: {},
                     })
                   );
 
@@ -234,6 +298,7 @@ const footer = state => {
                       colspan: 1,
                       rowCollision: false,
                       colCollision: false,
+                      styles: {},
                     })
                   );
 
@@ -246,6 +311,7 @@ const footer = state => {
                       colCollision: false,
                       isHeader: false,
                       headerScope: 'col',
+                      styles: {},
                     })
                   );
                 }
