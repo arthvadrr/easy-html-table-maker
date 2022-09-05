@@ -67,6 +67,19 @@ const header = state => {
           ],
         });
 
+        const createAlignClassName = () => {
+          let className = 'text-align-';
+          const textAlign = state.headerContent[r][c].styles['text-align'];
+
+          if (textAlign) {
+            className += textAlign;
+          } else {
+            className += 'center';
+          }
+
+          return className;
+        };
+
         createElement({
           type: 'textarea',
           id: `p-${r}${c}`,
@@ -75,7 +88,7 @@ const header = state => {
           attrs: [
             {
               attr: 'class',
-              value: `td-input pre-wrap text-align-${state.headerContent[r][c].styles['text-align']}`,
+              value: `td-input pre-wrap ${createAlignClassName()}`,
             },
           ],
           inputProps: {
@@ -133,6 +146,22 @@ const header = state => {
             { dir: 'right', entity: '↤' },
           ];
 
+          const setClassActiveTextAlign = alignment => {
+            let activeClass = '';
+            const textAlign = state.headerContent[r][c].styles['text-align'];
+            const dir = alignment.dir;
+
+            if (textAlign === undefined) {
+              if (dir === 'center') {
+                activeClass = 'active';
+              }
+            } else if (textAlign === dir) {
+              activeClass = 'active';
+            }
+
+            return activeClass;
+          };
+
           textAlignments.forEach(alignment => {
             createElement({
               type: 'input',
@@ -142,7 +171,7 @@ const header = state => {
                 type: 'radio',
                 container: 'div',
                 labelIcon: `icon-text-align-${alignment.dir}`,
-                labelClass: `${state.headerContent[r][c].styles['text-align'] === alignment.dir || (alignment.dir === 'left' && state.headerContent[r][c].styles['text-align'] === undefined) ? 'active' : ''}`,
+                labelClass: setClassActiveTextAlign(alignment),
                 for: `header-text-align-${alignment.dir}-${r}${c}`,
                 name: `th-text-align-${r}${c}`,
                 checked: state.headerContent[r][c].styles['text-align'] === alignment.dir,
@@ -160,10 +189,8 @@ const header = state => {
               eventObject: {
                 listener: 'click',
                 func: () => {
-                  if (alignment.dir === 'left') {
-                    if (state.headerContent[r][c].styles['text-align']) {
-                      delete state.headerContent[r][c].styles['text-align'];
-                    }
+                  if (alignment.dir === 'center') {
+                    delete state.headerContent[r][c].styles['text-align'];
                   } else {
                     state.headerContent[r][c].styles['text-align'] = alignment.dir;
                   }

@@ -223,7 +223,6 @@ const body = state => {
               listener: 'input',
               func: () => {
                 const isHeader = state.content[r][c].isHeader;
-                const textAlign = state.content[r][c].styles['text-align'];
 
                 if (alignment.dir === 'left' && !isHeader) {
                   delete state.content[r][c].styles['text-align'];

@@ -66,6 +66,22 @@ const footer = state => {
           ],
         });
 
+        const createAlignClassName = () => {
+          let className = 'text-align-';
+          const textAlign = state.footerContent[r][c].styles['text-align'];
+          const isHeader = state.footerContent[r][c].isHeader;
+
+          if (textAlign) {
+            className += textAlign;
+          } else if (isHeader) {
+            className += 'center';
+          } else {
+            className += 'left';
+          }
+
+          return className;
+        };
+
         createElement({
           type: 'textarea',
           id: `fp-${r}${c}`,
@@ -74,7 +90,7 @@ const footer = state => {
           attrs: [
             {
               attr: 'class',
-              value: `td-input pre-wrap text-align-${state.footerContent[r][c].styles['text-align']}`,
+              value: `td-input pre-wrap ${createAlignClassName}}`,
             },
           ],
           inputProps: {
@@ -132,6 +148,29 @@ const footer = state => {
             { dir: 'right', entity: '↤' },
           ];
 
+          const setClassActiveTextAlign = alignment => {
+            let activeClass = '';
+            const isHeader = state.footerContent[r][c].isHeader;
+            const textAlign = state.footerContent[r][c].styles['text-align'];
+            const dir = alignment.dir;
+
+            if (textAlign === undefined) {
+              if (dir === 'left' && !isHeader) {
+                activeClass = 'active';
+              }
+
+              if (dir === 'center' && isHeader) {
+                activeClass = 'active';
+              }
+            }
+
+            if (textAlign === dir) {
+              activeClass = 'active';
+            }
+
+            return activeClass;
+          };
+
           textAlignments.forEach(alignment => {
             createElement({
               type: 'input',
@@ -141,7 +180,7 @@ const footer = state => {
                 type: 'radio',
                 container: 'div',
                 labelIcon: `icon-text-align-${alignment.dir}`,
-                labelClass: `${state.footerContent[r][c].styles['text-align'] === alignment.dir || (alignment.dir === 'left' && state.footerContent[r][c].styles['text-align'] === undefined) ? 'active' : ''}`,
+                labelClass: setClassActiveTextAlign(alignment),
                 for: `footer-text-align-${alignment.dir}-${r}${c}`,
                 name: `tf-text-align-${r}${c}`,
                 checked: state.footerContent[r][c].styles['text-align'] === alignment.dir,
@@ -159,10 +198,12 @@ const footer = state => {
               eventObject: {
                 listener: 'click',
                 func: () => {
-                  if (alignment.dir === 'left') {
-                    if (state.footerContent[r][c].styles['text-align']) {
-                      delete state.footerContent[r][c].styles['text-align'];
-                    }
+                  const isHeader = state.footerContent[r][c].isHeader;
+
+                  if (alignment.dir === 'left' && !isHeader) {
+                    delete state.footerContent[r][c].styles['text-align'];
+                  } else if (alignment.dir === 'center' && isHeader) {
+                    delete state.footerContent[r][c].styles['text-align'];
                   } else {
                     state.footerContent[r][c].styles['text-align'] = alignment.dir;
                   }
