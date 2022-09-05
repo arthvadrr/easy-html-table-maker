@@ -140,7 +140,8 @@ const footer = state => {
               inputProps: {
                 type: 'radio',
                 container: 'div',
-                label: alignment.entity,
+                labelIcon: `icon-text-align-${alignment.dir}`,
+                labelClass: `${state.footerContent[r][c].styles['text-align'] === alignment.dir || (alignment.dir === 'left' && state.footerContent[r][c].styles['text-align'] === undefined) ? 'active' : ''}`,
                 for: `footer-text-align-${alignment.dir}-${r}${c}`,
                 name: `tf-text-align-${r}${c}`,
                 checked: state.footerContent[r][c].styles['text-align'] === alignment.dir,

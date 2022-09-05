@@ -318,6 +318,29 @@ h3 {
     .td-text-align-controls-container {
       display: flex;
 
+      label {
+        display: block;
+        background-color: #e9e9ed;
+        border: 1px solid #000;
+        border-top: none;
+        border-left: none;
+        padding: 2px;
+        height: 10px;
+        width: 1.46rem;
+
+        svg {
+          height: 100%;
+          width: 100%;
+          fill: lighten($color_gray, 40%);
+        }
+
+        &.active {
+          svg {
+            fill: $color_gray;
+          }
+        }
+      }
+
       input {
         display: none;
       }

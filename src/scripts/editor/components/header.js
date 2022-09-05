@@ -141,7 +141,8 @@ const header = state => {
               inputProps: {
                 type: 'radio',
                 container: 'div',
-                label: alignment.entity,
+                labelIcon: `icon-text-align-${alignment.dir}`,
+                labelClass: `${state.headerContent[r][c].styles['text-align'] === alignment.dir || (alignment.dir === 'left' && state.headerContent[r][c].styles['text-align'] === undefined) ? 'active' : ''}`,
                 for: `header-text-align-${alignment.dir}-${r}${c}`,
                 name: `th-text-align-${r}${c}`,
                 checked: state.headerContent[r][c].styles['text-align'] === alignment.dir,

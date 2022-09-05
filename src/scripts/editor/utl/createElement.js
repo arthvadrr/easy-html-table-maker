@@ -39,13 +39,30 @@ const createElement = (props = { ...props }) => {
       ele.setAttribute('name', inputProps.name);
     }
 
-    if (inputProps.label && inputProps.for) {
+    if ((inputProps.label && inputProps.for) || (inputProps.labelIcon && inputProps.for)) {
       const label = document.createElement('label');
       label.setAttribute('for', inputProps.for);
-      label.innerText = inputProps.label;
+
+      if (inputProps.label) {
+        label.innerText = inputProps.label;
+      }
       inputContainer.appendChild(label);
       parent.appendChild(inputContainer);
       parent = inputContainer;
+
+      if (inputProps.labelIcon) {
+        const labelIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        labelIcon.classList.add('label-icon');
+        labelIcon.setAttribute('focusable', 'false');
+        labelIcon.innerHTML = `<use href="#${inputProps.labelIcon}"></use>`;
+
+        label.appendChild(labelIcon);
+      }
+
+      if (inputProps.labelClass) {
+        console.log(inputProps.labelClass);
+        label.classList.add(inputProps.labelClass);
+      }
     }
 
     if (inputProps.min) {
