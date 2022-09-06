@@ -20,6 +20,22 @@ body {
   text-align: center;
 }
 
+.vertical-align-baseline {
+  vertical-align: baseline !important;
+}
+
+.vertical-align-top {
+  vertical-align: top !important;
+}
+
+.vertical-align-middle {
+  vertical-align: middle !important;
+}
+
+.vertical-align-bottom {
+  vertical-align: bottom !important;
+}
+
 h1 {
   font-size: 2.5rem;
   font-weight: 300;
@@ -315,7 +331,8 @@ h3 {
     height: inherit;
     text-align: center;
 
-    .td-text-align-controls-container {
+    .td-text-align-controls-container,
+    .td-vertical-align-controls-container {
       display: flex;
 
       label {
@@ -327,6 +344,7 @@ h3 {
         padding: 2px;
         height: 10px;
         width: 1.46rem;
+        color: lighten($color_gray, 40%);
 
         svg {
           height: 100%;
@@ -335,6 +353,8 @@ h3 {
         }
 
         &.active {
+          color: $color_gray;
+
           svg {
             fill: $color_gray;
           }

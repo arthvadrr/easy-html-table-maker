@@ -80,6 +80,17 @@ const header = state => {
           return className;
         };
 
+        const createVerticalAlignClassName = () => {
+          let className = 'vertical-align-';
+          const verticalAlign = state.headerContent[r][c].styles['vertical-align'];
+
+          if (verticalAlign) {
+            className += verticalAlign;
+          }
+
+          return className;
+        };
+
         createElement({
           type: 'textarea',
           id: `p-${r}${c}`,
@@ -88,7 +99,7 @@ const header = state => {
           attrs: [
             {
               attr: 'class',
-              value: `td-input pre-wrap ${createAlignClassName()}`,
+              value: `td-input pre-wrap ${createAlignClassName()} ${createVerticalAlignClassName()}`,
             },
           ],
           inputProps: {
@@ -140,11 +151,7 @@ const header = state => {
             ],
           });
 
-          const textAlignments = [
-            { dir: 'left', entity: '↦' },
-            { dir: 'center', entity: '↔' },
-            { dir: 'right', entity: '↤' },
-          ];
+          const textAlignments = [{ dir: 'left' }, { dir: 'center' }, { dir: 'right' }];
 
           const setClassActiveTextAlign = alignment => {
             let activeClass = '';
@@ -193,6 +200,75 @@ const header = state => {
                     delete state.headerContent[r][c].styles['text-align'];
                   } else {
                     state.headerContent[r][c].styles['text-align'] = alignment.dir;
+                  }
+
+                  reload(state, true);
+                },
+              },
+            });
+          });
+
+          createElement({
+            type: 'div',
+            id: `header-vertical-align-controls-${r}${c}`,
+            parent: `th-styles-controls-container-${r}${c}`,
+            attrs: [
+              {
+                attr: 'class',
+                value: 'td-vertical-align-controls-container',
+              },
+            ],
+          });
+
+          const verticalAlignments = [{ dir: 'unset' }, { dir: 'baseline' }, { dir: 'top' }, { dir: 'middle' }, { dir: 'bottom' }];
+
+          const setVerticalAlignmentActiveClass = alignment => {
+            let activeClass = '';
+            const verticalAlign = state.headerContent[r][c].styles['vertical-align'];
+
+            if (verticalAlign === alignment) {
+              activeClass = 'active';
+            }
+
+            if (verticalAlign === undefined && alignment === 'unset') {
+              activeClass = 'active';
+            }
+
+            return activeClass;
+          };
+
+          verticalAlignments.forEach(alignment => {
+            createElement({
+              type: 'input',
+              id: `header-vertical-align-${alignment.dir}-${r}${c}`,
+              parent: `header-vertical-align-controls-${r}${c}`,
+              inputProps: {
+                type: 'radio',
+                container: 'div',
+                label: `${alignment.dir === 'unset' ? 'u' : ''}`,
+                labelClass: setVerticalAlignmentActiveClass(alignment.dir),
+                labelIcon: `icon-vertical-align-${alignment.dir}`,
+                for: `header-vertical-align-${alignment.dir}-${r}${c}`,
+                name: `header-vertical-align-${r}${c}`,
+                checked: state.headerContent[r][c].styles['vertical-align'] === alignment.dir,
+              },
+              attrs: [
+                {
+                  attr: 'class',
+                  value: 'td-vertical-align-button',
+                },
+                {
+                  attr: 'aria-label',
+                  value: `vertically align text ${alignment.dir}`,
+                },
+              ],
+              eventObject: {
+                listener: 'click',
+                func: () => {
+                  if (alignment.dir === 'unset') {
+                    delete state.headerContent[r][c].styles['vertical-align'];
+                  } else {
+                    state.headerContent[r][c].styles['vertical-align'] = alignment.dir;
                   }
 
                   reload(state, true);

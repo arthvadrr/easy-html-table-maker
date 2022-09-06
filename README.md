@@ -18,6 +18,20 @@ The font is [Courier Prime Sans](https://www.1001fonts.com/courier-prime-sans-fo
 
 Courier Prime Sans is licensed under SIL [Open Font License (OFL)](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
 
+### Icon Attribution
+
+All icons are from [icomoon](https://icomoon.io/)
+
+#### Icons used:
+
+- menu
+- menu2
+- menu3
+- menu4
+- paragraph-left
+- paragraph-center
+- paragraph-right
+
 ### Colors
 
 Contrast group A contrasts with group B and vice versa (WCAG 2.1 AAA @ regular text (>= 7:1 18pt)).

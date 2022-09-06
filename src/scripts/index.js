@@ -34,7 +34,6 @@ const init = () => {
   createEditorTable(state);
   createTableCode(state);
   createTablePreview(state);
-  addResizingToTextareas();
 
   if (!state.allowTags) {
     addFilterInnerHTMLToInputs();
@@ -45,3 +44,7 @@ const init = () => {
   document.getElementById('editor-table').style.height = controlContainerHeight + 'px';
   document.getElementById('loading-modal').classList.add('display-none');
 };
+
+window.addEventListener('load', () => {
+  addResizingToTextareas();
+});

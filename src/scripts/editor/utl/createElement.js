@@ -60,7 +60,6 @@ const createElement = (props = { ...props }) => {
       }
 
       if (inputProps.labelClass) {
-        console.log(inputProps.labelClass);
         label.classList.add(inputProps.labelClass);
       }
     }

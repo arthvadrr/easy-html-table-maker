@@ -13,7 +13,6 @@ minus: &#8722;
 */
 
 const controls = state => {
-  console.time('controls');
   createElement({
     type: 'div',
     id: `editor-table-controls`,

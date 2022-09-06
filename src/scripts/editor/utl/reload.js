@@ -7,7 +7,6 @@ import { addFilterInnerHTMLToInputs } from './filterInnerHTML';
 
 const reload = (state, reloadEditor = false) => {
   //TODO when editor reloads, set scrollto user previous position. Like fast.
-  console.log(state);
   localStorage.setItem('savedState', JSON.stringify(state));
 
   if (reloadEditor) {
