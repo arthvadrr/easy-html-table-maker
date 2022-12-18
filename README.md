@@ -4,6 +4,8 @@
 
 This is a tool for quickly generating html markup for those troublesome tables.
 
+[View the github page](https://javabryan.github.io/easy-html-table-maker/)
+
 ## How to use
 Download the repo, unzip it and open index.html
 
