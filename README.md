@@ -55,4 +55,4 @@ Contrast group A contrasts with group B and vice versa (WCAG 2.1 AAA @ regular t
 
 ## Changelog
 
-1.0.0 in progress
+1.0.0 stable
