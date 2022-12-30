@@ -6,7 +6,7 @@ This is a tool for quickly generating html markup for those troublesome tables.
 
 ## How to use
 Download the repo, unzip it and open index.html
-or [view the github page](https://javabryan.github.io/easy-html-table-maker/)
+or [view the github page](https://arthvadrr.github.io/easy-html-table-maker/)
 
 ## Contributions
 
