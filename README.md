@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a tool for quickly generating html markup for those troublesome tables.
+A GUI webapp tool for quickly generating html markup for tables.
 
 ## How to use
 Download the repo, unzip it and open index.html
